@@ -1,0 +1,45 @@
+$white:    #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:    #000;
+
+$blue:    #0d6efd;
+$indigo:  #6610f2;
+$purple:  #6f42c1;
+$pink:    #d63384;
+$red:     #c62134;
+$orange:  #fd7e14;
+$yellow:  #eaa510;
+$green:   #198754;
+$teal:    #20c997;
+$cyan:    #0dcaf0;
+
+$text-muted: $gray-600;
+
+$font-family-sans-serif:      "Open Sans";
+$font-family-monospace:       "Inconsolata";
+$form-select-font-family:     system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+$link-decoration:             none;
+
+// These variables are adjustments specific to the $font-family-sans-serif used here:
+$border-width:                    1px;
+$input-height-border:             $border-width * 2;
+$form-floating-height:            4rem;
+$form-floating-input-padding-b:   .35rem;
+$form-floating-label-opacity:     .5;
+$enable-negative-margins:         true;
+
+// No variable for that
+.form-floating {
+    > select.form-select {
+        padding-left: .5rem;
+    }
+}

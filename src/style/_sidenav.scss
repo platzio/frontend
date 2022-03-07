@@ -1,0 +1,39 @@
+:root {
+    --sidenav-nav-width: 10rem;
+}
+
+.sidenav {
+    display: flex;
+    flex-direction: row;
+
+    > .nav {
+        flex: 1 1 0;
+        width: var(--sidenav-nav-width);
+        min-width: var(--sidenav-nav-width);
+        max-width: var(--sidenav-nav-width);
+        margin-left: -$nav-link-padding-x;
+
+        .nav-heading {
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+
+            &:first-child {
+                margin-top: 0;
+            }
+                }
+    }
+
+    > .content {
+        @extend .ps-4;
+        flex: 1;
+        max-width: calc(calc(100% - var(--sidenav-nav-width) + $nav-link-padding-x));
+    }
+}
+
+.nav-heading {
+    @extend .px-3;
+    @extend .text-uppercase;
+    @extend .text-muted;
+    font-size: .75rem;
+    font-weight: 600;
+}

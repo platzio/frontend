@@ -1,0 +1,135 @@
+import { computed, reactive, readonly } from 'vue'
+import axios from 'axios'
+
+export interface CollectionItem<ID = string> {
+    id: ID;
+}
+
+type SortFunction<T> = (x: T, y: T) => number
+
+export interface CreateCollectionOptions<T, F> {
+    url: string;
+    sortFunc: SortFunction<T>;
+    /* This type here should be `T`, but the compiler can't properly 
+       infer types when returning a collection from tableNameToCollection */
+    formatItem: (item: any) => {
+        inputLabel?: boolean;
+        label?: string;
+        icon: string;
+        text: string;
+    };
+    envFilter?: (item: T, envId: string) => boolean;
+    initialFilters?: F;
+}
+
+export function createCollection<T extends CollectionItem<K>, F = null, K = string>(
+    opts: CreateCollectionOptions<T, F>,
+) {
+    const state = reactive({
+        ready: false,
+        loading: true,
+        items: new Map<K, T>(),
+        error: undefined as any,
+        filters: opts.initialFilters || {},
+    })
+
+    const ready = computed(() => state.ready)
+    const loading = computed(() => state.loading)
+    const status = computed(() => state.error ? `${name}: ${state.error}` : null)
+    const getOne = computed(() => (id: K) => state.items.get(id) as T)
+
+    const all = computed(() => {
+        const items = Array.from(state.items.values())
+        items.sort(opts.sortFunc)
+        return items
+    })
+
+    const allForEnv = computed(
+        () => (envId: string) =>
+            opts.envFilter ?
+                all.value.filter(item => opts.envFilter!(item, envId)) :
+                all.value
+    )
+
+    const setOne = (item: T) => {
+        state.items.set(item.id, item)
+    }
+
+    const discardOne = (id: K) => {
+        state.items.delete(id)
+    }
+
+    const readAllItems = async () => {
+        state.loading = true
+        try {
+            const res = await axios.get(opts.url, {
+                params: {
+                    all: 'yes',
+                    ...state.filters
+                }
+            })
+            for (const item of res.data as T[]) {
+                setOne(item)
+            }
+            state.ready = true
+        } catch (error) {
+            state.error = error
+        }
+        state.loading = false
+    }
+
+    const readItem = async ({ id }: { id: string }) => {
+        try {
+            const res = await axios.get(`${opts.url}/${id}`)
+            const item = res.data as T
+            setOne(item)
+        } catch (error) {
+            state.error = error
+        }
+    }
+
+    const createItem = async (item: Record<string, any>): Promise<T> => {
+        const res = await axios.post(opts.url, item)
+        return res.data as T
+    }
+
+    const updateItem = async ({ id, data }: { id: string; data: Record<string, any> }): Promise<T> => {
+        const res = await axios.put(`${opts.url}/${id}`, data)
+        return res.data as T
+    }
+
+    const deleteItem = async (id: string): Promise<void> => {
+        await axios.delete(`${opts.url}/${id}`)
+    }
+
+    const setFilters = (filters: F) => {
+        state.filters = filters
+        readAllItems()
+    }
+
+    const reset = () => {
+        state.ready = false
+        state.items = new Map()
+        state.error = undefined
+    }
+
+    return reactive({
+        state: readonly(state),
+        ready,
+        loading,
+        status,
+        getOne,
+        all,
+        allForEnv,
+        setOne,
+        discardOne,
+        readAllItems,
+        readItem,
+        createItem,
+        updateItem,
+        deleteItem,
+        setFilters,
+        reset,
+        formatItem: opts.formatItem,
+    })
+}

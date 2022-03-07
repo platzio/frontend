@@ -1,0 +1,71 @@
+<template>
+  <div class="newer-version" v-if="hasNewVersion">
+    <button
+      class="alert alert-success py-2"
+      @click="reload"
+      :disabled="reloading"
+    >
+      <div>
+        <fa icon="gift" fixed-width />
+        New UI Version Available
+      </div>
+      <div class="fw-bold">Click here to upgrade</div>
+    </button>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.newer-version {
+  position: absolute;
+  top: 2rem;
+  margin-left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  font-size: 0.9rem;
+}
+</style>
+
+<script lang="ts">
+import axios from "axios";
+import { computed, defineComponent, onBeforeUnmount, ref } from "vue";
+
+const CHECK_INTERVAL = 60 * 1000;
+
+export default defineComponent({
+  setup() {
+    let timer: number;
+    const prev = ref<string | undefined>();
+    const current = ref<string | undefined>();
+    const reloading = ref(false);
+
+    const check = async () => {
+      try {
+        const res = await axios.get("/");
+        prev.value = current.value;
+        current.value = res.data;
+      } catch (err) {}
+      timer = window.setTimeout(check, CHECK_INTERVAL);
+    };
+
+    const reload = () => {
+      reloading.value = true;
+      window.clearTimeout(timer);
+      window.location.reload();
+    };
+
+    check();
+
+    onBeforeUnmount(() => window.clearTimeout(timer));
+
+    const hasNewVersion = computed(
+      () => prev.value && current.value && prev.value !== current.value
+    );
+
+    return {
+      hasNewVersion,
+      reload,
+      reloading,
+    };
+  },
+});
+</script>
