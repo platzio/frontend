@@ -5,7 +5,7 @@
     </div>
     <ul class="array-value-list" v-if="value">
       <li v-for="(item, idx) in value" :key="idx">
-        <ConfigValue :input="innerInput" :value="item" />
+        <ConfigValue :input="innerInput" :value="item" :allValues="allValues" />
       </li>
     </ul>
     <span class="text-secondary fst-italic" v-else>(empty)</span>
@@ -36,6 +36,10 @@ export default defineComponent({
     },
     value: {
       type: Array,
+    },
+    allValues: {
+      type: Object as PropType<Record<string, any>>,
+      required: true,
     },
     showLabel: {
       type: Boolean,

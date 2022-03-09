@@ -4,6 +4,7 @@
       v-if="input.type === 'array'"
       :input="input"
       :value="value"
+      :allValues="allValues"
       :showLabel="showLabel"
       :showEmpty="showEmpty"
     />
