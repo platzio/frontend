@@ -28,14 +28,7 @@
 
 <script lang="ts">
 import { isEqual } from "lodash";
-import {
-  computed,
-  defineComponent,
-  ref,
-  watch,
-  PropType,
-  watchEffect,
-} from "vue";
+import { computed, defineComponent, ref, watch, PropType } from "vue";
 import { HelmChartUiInput } from "@/store/models/helm-chart";
 
 export default defineComponent({
@@ -79,9 +72,13 @@ export default defineComponent({
       { immediate: true, deep: true }
     );
 
-    watchEffect(() => {
-      emit("update:modelValue", inner.value);
-    });
+    watch(
+      () => inner,
+      () => {
+        emit("update:modelValue", inner.value);
+      },
+      { deep: true }
+    );
 
     const addToArray = () => {
       inner.value.push({});

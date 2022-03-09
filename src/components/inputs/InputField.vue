@@ -63,14 +63,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-  PropType,
-  watch,
-  watchEffect,
-} from "vue";
+import { computed, defineComponent, ref, PropType, watch } from "vue";
 import { HelmChartUiInput } from "@/store/models/helm-chart";
 import { isEqual } from "lodash";
 
@@ -111,9 +104,13 @@ export default defineComponent({
       { immediate: true, deep: true }
     );
 
-    watchEffect(() => {
-      emit("update:modelValue", inner.value);
-    });
+    watch(
+      () => inner,
+      () => {
+        emit("update:modelValue", inner.value);
+      },
+      { deep: true }
+    );
 
     const visible = computed(
       () =>
