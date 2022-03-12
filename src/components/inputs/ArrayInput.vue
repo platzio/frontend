@@ -67,6 +67,9 @@ export default defineComponent({
         if (isEqual(newValue, inner.value)) {
           return;
         }
+        if (typeof newValue === 'string' || typeof newValue === 'number') {
+          newValue = [newValue]
+        }
         inner.value = newValue as any[];
       },
       { immediate: true, deep: true }
