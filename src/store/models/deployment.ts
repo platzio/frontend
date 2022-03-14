@@ -58,7 +58,7 @@ export const collection = createCollection<Deployment>({
         return {
             inputLabel: true,
             icon: registry.fa_icon,
-            text: item.name,
+            text: item.name || item.kind.toLowerCase(),
         }
     },
 

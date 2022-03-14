@@ -2,9 +2,9 @@
   <div>
     <div class="d-flex flex-row justify-content-between align-items-start">
       <div class="d-flex flex-row align-items-center">
-        <div class="h1 me-3">
-          <fa v-if="icon" :icon="icon" />
-          {{ deployment.name || deployment.kind.toLowerCase() }}
+        <div class="h1 me-3" v-if="formatted">
+          <fa :icon="formatted.icon" />
+          {{ formatted.text }}
         </div>
         <DeploymentStatus class="me-2" :deployment="deployment" />
       </div>
@@ -169,8 +169,8 @@ export default defineComponent({
       store!.collections.deployments.getOne(props.id)
     );
 
-    const icon = computed(
-      () => store!.collections.deployments.formatItem(deployment.value).icon
+    const formatted = computed(() =>
+      store!.collections.deployments.formatItem(deployment.value)
     );
 
     const hasError = computed(
@@ -216,7 +216,7 @@ export default defineComponent({
       deployment,
       curTab,
       history,
-      icon,
+      formatted,
       hasError,
       cluster,
       metrics,

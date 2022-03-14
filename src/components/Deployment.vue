@@ -3,9 +3,9 @@
     <div>
       <div class="my-1">
         <DeploymentStatus class="me-2" :deployment="deployment" />
-        <span>
-          <fa v-if="icon" :icon="icon" />
-          {{ deployment.name || deployment.kind.toLowerCase() }}
+        <span v-if="formatted">
+          <fa :icon="formatted.icon" />
+          {{ formatted.text }}
         </span>
         <DeploymentWarnings :deployment="deployment" />
       </div>
@@ -79,8 +79,8 @@ export default defineComponent({
       () => props.deployment.status == DeploymentStatus.Error
     );
 
-    const icon = computed(
-      () => store!.collections.deployments.formatItem(props.deployment).icon
+    const formatted = computed(() =>
+      store!.collections.deployments.formatItem(props.deployment)
     );
 
     const chart = computed(() =>
@@ -116,7 +116,7 @@ export default defineComponent({
 
     return {
       hasError,
-      icon,
+      formatted,
       chart,
       hasUpgrade,
       isMaintainer,
