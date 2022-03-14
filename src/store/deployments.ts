@@ -2,8 +2,17 @@ import { Deployment } from './models/deployment'
 import { TableName } from './collections'
 import { useStore } from './'
 
+export interface DeploymentResourceCollection {
+    deployment: string;
+    type: string;
+}
+
+export type LegacyCollectionName = string;
+
+export type DbTableOrDeploymentResource = TableName | DeploymentResourceCollection | LegacyCollectionName;
+
 export function findCollectionDependencies(
-    tableName: TableName,
+    collection: DbTableOrDeploymentResource,
     id: string,
 ): Deployment[] {
     const store = useStore()
@@ -17,7 +26,7 @@ export function findCollectionDependencies(
         }
 
         for (const input of chart.values_ui.inputs) {
-            if (input.collection !== tableName) {
+            if (input.collection !== collection) {
                 continue
             }
             if (deployment.config[input.id] === id) {

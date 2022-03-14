@@ -1,6 +1,8 @@
 import { collection as deployments } from './models/deployment'
 import { collection as deploymentTasks } from './models/deployment-task'
 import { collection as deploymentPermissions } from './models/deployment-permission'
+import { collection as deploymentResourceTypes } from './models/deployment-resource-type'
+import { collection as deploymentResources } from './models/deployment-resource'
 import { collection as helmRegistries } from './models/helm-registry'
 import { collection as helmCharts } from './models/helm-chart'
 import { collection as k8sClusters } from './models/k8s-cluster'
@@ -14,6 +16,8 @@ export type TableName =
     'deployments' |
     'deployment_tasks' |
     'deployment_permissions' |
+    'deployment_resource_types' |
+    'deployment_resources' |
     'helm_registries' |
     'helm_charts' |
     'k8s_clusters' |
@@ -28,6 +32,8 @@ export function createCollections() {
         deployments,
         deploymentTasks,
         deploymentPermissions,
+        deploymentResourceTypes,
+        deploymentResources,
         helmRegistries,
         helmCharts,
         k8sClusters,
@@ -46,6 +52,10 @@ export function createCollections() {
                 return collections.deploymentTasks
             case 'deployment_permissions':
                 return collections.deploymentPermissions
+            case 'deployment_resource_types':
+                return collections.deploymentResourceTypes
+            case 'deployment_resources':
+                return collections.deploymentResources
             case 'helm_registries':
                 return collections.helmRegistries
             case 'helm_charts':

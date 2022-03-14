@@ -23,6 +23,21 @@
             Deployments
           </router-link>
         </li>
+        <li
+          class="nav-item"
+          v-for="resourceType in resourceTypes"
+          :key="resourceType.id"
+        >
+          <router-link
+            class="nav-link"
+            :to="{
+              name: 'env.resources.list',
+              params: { resourceTypeId: resourceType.id },
+            }"
+          >
+            {{ resourceType.spec.name_plural }}
+          </router-link>
+        </li>
       </ul>
 
       <ul class="navbar-nav mb-2 mb-lg-0">
@@ -127,16 +142,25 @@ export default defineComponent({
 
   setup(props) {
     const store = useStore();
+
     const curUser = computed(() => store!.auth.curUser!);
+
     const otherEnvs = computed(() =>
       store!.collections.envs.all.filter(
         (env) => env.id != props.envId && isEnvUser(env.id, curUser.value.id)
       )
     );
 
+    const resourceTypes = computed(() =>
+      store!.collections.deploymentResourceTypes.all.filter(
+        (resourceType) => resourceType.env_id === props.envId
+      )
+    );
+
     return {
       curUser,
       otherEnvs,
+      resourceTypes,
     };
   },
 });

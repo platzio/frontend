@@ -1,19 +1,5 @@
-import { JSONSchema7 } from 'json-schema';
 import { CollectionItem, createCollection } from './collection'
 import { UserDeploymentRole } from './deployment-permission';
-
-export interface PlatzJsonSchemaCollection {
-    name: string;
-    property: string;
-}
-
-export interface PlatzJsonSchemaProp {
-    collection?: PlatzJsonSchemaCollection;
-}
-
-export interface PlatzJsonSchema extends JSONSchema7 {
-    platz?: PlatzJsonSchemaProp;
-}
 
 export interface HelmChartActionSchema {
     id: string;
@@ -27,6 +13,12 @@ export interface HelmChartActionSchema {
     fontawesome_icon?: string;
     description: string;
     ui_schema?: HelmChartUiSchema;
+}
+
+export interface ChartExtActionTarget {
+    endpoint: string;
+    path: string;
+    method: string;
 }
 
 export interface HelmChartActionsSchema {
@@ -103,7 +95,6 @@ export interface HelmChart extends CollectionItem {
     image_digest: string;
     image_tag: string;
     available: boolean;
-    values_schema?: PlatzJsonSchema;
     values_ui?: HelmChartUiSchema;
     actions_schema?: HelmChartActionsSchema;
     features?: HelmChartFeatures;

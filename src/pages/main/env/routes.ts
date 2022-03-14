@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 import Root from './Root.vue'
 import Inner from './Inner.vue'
 import deploymentRoutes from './deployments/routes'
+import deploymentResourceRoutes from './resources/routes'
 import settingsRoutes from './settings/routes'
 
 const routes: RouteRecordRaw[] = [
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
                 redirect: { name: 'env.deployments' },
                 children: [
                     ...deploymentRoutes,
+                    ...deploymentResourceRoutes,
                     ...settingsRoutes,
                 ],
             },
