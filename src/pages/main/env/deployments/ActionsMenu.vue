@@ -166,9 +166,15 @@ export default defineComponent({
       store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
     );
 
-    const actions = computed(() =>
-      chart.value.actions_schema ? chart.value.actions_schema.actions : []
-    );
+    const actions = computed(() => {
+      if (!chart.value.actions_schema) {
+        return [];
+      }
+      if (Array.isArray(chart.value.actions_schema)) {
+        return chart.value.actions_schema.map((action) => action.spec);
+      }
+      return chart.value.actions_schema.actions;
+    });
 
     const currentStatus = computed(() =>
       props.deployment.reported_status &&
