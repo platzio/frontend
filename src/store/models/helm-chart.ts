@@ -21,15 +21,27 @@ export interface ChartExtActionTarget {
     method: string;
 }
 
-export interface HelmChartActionsSchema {
+export interface HelmChartActionsSchemaV0 {
     schema_version: number;
     actions: HelmChartActionSchema[];
 }
 
-export interface HelmChartFeatures {
+export interface HelmChartActionsSchemaV1 {
+    apiVersion: string;
+    kind: string;
+    actions: HelmChartActionSchema[];
+}
+
+export interface HelmChartFeaturesV0 {
     standard_ingress: boolean;
     status?: HelmChartStatusFeature;
     cardinality?: HelmChartCardinality;
+}
+
+export interface HelmChartFeaturesV1 {
+    apiVersion: string;
+    kind: string;
+    spec: HelmChartFeaturesV0;
 }
 
 export interface HelmChartStatusFeature {
@@ -96,8 +108,22 @@ export interface HelmChart extends CollectionItem {
     image_tag: string;
     available: boolean;
     values_ui?: HelmChartUiSchema;
-    actions_schema?: HelmChartActionsSchema;
-    features?: HelmChartFeatures;
+    actions_schema?: HelmChartActionsSchemaV0 | HelmChartActionsSchemaV1;
+    features?: HelmChartFeaturesV0 | HelmChartFeaturesV1;
+}
+
+function isChartFeaturesV1(features: HelmChartFeaturesV0 | HelmChartFeaturesV1): features is HelmChartFeaturesV1 {
+    return (features as HelmChartFeaturesV1).apiVersion !== undefined
+}
+
+export function chartFeatures(chart: HelmChart): HelmChartFeaturesV0 | null {
+    if (!chart.features) {
+        return null
+    }
+    if (isChartFeaturesV1(chart.features)) {
+        return chart.features.spec
+    }
+    return chart.features
 }
 
 export const collection = createCollection<HelmChart>({

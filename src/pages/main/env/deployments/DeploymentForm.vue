@@ -90,7 +90,7 @@ import { capitalize, cloneDeep } from "lodash";
 import moment from "moment";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
-import { HelmChartCardinality } from "@/store/models/helm-chart";
+import { chartFeatures, HelmChartCardinality } from "@/store/models/helm-chart";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
 import { isDeploymentOwner } from "@/store/permissions";
 
@@ -159,9 +159,11 @@ export default defineComponent({
       if (!newChart.value.features) {
         return true;
       }
-      const { cardinality = HelmChartCardinality.Many } =
-        newChart.value.features;
-      return cardinality == HelmChartCardinality.Many;
+      const features = chartFeatures(newChart.value);
+      if (!features) {
+        return HelmChartCardinality.Many;
+      }
+      return features.cardinality == HelmChartCardinality.Many;
     });
 
     const newUiSchema = computed(
