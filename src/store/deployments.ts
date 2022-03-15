@@ -1,15 +1,6 @@
 import { Deployment } from './models/deployment'
-import { TableName } from './collections'
+import { DbTableOrDeploymentResource } from './models/helm-chart'
 import { useStore } from './'
-
-export interface DeploymentResourceCollection {
-    deployment: string;
-    type: string;
-}
-
-export type LegacyCollectionName = string;
-
-export type DbTableOrDeploymentResource = TableName | DeploymentResourceCollection | LegacyCollectionName;
 
 export function findCollectionDependencies(
     collection: DbTableOrDeploymentResource,

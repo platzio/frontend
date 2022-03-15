@@ -108,13 +108,10 @@ import { computed, defineComponent, ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
-import {
-  findCollectionDependencies,
-  DeploymentResourceCollection,
-  LegacyCollectionName,
-} from "@/store/deployments";
+import { findCollectionDependencies } from "@/store/deployments";
 import EditResource from "./EditResource.vue";
 import DeleteResource from "./DeleteResource.vue";
+import { DeploymentResourceCollection } from "@/store/models/helm-chart";
 
 export default defineComponent({
   props: {
@@ -167,10 +164,7 @@ export default defineComponent({
     );
 
     const deployments = computed(() =>
-      findCollectionDependencies(
-        resourceType.value.key as LegacyCollectionName,
-        props.id
-      ).concat(
+      findCollectionDependencies(resourceType.value.key, props.id).concat(
         findCollectionDependencies(
           {
             deployment: resourceType.value.deployment_kind,

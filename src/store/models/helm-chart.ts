@@ -79,12 +79,14 @@ export type HelmChartUiInputType =
     'Checkbox' |
     'DaysAndHour';
 
+export type DbTableOrDeploymentResource = DeploymentResourceCollection | string;
+
 export interface HelmChartUiInput {
     id: string;
     type: HelmChartUiInputType;
     itemType?: HelmChartUiInputType;
     label: string;
-    collection?: string;
+    collection?: DbTableOrDeploymentResource;
     initialValue: string;
     helpText?: string;
     required?: boolean;
@@ -99,6 +101,15 @@ export interface HelmChartUiInput {
 export interface HelmChartUiSchema {
     inputs: HelmChartUiInput[];
     outputs: Record<string, any>;
+}
+
+export interface DeploymentResourceCollection {
+    deployment: string;
+    type: string;
+}
+
+export function isDeploymentResourceCollection(collection: DbTableOrDeploymentResource): collection is DeploymentResourceCollection {
+    return (collection as DeploymentResourceCollection).deployment !== undefined
 }
 
 export interface HelmChart extends CollectionItem {

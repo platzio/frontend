@@ -41,9 +41,8 @@ import {
   watchEffect,
   PropType,
 } from "vue";
-import { useStore } from "@/store";
-import { TableName } from "@/store/collections";
 import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { getInputCollection } from "@/store/deployment-resources";
 
 export default defineComponent({
   props: {
@@ -69,7 +68,6 @@ export default defineComponent({
   emits: ["update:modelValue"],
 
   setup(props, { emit }) {
-    const store = useStore();
     const inner = ref();
 
     watch(
@@ -87,10 +85,10 @@ export default defineComponent({
       emit("update:modelValue", inner.value);
     });
 
-    const collection = computed(() =>
-      props.input.collection
-        ? store!.tableNameToCollection(props.input.collection as TableName)
-        : null
+    const collection = computed(
+      () =>
+        props.input.collection &&
+        getInputCollection(props.envId, props.input.collection)
     );
 
     const collectionItems = computed(() => {
