@@ -26,12 +26,7 @@
         </router-link>
       </li>
 
-      <li class="nav-heading">Custom Objects</li>
-      <li class="nav-item">
-        <router-link class="nav-link" :to="{ name: 'admin.models' }">
-          Models
-        </router-link>
-      </li>
+      <li class="nav-heading">Global Resources</li>
     </ul>
     <div class="content">
       <router-view />
