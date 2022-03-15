@@ -24,11 +24,14 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "@vue/runtime-core";
 import { HelmChartUiInput } from "@/store/models/helm-chart";
-import { useStore } from "@/store";
-import { TableName } from "@/store/collections";
+import { getInputCollection } from "@/store/deployment-resources";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     input: {
       type: Object as PropType<HelmChartUiInput>,
       required: true,
@@ -47,12 +50,10 @@ export default defineComponent({
   },
 
   setup(props) {
-    const store = useStore();
-
-    const collection = computed(() =>
-      props.input.collection
-        ? store!.tableNameToCollection(props.input.collection as TableName)
-        : null
+    const collection = computed(
+      () =>
+        props.input.collection &&
+        getInputCollection(props.envId, props.input.collection)
     );
 
     const item = computed(() =>

@@ -25,6 +25,7 @@
       <ConfigDelta
         :uiSchema="newChart.values_ui"
         :delta="operation.config_delta"
+        :envId="envId"
         :allValues="operation.config_inputs"
       />
     </div>
@@ -39,6 +40,10 @@ import ConfigDelta from "./ConfigDelta.vue";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     operation: {
       type: Object as PropType<DeploymentUpgradeTask>,
       required: true,

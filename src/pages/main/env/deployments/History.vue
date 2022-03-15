@@ -9,7 +9,7 @@
     <Collection v-else :items="tasks" flush>
       <template #item="scope">
         <CollectionItem>
-          <DeploymentTask :task="scope.item" />
+          <DeploymentTask :task="scope.item" :envId="envId" />
         </CollectionItem>
       </template>
     </Collection>
@@ -25,6 +25,10 @@ import DeploymentTask from "./tasks/DeploymentTask.vue";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     deployment: {
       type: Object as PropType<Deployment>,
       required: true,

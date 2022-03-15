@@ -9,6 +9,7 @@
     <UpgradeParams
       v-if="task.operation.Upgrade"
       :operation="task.operation.Upgrade"
+      :envId="envId"
     />
 
     <ReinstallParams
@@ -56,6 +57,10 @@ import RestartK8sResourceParams from "./RestartK8sResourceParams.vue";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     task: {
       type: Object as PropType<DeploymentTask>,
       required: true,

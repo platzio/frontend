@@ -5,7 +5,12 @@
     </div>
     <ul class="array-value-list" v-if="value">
       <li v-for="(item, idx) in value" :key="idx">
-        <ConfigValue :input="innerInput" :value="item" :allValues="allValues" />
+        <ConfigValue
+          :input="innerInput"
+          :envId="envId"
+          :value="item"
+          :allValues="allValues"
+        />
       </li>
     </ul>
     <span class="text-secondary fst-italic" v-else>(empty)</span>
@@ -30,6 +35,10 @@ import { HelmChartUiInput } from "@/store/models/helm-chart";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     input: {
       type: Object as PropType<HelmChartUiInput>,
       required: true,

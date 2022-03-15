@@ -106,7 +106,7 @@
       </div>
 
       <div class="card-body px-0 py-1" v-show="curTab == 'history'">
-        <History :deployment="deployment" ref="history" />
+        <History :deployment="deployment" :envId="envId" ref="history" />
       </div>
     </div>
   </div>

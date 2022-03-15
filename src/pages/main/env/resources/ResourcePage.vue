@@ -55,6 +55,7 @@
         >
           <ConfigValue
             :input="input"
+            :envId="envId"
             :value="resource.props[input.id]"
             :allValues="resource.props"
           />

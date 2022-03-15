@@ -8,6 +8,7 @@
       :input="inputFor(key)"
       :value="changes[0]"
       :allValues="allValues"
+      :envId="envId"
       :showLabel="true"
       :showEmpty="true"
     />
@@ -16,6 +17,7 @@
       :input="inputFor(key)"
       :value="changes[1]"
       :allValues="allValues"
+      :envId="envId"
       :showLabel="false"
       :showEmpty="true"
     />
@@ -28,6 +30,10 @@ import { HelmChartUiSchema } from "@/store/models/helm-chart";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     uiSchema: {
       type: Object as PropType<HelmChartUiSchema>,
       required: true,

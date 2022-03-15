@@ -4,6 +4,7 @@
       <div v-for="input in chart.values_ui.inputs" :key="input.id" class="mt-2">
         <ConfigValue
           :input="input"
+          :envId="envId"
           :value="deployment.config[input.id]"
           :allValues="deployment.config"
         />

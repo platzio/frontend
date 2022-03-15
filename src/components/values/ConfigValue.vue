@@ -5,6 +5,7 @@
       :input="input"
       :value="value"
       :allValues="allValues"
+      :envId="envId"
       :showLabel="showLabel"
       :showEmpty="showEmpty"
     />
@@ -33,6 +34,7 @@
       v-else-if="input.type === 'CollectionSelect'"
       :input="input"
       :value="value"
+      :envId="envId"
       :showLabel="showLabel"
       :showEmpty="showEmpty"
     />
@@ -67,6 +69,10 @@ import { HelmChartUiInput } from "@/store/models/helm-chart";
 
 export default defineComponent({
   props: {
+    envId: {
+      type: String,
+      required: true,
+    },
     input: {
       type: Object as PropType<HelmChartUiInput>,
       required: true,

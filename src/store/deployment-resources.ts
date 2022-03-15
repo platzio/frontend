@@ -1,7 +1,6 @@
 import { computed, reactive } from "vue";
 import { useStore } from ".";
 import { TableName } from "./collections";
-import { DeploymentResource } from "./models/deployment-resource";
 import { DbTableOrDeploymentResource, isDeploymentResourceCollection } from "./models/helm-chart";
 
 function toDeploymentResourceCollection(resourceTypeId: string) {
@@ -11,14 +10,18 @@ function toDeploymentResourceCollection(resourceTypeId: string) {
 
   const all = computed(() => store!.collections.deploymentResources.all.filter(resource => resource.type_id === resourceTypeId))
   const allForEnv = computed(() => (_envId: string) => all.value)
-  const formatItem = computed(() => (item: DeploymentResource) => ({
+  const getOne = computed(() => (id: string) => store!.collections.deploymentResources.getOne(id))
+  const formatItem = computed(() => (item: any) => ({
     text: item.name,
     icon: resourceType.value.spec.fontawesome_icon,
+    inputLabel: '',
+    label: '',
   }))
 
   return reactive({
     all,
     allForEnv,
+    getOne,
     formatItem,
   })
 }
