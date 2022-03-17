@@ -11,6 +11,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <div class="ps-2 mb-3">
       <a class="text-secondary" @click="removeFromArray(idx)">
@@ -49,6 +50,10 @@ export default defineComponent({
     allValues: {
       type: Object as PropType<Record<string, any>>,
       required: true,
+    },
+    isNew: {
+      type: Boolean,
+      default: true,
     },
   },
 

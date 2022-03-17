@@ -8,6 +8,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
   </div>
 </template>
@@ -34,6 +35,10 @@ export default defineComponent({
     modelValue: {
       type: Object,
       default: () => ({}),
+    },
+    isNew: {
+      type: Boolean,
+      default: true,
     },
   },
 

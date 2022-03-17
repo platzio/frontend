@@ -7,6 +7,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <CheckboxInput
       v-else-if="input.type === 'Checkbox'"
@@ -15,6 +16,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <CollectionInput
       v-else-if="input.type === 'CollectionSelect'"
@@ -23,6 +25,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <DaysHourInput
       v-else-if="input.type === 'DaysAndHour'"
@@ -31,6 +34,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <NumberInput
       v-else-if="input.type === 'number'"
@@ -39,6 +43,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <RadioInput
       v-else-if="input.type === 'RadioSelect'"
@@ -47,6 +52,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <TextInput
       v-else-if="input.type === 'text'"
@@ -55,6 +61,7 @@
       :envId="envId"
       :disabled="disabled"
       :allValues="allValues"
+      :isNew="isNew"
     />
     <div class="alert alert-warning mb-3" v-else>
       Oh no, I don't know how to render this: {{ input }}
@@ -85,6 +92,10 @@ export default defineComponent({
     allValues: {
       type: Object as PropType<Record<string, any>>,
       required: true,
+    },
+    isNew: {
+      type: Boolean,
+      default: true,
     },
   },
 

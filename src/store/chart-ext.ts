@@ -132,6 +132,7 @@ export interface HelmChartUiInput {
     initialValue: string;
     helpText?: string;
     required?: boolean;
+    sensitive?: boolean;
     options?: FieldOption[];
     showIfAll?: FieldValue[];
     filters?: FieldValue[];

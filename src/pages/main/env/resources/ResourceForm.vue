@@ -48,6 +48,7 @@
       :envId="envId"
       :uiSchema="resourceType.spec.values_ui"
       :disabled="disabled"
+      :isNew="isNew"
       v-model="new_data.props"
     />
   </div>
@@ -108,8 +109,10 @@ export default defineComponent({
       }
     );
 
+    const isNew = computed(() => !!props.currentData.id);
+
     async function save() {
-      if (props.currentData.id) {
+      if (isNew.value) {
         const updated = await store!.collections.deploymentResources.updateItem(
           {
             id: props.currentData.id,
@@ -135,6 +138,7 @@ export default defineComponent({
     return {
       new_data,
       possibleDeployments,
+      isNew,
       save,
       resourceType,
       formatDeployment,

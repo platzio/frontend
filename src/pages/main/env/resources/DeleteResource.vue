@@ -19,7 +19,7 @@
     </div>
 
     <div class="border p-2" v-if="resource">
-      <ResourceRow :resourcce="resourcce" />
+      <ResourceRow :resource="resource" />
     </div>
 
     <div class="mt-3">Are you sure you want to continue?</div>

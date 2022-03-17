@@ -6,11 +6,11 @@
       :id="input.id"
       v-model="inner"
       :disabled="disabled"
-      :required="input.required"
+      :required="required"
     />
     <label class="opacity-100">
       <span class="opacity-50">{{ input.label }}</span>
-      <span class="ms-2 text-danger" v-if="input.required">*</span>
+      <span class="ms-2 text-danger" v-if="required">*</span>
     </label>
     <div class="form-text" v-if="input.helpText">
       {{ input.helpText }}
@@ -20,7 +20,14 @@
 
 <script lang="ts">
 import { isEqual } from "lodash";
-import { defineComponent, ref, watch, watchEffect, PropType } from "vue";
+import {
+  defineComponent,
+  ref,
+  watch,
+  watchEffect,
+  PropType,
+  computed,
+} from "vue";
 import { HelmChartUiInput } from "@/store/chart-ext";
 
 export default defineComponent({
@@ -41,6 +48,10 @@ export default defineComponent({
     allValues: {
       type: Object as PropType<Record<string, any>>,
       required: true,
+    },
+    isNew: {
+      type: Boolean,
+      default: true,
     },
   },
 
@@ -64,8 +75,15 @@ export default defineComponent({
       emit("update:modelValue", inner.value);
     });
 
+    const required = computed(
+      () =>
+        props.input.required &&
+        (!props.input.sensitive || (props.input.sensitive && !props.isNew))
+    );
+
     return {
       inner,
+      required,
     };
   },
 });

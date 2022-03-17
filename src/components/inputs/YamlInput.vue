@@ -45,6 +45,10 @@ export default defineComponent({
       type: Object,
       default: () => ({}),
     },
+    isNew: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   emits: [UPDATE_EVENT],

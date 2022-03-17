@@ -99,6 +99,10 @@ export default defineComponent({
       type: Object as PropType<Record<string, any>>,
       required: true,
     },
+    isNew: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   emits: ["update:modelValue"],
