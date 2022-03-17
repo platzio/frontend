@@ -41,7 +41,7 @@ import {
   watchEffect,
   PropType,
 } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 import { getInputCollection } from "@/store/deployment-resources";
 
 export default defineComponent({

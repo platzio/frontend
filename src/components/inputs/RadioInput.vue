@@ -41,7 +41,7 @@
 <script lang="ts">
 import { isEqual } from "lodash";
 import { defineComponent, ref, watch, PropType, watchEffect } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {

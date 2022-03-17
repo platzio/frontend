@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {

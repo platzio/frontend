@@ -45,7 +45,7 @@
 <script lang="ts">
 import { isEqual } from "lodash";
 import { defineComponent, ref, watch, PropType } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 
 const DAY_NAMES: Record<number, string> = {
   0: "Sun",

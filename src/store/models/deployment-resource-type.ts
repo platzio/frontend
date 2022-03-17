@@ -1,5 +1,5 @@
 import { CollectionItem, createCollection } from './collection'
-import { ChartExtActionTarget, HelmChartUiSchema } from './helm-chart';
+import { ChartExtActionTarget, HelmChartUiSchema } from '../chart-ext';
 import { UserDeploymentRole } from './deployment-permission';
 
 export interface DeploymentResourceType extends CollectionItem {

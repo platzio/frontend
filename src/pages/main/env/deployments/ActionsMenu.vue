@@ -123,6 +123,7 @@ import EditDescription from "./EditDescription.vue";
 import EnableDeployment from "./EnableDeployment.vue";
 import DisableDeployment from "./DisableDeployment.vue";
 import DeleteDeployment from "./DeleteDeployment.vue";
+import { chartActionsSchema } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {
@@ -166,15 +167,7 @@ export default defineComponent({
       store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
     );
 
-    const actions = computed(() => {
-      if (!chart.value.actions_schema) {
-        return [];
-      }
-      if (Array.isArray(chart.value.actions_schema)) {
-        return chart.value.actions_schema.map((action) => action.spec);
-      }
-      return chart.value.actions_schema.actions;
-    });
+    const actions = computed(() => chartActionsSchema(chart.value));
 
     const currentStatus = computed(() =>
       props.deployment.reported_status &&

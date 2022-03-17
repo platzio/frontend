@@ -64,7 +64,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, PropType, watch } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 import { isEqual } from "lodash";
 
 export default defineComponent({

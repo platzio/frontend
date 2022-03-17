@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 import { ExternalFormat } from "../inputs/DaysHourInput.vue";
 
 function toDayName(n: string) {

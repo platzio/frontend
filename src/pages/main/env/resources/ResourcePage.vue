@@ -112,7 +112,7 @@ import { useStore } from "@/store";
 import { findCollectionDependencies } from "@/store/deployments";
 import EditResource from "./EditResource.vue";
 import DeleteResource from "./DeleteResource.vue";
-import { DeploymentResourceCollection } from "@/store/models/helm-chart";
+import { DeploymentResourceCollection } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {

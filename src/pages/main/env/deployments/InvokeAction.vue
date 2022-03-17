@@ -43,7 +43,7 @@
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Modal from "@/components/base/Modal.vue";
 import { Deployment } from "@/store/models/deployment";
-import { HelmChartActionSchema } from "@/store/models/helm-chart";
+import { HelmChartActionSchemaV0 } from "@/store/chart-ext";
 import { useStore } from "@/store";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
 
@@ -51,7 +51,7 @@ function initialData(): {
   error: any;
   working: boolean;
   deployment?: Deployment;
-  action?: HelmChartActionSchema;
+  action?: HelmChartActionSchemaV0;
   body: Record<string, any>;
   confirm_danger: boolean;
 } {
@@ -83,7 +83,7 @@ export default defineComponent({
     const state = reactive({ ...initialData() });
     const modal = ref<typeof Modal>();
 
-    function open(deployment: Deployment, action: HelmChartActionSchema) {
+    function open(deployment: Deployment, action: HelmChartActionSchemaV0) {
       Object.assign(state, initialData());
       state.deployment = deployment;
       state.action = action;

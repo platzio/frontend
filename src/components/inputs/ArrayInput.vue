@@ -29,7 +29,7 @@
 <script lang="ts">
 import { isEqual } from "lodash";
 import { computed, defineComponent, ref, watch, PropType } from "vue";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {
@@ -67,8 +67,8 @@ export default defineComponent({
         if (isEqual(newValue, inner.value)) {
           return;
         }
-        if (typeof newValue === 'string' || typeof newValue === 'number') {
-          newValue = [newValue]
+        if (typeof newValue === "string" || typeof newValue === "number") {
+          newValue = [newValue];
         }
         inner.value = newValue as any[];
       },

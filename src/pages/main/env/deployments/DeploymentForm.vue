@@ -90,7 +90,7 @@ import { capitalize, cloneDeep } from "lodash";
 import moment from "moment";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
-import { chartFeatures, HelmChartCardinality } from "@/store/models/helm-chart";
+import { chartFeatures, HelmChartCardinality } from "@/store/chart-ext";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
 import { isDeploymentOwner } from "@/store/permissions";
 

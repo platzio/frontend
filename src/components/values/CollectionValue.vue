@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "@vue/runtime-core";
-import { HelmChartUiInput } from "@/store/models/helm-chart";
+import { HelmChartUiInput } from "@/store/chart-ext";
 import { getInputCollection } from "@/store/deployment-resources";
 
 export default defineComponent({

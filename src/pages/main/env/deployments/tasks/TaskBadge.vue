@@ -27,6 +27,7 @@ import {
   DeploymentTask,
   DeploymentTaskStatus,
 } from "@/store/models/deployment-task";
+import { chartActionsSchema } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {
@@ -119,10 +120,7 @@ export default defineComponent({
         const chart = store!.collections.helmCharts.getOne(
           operation.helm_chart_id
         );
-        if (!chart.actions_schema) {
-          return "Action";
-        }
-        const action_schema = chart.actions_schema.actions.find(
+        const action_schema = chartActionsSchema(chart).find(
           (action) => action.id == operation.action_id
         );
         if (!action_schema) {

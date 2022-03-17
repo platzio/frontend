@@ -1,7 +1,7 @@
 import { computed, reactive } from "vue";
 import { useStore } from ".";
 import { TableName } from "./collections";
-import { DbTableOrDeploymentResource, isDeploymentResourceCollection } from "./models/helm-chart";
+import { DbTableOrDeploymentResource, isDeploymentResourceCollection } from "./chart-ext";
 
 function toDeploymentResourceCollection(resourceTypeId: string) {
   const store = useStore()

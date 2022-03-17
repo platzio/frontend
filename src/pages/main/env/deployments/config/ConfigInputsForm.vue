@@ -15,7 +15,7 @@
 <script lang="ts">
 import { cloneDeep, isEqual } from "lodash";
 import { defineComponent, watch, reactive, PropType } from "vue";
-import { HelmChartUiSchema } from "@/store/models/helm-chart";
+import { HelmChartUiSchema } from "@/store/chart-ext";
 
 export default defineComponent({
   props: {

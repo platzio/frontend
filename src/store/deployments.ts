@@ -1,5 +1,5 @@
 import { Deployment } from './models/deployment'
-import { DbTableOrDeploymentResource } from './models/helm-chart'
+import { DbTableOrDeploymentResource } from './chart-ext'
 import { useStore } from './'
 
 export function findCollectionDependencies(
