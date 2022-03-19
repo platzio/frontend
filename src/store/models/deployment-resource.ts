@@ -8,6 +8,16 @@ export interface DeploymentResource extends CollectionItem {
     name: string;
     exists: boolean;
     props: Record<string, any>;
+    sync_status: SyncStatus;
+    sync_reason?: string;
+}
+
+export enum SyncStatus {
+    Creating = 'Creating',
+    Updating = 'Updating',
+    Deleting = 'Deleting',
+    Ready = 'Ready',
+    Error = 'Error',
 }
 
 export const collection = createCollection<DeploymentResource>({
