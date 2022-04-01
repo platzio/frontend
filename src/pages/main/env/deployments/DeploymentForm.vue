@@ -161,7 +161,7 @@ export default defineComponent({
       }
       const features = chartFeatures(newChart.value);
       if (!features) {
-        return HelmChartCardinality.Many;
+        return true;
       }
       return features.cardinality == HelmChartCardinality.Many;
     });
