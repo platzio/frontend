@@ -21,7 +21,7 @@ export enum SyncStatus {
 }
 
 export const collection = createCollection<DeploymentResource>({
-    url: '/api/v1/deployment-resources',
+    url: '/api/v2/deployment-resources',
 
     sortFunc(x, y) {
         return x.name.localeCompare(y.name)

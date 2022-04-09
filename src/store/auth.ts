@@ -22,7 +22,7 @@ export function createAuth() {
         state.curUser = null
 
         try {
-            const res = await axios.get('/api/v1/auth/me')
+            const res = await axios.get('/api/v2/auth/me')
             state.curUser = res.data.user as User
             state.needsLogin = false
             state.ready = true

@@ -14,7 +14,7 @@ export interface DeploymentPermission extends CollectionItem {
 }
 
 export const collection = createCollection<DeploymentPermission>({
-    url: '/api/v1/deployment-permissions',
+    url: '/api/v2/deployment-permissions',
 
     sortFunc(x, y) {
         return y.created_at.localeCompare(x.created_at)

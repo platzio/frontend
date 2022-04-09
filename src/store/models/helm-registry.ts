@@ -12,7 +12,7 @@ export interface HelmRegistry extends CollectionItem {
 }
 
 export const collection = createCollection<HelmRegistry>({
-    url: '/api/v1/helm-registries',
+    url: '/api/v2/helm-registries',
 
     sortFunc(x, y) {
         return (x.domain_name.localeCompare(y.domain_name) ||

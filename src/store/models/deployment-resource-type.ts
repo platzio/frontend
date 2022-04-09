@@ -31,7 +31,7 @@ export interface ResourceLifecycle {
 }
 
 export const collection = createCollection<DeploymentResourceType>({
-    url: '/api/v1/deployment-resource-types',
+    url: '/api/v2/deployment-resource-types',
 
     sortFunc(x, y) {
         return x.spec.name_singular.localeCompare(y.spec.name_singular)

@@ -14,7 +14,7 @@ export interface K8sCluster extends CollectionItem {
 }
 
 export const collection = createCollection<K8sCluster>({
-    url: '/api/v1/k8s-clusters',
+    url: '/api/v2/k8s-clusters',
 
     sortFunc(x, y) {
         if (x.ignore < y.ignore) {

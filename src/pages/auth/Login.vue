@@ -21,7 +21,7 @@ export default defineComponent({
 
     onMounted(async () => {
       try {
-        const res = await axios.get("/api/v1/auth/google");
+        const res = await axios.get("/api/v2/auth/google");
         const login_info = res.data as GoogleLoginInfo;
         window.location.assign(login_info.redirect_url);
       } catch (err) {
@@ -30,8 +30,8 @@ export default defineComponent({
     });
 
     return {
-      error
+      error,
     };
-  }
+  },
 });
 </script>

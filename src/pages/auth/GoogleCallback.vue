@@ -22,7 +22,7 @@ export default defineComponent({
     onMounted(async () => {
       try {
         const { code } = route.query;
-        const res = await axios.post("/api/v1/auth/google/callback", {
+        const res = await axios.post("/api/v2/auth/google/callback", {
           auth_code: code,
         });
         const login_res = res.data as LoginResponse;

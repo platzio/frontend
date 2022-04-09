@@ -40,7 +40,7 @@ export interface NewDeployment {
 }
 
 export const collection = createCollection<Deployment>({
-    url: '/api/v1/deployments',
+    url: '/api/v2/deployments',
 
     sortFunc(x: Deployment, y: Deployment) {
         if (x.enabled < y.enabled) {

@@ -29,7 +29,7 @@ export function startWsUpdates({ tableNameToCollection }: ReturnType<typeof crea
 
         state.started = true
         state.status = null
-        const socket = new WebSocket(`${(location.protocol === 'https:') ? 'wss' : 'ws'}://${location.host}/api/v1/ws`)
+        const socket = new WebSocket(`${(location.protocol === 'https:') ? 'wss' : 'ws'}://${location.host}/api/v2/ws`)
 
         socket.onopen = () => {
             state.ready = true

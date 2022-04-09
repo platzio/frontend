@@ -8,7 +8,7 @@ export interface Env extends CollectionItem {
 }
 
 export const collection = createCollection<Env>({
-    url: '/api/v1/envs',
+    url: '/api/v2/envs',
 
     sortFunc(x, y) {
         return x.name.localeCompare(y.name)

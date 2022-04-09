@@ -71,7 +71,7 @@ export interface DeploymentTaskFilter {
 }
 
 export const collection = createCollection<DeploymentTask, DeploymentTaskFilter>({
-    url: '/api/v1/deployment-tasks',
+    url: '/api/v2/deployment-tasks',
 
     sortFunc(x, y) {
         return y.created_at.localeCompare(x.created_at)

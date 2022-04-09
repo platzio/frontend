@@ -12,7 +12,7 @@ export interface K8sResource extends CollectionItem {
 }
 
 export const collection = createCollection<K8sResource>({
-    url: '/api/v1/k8s-resources',
+    url: '/api/v2/k8s-resources',
 
     sortFunc(x, y) {
         return x.name.localeCompare(y.name)

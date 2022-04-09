@@ -9,7 +9,7 @@ export interface Secret extends CollectionItem {
 }
 
 export const collection = createCollection<Secret>({
-    url: '/api/v1/secrets',
+    url: '/api/v2/secrets',
 
     sortFunc(x, y) {
         return x.collection.localeCompare(y.collection) ||

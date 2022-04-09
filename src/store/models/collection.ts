@@ -1,5 +1,5 @@
 import { computed, reactive, readonly } from 'vue'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 export interface CollectionItem<ID = string> {
     id: ID;
@@ -20,6 +20,13 @@ export interface CreateCollectionOptions<T, F> {
     };
     envFilter?: (item: T, envId: string) => boolean;
     initialFilters?: F;
+}
+
+interface Paginated<T> {
+    page: number;
+    per_page: number;
+    num_total: number;
+    items: T[];
 }
 
 export function createCollection<T extends CollectionItem<K>, F = null, K = string>(
@@ -62,15 +69,21 @@ export function createCollection<T extends CollectionItem<K>, F = null, K = stri
     const readAllItems = async () => {
         state.loading = true
         try {
-            const res = await axios.get(opts.url, {
-                params: {
-                    all: 'yes',
-                    ...state.filters
+            let page = 1
+            let num_pages = 1
+            do {
+                const res: AxiosResponse<Paginated<T>> = await axios.get(opts.url, {
+                    params: {
+                        page,
+                        ...state.filters
+                    }
+                })
+                for (const item of res.data.items) {
+                    setOne(item)
                 }
-            })
-            for (const item of res.data as T[]) {
-                setOne(item)
-            }
+                page++;
+                num_pages = Math.ceil(res.data.num_total / res.data.per_page)
+            } while (page <= num_pages)
             state.ready = true
         } catch (error) {
             state.error = error

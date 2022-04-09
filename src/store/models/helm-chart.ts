@@ -15,7 +15,7 @@ export interface HelmChart extends CollectionItem {
 }
 
 export const collection = createCollection<HelmChart>({
-    url: '/api/v1/helm-charts',
+    url: '/api/v2/helm-charts',
 
     sortFunc(x, y) {
         return y.created_at.localeCompare(x.created_at)

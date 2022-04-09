@@ -8,7 +8,7 @@ export interface User extends CollectionItem {
 }
 
 export const collection = createCollection<User>({
-    url: '/api/v1/users',
+    url: '/api/v2/users',
 
     sortFunc(x, y) {
         return x.display_name.localeCompare(y.display_name)

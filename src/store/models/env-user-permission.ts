@@ -13,7 +13,7 @@ export interface EnvUserPermission extends CollectionItem {
 }
 
 export const collection = createCollection<EnvUserPermission>({
-    url: '/api/v1/env-user-permissions',
+    url: '/api/v2/env-user-permissions',
 
     sortFunc(x, y) {
         return x.created_at.localeCompare(y.created_at)
