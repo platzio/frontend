@@ -215,7 +215,7 @@ export default defineComponent({
           },
         ])
       );
-      return `%{cluster.grafana_url}?${params.toString()}`;
+      return `${cluster.value.grafana_url}?${params.toString()}`;
     });
 
     const router = useRouter();
