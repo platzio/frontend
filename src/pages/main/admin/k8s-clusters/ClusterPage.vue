@@ -173,7 +173,7 @@
             class="btn btn-outline-primary"
             @click="setGrafana && setGrafana.open(cluster)"
           >
-            Change Cluster Domain
+            Change Cluster Grafana Configuration
           </button>
         </div>
       </div>
