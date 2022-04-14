@@ -148,6 +148,38 @@
     </div>
 
     <div class="my-4 card">
+      <div class="card-header">Grafana</div>
+      <div class="card-body">
+        <div class="mb-3">
+          Configure a Grafana URL and a Loki data-source name to show an "Open
+          Logs" action for deployments running in this cluster.
+        </div>
+        <div class="my-3">
+          <span>URL: </span>
+          <span class="fw-bold" v-if="cluster.grafana_url">{{
+            cluster.grafana_url
+          }}</span>
+          <span class="text-muted fst-italic" v-else>(not set)</span>
+        </div>
+        <div class="my-3">
+          <span>Data-Source Name: </span>
+          <span class="fw-bold" v-if="cluster.grafana_datasource_name">{{
+            cluster.grafana_datasource_name
+          }}</span>
+          <span class="text-muted fst-italic" v-else>(not set)</span>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary"
+            @click="setGrafana && setGrafana.open(cluster)"
+          >
+            Change Cluster Domain
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-4 card">
       <div class="card-header">Deployments ({{ deployments.length }})</div>
       <Collection :items="deployments" :flush="true">
         <template #item="scope">
@@ -161,6 +193,7 @@
     <ChangeEnv ref="changeEnv" />
     <SetDomain ref="setDomain" />
     <SetIgnore ref="setIgnore" />
+    <SetGrafana ref="setGrafana" />
   </div>
 </template>
 
@@ -170,6 +203,7 @@ import { computed, defineComponent, ref } from "vue";
 import ChangeEnv from "./ChangeEnv.vue";
 import SetDomain from "./SetDomain.vue";
 import SetIgnore from "./SetIgnore.vue";
+import SetGrafana from "./SetGrafana.vue";
 
 export default defineComponent({
   props: {
@@ -183,6 +217,7 @@ export default defineComponent({
     ChangeEnv,
     SetDomain,
     SetIgnore,
+    SetGrafana,
   },
 
   setup(props) {
@@ -190,6 +225,7 @@ export default defineComponent({
     const changeEnv = ref<typeof ChangeEnv>();
     const setDomain = ref<typeof SetDomain>();
     const setIgnore = ref<typeof SetIgnore>();
+    const setGrafana = ref<typeof SetGrafana>();
     const cluster = computed(() =>
       store!.collections.k8sClusters.getOne(props.id)
     );
@@ -206,6 +242,7 @@ export default defineComponent({
       deployments,
       setDomain,
       setIgnore,
+      setGrafana,
     };
   },
 });

@@ -11,6 +11,7 @@ export interface K8sCluster extends CollectionItem {
     ignore: boolean;
     domain?: string;
     grafana_url?: string;
+    grafana_datasource_name?: string;
 }
 
 export const collection = createCollection<K8sCluster>({

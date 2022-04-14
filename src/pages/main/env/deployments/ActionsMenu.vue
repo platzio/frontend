@@ -209,7 +209,7 @@ export default defineComponent({
         JSON.stringify([
           "now-1h",
           "now",
-          `Loki (${cluster.value.name})`,
+          cluster.value.grafana_datasource_name || "Loki",
           {
             expr: `{namespace="${namespace.value}"}`,
           },
