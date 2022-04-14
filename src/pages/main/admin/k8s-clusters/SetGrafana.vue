@@ -9,7 +9,7 @@
     @submit="submit"
   >
     <div class="mb-3">
-      This sets the Grafana URL and Loki data-source name for deployments
+      This sets the Grafana "explore" URL and Loki data-source name for deployments
       running in this cluster.
     </div>
 
@@ -28,8 +28,8 @@
       />
       <label for="grafana_url" class="form-label">Grafana URL</label>
       <div class="form-text">
-        Provide a full URL that would work for users outside the cluster,
-        including http:// or https://
+        Provide a full URL to the Grafana explore view, that would work for users outside the cluster,
+        including http:// or https:// (e.g. https://my.grafana.instance/explore)
       </div>
     </div>
 
