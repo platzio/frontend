@@ -68,7 +68,7 @@ export default defineComponent({
 
     function openForCreate(kind: string) {
       Object.assign(state, initialData());
-      state.current = cloneDeep({ kind: kind });
+      state.current = cloneDeep({ kind });
       modal.value!.open();
     }
 

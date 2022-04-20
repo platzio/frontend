@@ -93,6 +93,7 @@ import { Deployment } from "@/store/models/deployment";
 import { chartFeatures, HelmChartCardinality } from "@/store/chart-ext";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
 import { isDeploymentOwner } from "@/store/permissions";
+import { getKind } from "@/store/models/helm-registry";
 
 export default defineComponent({
   components: {
@@ -134,13 +135,13 @@ export default defineComponent({
         .filter((cluster) => !cluster.ignore)
         .filter((cluster) => cluster.env_id == props.envId)
     );
+
     const filteredCharts = computed(() =>
       store!.collections.helmCharts.all.filter((chart) => {
         const registry = store!.collections.helmRegistries.getOne(
           chart.helm_registry_id
         );
-        const repo = registry.repo_name.split("/").pop();
-        const kind = repo!.split("-").map(capitalize).join("");
+        const kind = getKind(registry);
         return new_data.value.kind && kind === new_data.value.kind;
       })
     );

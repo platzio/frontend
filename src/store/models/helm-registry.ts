@@ -26,10 +26,18 @@ export const collection = createCollection<HelmRegistry>({
 })
 
 export function getKind(registry: HelmRegistry): string {
-    return registry.repo_name.split("-").map(capitalize).join("")
+    const parts = registry.repo_name.split("-")
+    // Remove '-chart' or '-charts' suffixes, like moo-charts
+    if (parts.length > 1) {
+        const idx = parts.length - 1
+        if ((parts[idx] === 'chart') || (parts[idx] === 'charts')) {
+            parts.splice(idx)
+        }
+    }
+    return parts.map(capitalize).join("")
 }
 
 export function allKinds(): string[] {
-    const store = useStore();
+    const store = useStore()
     return store!.collections.helmRegistries.all.map(getKind).sort()
 }
