@@ -10,7 +10,12 @@
   >
     <div class="mb-3">
       This sets a domain for the cluster, allowing deployments to automatically
-      create ingresses using the deployment name and the domain set here:
+      create an ingress using the deployment name and the domain set here.
+    </div>
+
+    <div class="mb-3">
+      The TLS secret name is a Kubernetes secret for configuring TLS for the
+      ingress. The secret is usually managed automatically by cert-manager.
     </div>
 
     <div class="mb-3 form-floating">
@@ -23,13 +28,26 @@
         required
         :disabled="working"
       />
-      <label for="domain" class="form-label">
-        Domain
-      </label>
+      <label for="domain" class="form-label">Domain</label>
       <div id="domain" class="form-text">
         <fa icon="keyboard" class="ms-1" fixed-width />
         Enter a valid DNS name
       </div>
+    </div>
+
+    <div class="mb-3 form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="domain_tls_secret_name"
+        aria-describedby="domain_tls_secret_name"
+        v-model="domain_tls_secret_name"
+        required
+        :disabled="working"
+      />
+      <label for="domain_tls_secret_name" class="form-label">
+        TLS Secret Name
+      </label>
     </div>
   </Modal>
 </template>
@@ -45,18 +63,20 @@ function initialData(): {
   working: boolean;
   cluster?: K8sCluster;
   domain?: string;
+  domain_tls_secret_name?: string;
 } {
   return {
     error: undefined,
     working: false,
     cluster: undefined,
-    domain: undefined
+    domain: undefined,
+    domain_tls_secret_name: undefined,
   };
 }
 
 export default defineComponent({
   components: {
-    Modal
+    Modal,
   },
 
   setup() {
@@ -68,6 +88,7 @@ export default defineComponent({
       Object.assign(state, initialData());
       state.cluster = cluster;
       state.domain = cluster.domain;
+      state.domain_tls_secret_name = cluster.domain_tls_secret_name;
       modal.value!.open();
     }
 
@@ -85,8 +106,9 @@ export default defineComponent({
         await store!.collections.k8sClusters.updateItem({
           id: state.cluster.id,
           data: {
-            domain: state.domain
-          }
+            domain: state.domain,
+            domain_tls_secret_name: state.domain_tls_secret_name,
+          },
         });
         modal.value!.close();
       } catch (error) {
@@ -100,8 +122,8 @@ export default defineComponent({
       open,
       close,
       submit,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>

@@ -72,30 +72,27 @@
           each deployment. These deployments can then use the domain name and
           create an ingress for their services.
         </div>
-        <div v-if="cluster.domain">
-          <div class="my-3 h5 fw-bold">
+        <div class="my-3">
+          <span>Domain: </span>
+          <span class="fw-bold" v-if="cluster.domain">
             {{ cluster.domain }}
-          </div>
-          <div>
-            <button
-              class="btn btn-outline-primary"
-              @click="setDomain && setDomain.open(cluster)"
-            >
-              Change Cluster Domain
-            </button>
-          </div>
+          </span>
+          <span class="text-muted fst-italic" v-else>(not set)</span>
         </div>
-        <div v-else>
-          <div class="my-3 h5 text-muted fst-italic">No domain is set</div>
-          <div>
-            <button
-              class="btn btn-primary"
-              @click="setDomain && setDomain.open(cluster)"
-            >
-              Set Cluster Domain
-            </button>
-          </div>
+        <div class="my-3">
+          <span>TLS Secret Name: </span>
+          <span class="fw-bold" v-if="cluster.domain_tls_secret_name">
+            {{ cluster.domain_tls_secret_name }}
+          </span>
+          <span class="text-muted fst-italic" v-else>(not set)</span>
         </div>
+
+        <button
+          class="btn btn-outline-primary"
+          @click="setDomain && setDomain.open(cluster)"
+        >
+          Edit Domain Settings
+        </button>
       </div>
     </div>
 

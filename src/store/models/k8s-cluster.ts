@@ -10,6 +10,7 @@ export interface K8sCluster extends CollectionItem {
     not_ok_reason: string;
     ignore: boolean;
     domain?: string;
+    domain_tls_secret_name?: string;
     grafana_url?: string;
     grafana_datasource_name?: string;
 }
