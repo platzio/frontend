@@ -1,14 +1,15 @@
 <template>
-  <div :class="classes" v-if="format === 'helm'">
-    <span v-if="!chart.available" class="me-2 badge bg-light text-dark border">
+  <div
+    class="d-flex flex-row align-items-center"
+    :class="classes"
+    v-if="format === 'helm'"
+  >
+    <fa icon="map" fixed-width class="me-1" />
+    <span>{{ chart.image_tag }}</span>
+    <span v-if="!chart.available" class="ms-2 badge bg-light text-dark border">
       DELETED
     </span>
-    <fa icon="map" fixed-width class="me-1" />
-    <span v-if="registry">
-      {{ registry.domain_name }}/{{ registry.repo_name }}
-    </span>
-    <span>:</span>
-    <span class="fw-bold">{{ chart.image_tag }}</span>
+    <span v-else-if="chart.error" class="ms-2 badge bg-danger">ERROR</span>
   </div>
 
   <div
@@ -22,14 +23,7 @@
 
     <span
       v-if="isMaster"
-      class="
-        badge
-        rounded-pill
-        fw-normal
-        border border-primary
-        bg-light
-        text-primary
-      "
+      class="badge rounded-pill fw-normal border border-primary bg-light text-primary"
       :style="pillStyle"
     >
       <fa icon="star" fixed-width />
@@ -118,7 +112,8 @@ export default defineComponent({
         {},
         props.color
           ? {
-              "text-success": props.chart.available,
+              "text-success": props.chart.available && !props.chart.error,
+              "text-danger": props.chart.available && props.chart.error,
               "text-muted": !props.chart.available,
             }
           : {},

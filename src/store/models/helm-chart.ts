@@ -12,6 +12,7 @@ export interface HelmChart extends CollectionItem {
     values_ui?: HelmChartUiSchema;
     actions_schema?: HelmChartActionsSchemaV0 | HelmChartActionsSchemaV1;
     features?: HelmChartFeaturesV0 | HelmChartFeaturesV1;
+    error?: string;
 }
 
 export const collection = createCollection<HelmChart>({
