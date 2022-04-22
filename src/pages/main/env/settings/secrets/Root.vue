@@ -1,12 +1,16 @@
 <template>
   <div>
     <div v-if="collections.length > 0">
-      <div v-for="(collection, idx) in collections" :key="collection">
+      <div
+        class="mb-5"
+        v-for="(collection, idx) in collections"
+        :key="collection"
+      >
         <div class="d-flex flex-row align-items-end">
           <div class="mt-0 mb-3 h4 flex-fill">
             {{ collection }}
           </div>
-          <div class="float-end mb-3" v-if="idx === 0">
+          <div class="float-end mb-4" v-if="idx === 0">
             <button
               class="btn btn-primary"
               @click="addSecret && addSecret.open()"
