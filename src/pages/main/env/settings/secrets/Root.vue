@@ -51,6 +51,16 @@
                     Change Secret Contents
                   </a>
                 </li>
+                <li class="dropdown-divider" />
+                <li>
+                  <a
+                    class="dropdown-item"
+                    @click="deleteSecret && deleteSecret.open(scope.item)"
+                  >
+                    <fa icon="trash-can" fixed-width />
+                    Delete Secret
+                  </a>
+                </li>
               </template>
             </ItemWithActions>
           </template>
@@ -80,6 +90,7 @@
     <AddSecret ref="addSecret" :envId="envId" :collections="collections" />
     <RenameSecret ref="renameSecret" :envId="envId" />
     <ChangeSecretContents ref="changeSecretContents" :envId="envId" />
+    <DeleteSecret ref="deleteSecret" :envId="envId" />
   </div>
 </template>
 
@@ -90,6 +101,7 @@ import { computed, defineComponent, ref } from "vue";
 import AddSecret from "./AddSecret.vue";
 import RenameSecret from "./RenameSecret.vue";
 import ChangeSecretContents from "./ChangeSecretContents.vue";
+import DeleteSecret from "./DeleteSecret.vue";
 
 export default defineComponent({
   props: {
@@ -103,12 +115,14 @@ export default defineComponent({
     AddSecret,
     RenameSecret,
     ChangeSecretContents,
+    DeleteSecret,
   },
 
   setup(props) {
     const addSecret = ref<typeof AddSecret>();
     const renameSecret = ref<typeof RenameSecret>();
     const changeSecretContents = ref<typeof ChangeSecretContents>();
+    const deleteSecret = ref<typeof DeleteSecret>();
     const store = useStore();
 
     const env = computed(() => store!.collections.envs.getOne(props.envId));
@@ -138,6 +152,7 @@ export default defineComponent({
       addSecret,
       renameSecret,
       changeSecretContents,
+      deleteSecret,
       collections,
       collectionSecrets,
     };
