@@ -16,17 +16,43 @@
             </button>
           </div>
         </div>
+
         <Collection :items="collectionSecrets(collection)">
           <template #item="scope">
-            <CollectionItem>
-              <div class="my-1">
-                {{ scope.item.name }}
-              </div>
-              <div class="my-1 small">
-                <fa icon="clock" />
-                Last updated <Moment :value="scope.item.updated_at" />
-              </div>
-            </CollectionItem>
+            <ItemWithActions>
+              <template #contents>
+                <div class="my-1">
+                  {{ scope.item.name }}
+                </div>
+                <div class="my-1 small">
+                  <fa icon="clock" />
+                  Last updated <Moment :value="scope.item.updated_at" />
+                </div>
+              </template>
+              <template #actions>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    @click="renameSecret && renameSecret.open(scope.item)"
+                  >
+                    <fa icon="id-card" fixed-width />
+                    Rename Secret
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    @click="
+                      changeSecretContents &&
+                        changeSecretContents.open(scope.item)
+                    "
+                  >
+                    <fa icon="pencil" fixed-width />
+                    Change Secret Contents
+                  </a>
+                </li>
+              </template>
+            </ItemWithActions>
           </template>
         </Collection>
       </div>
@@ -52,6 +78,8 @@
     </div>
 
     <AddSecret ref="addSecret" :envId="envId" :collections="collections" />
+    <RenameSecret ref="renameSecret" :envId="envId" />
+    <ChangeSecretContents ref="changeSecretContents" :envId="envId" />
   </div>
 </template>
 
@@ -60,6 +88,8 @@ import { useStore } from "@/store";
 import { useHead } from "@vueuse/head";
 import { computed, defineComponent, ref } from "vue";
 import AddSecret from "./AddSecret.vue";
+import RenameSecret from "./RenameSecret.vue";
+import ChangeSecretContents from "./ChangeSecretContents.vue";
 
 export default defineComponent({
   props: {
@@ -71,10 +101,14 @@ export default defineComponent({
 
   components: {
     AddSecret,
+    RenameSecret,
+    ChangeSecretContents,
   },
 
   setup(props) {
     const addSecret = ref<typeof AddSecret>();
+    const renameSecret = ref<typeof RenameSecret>();
+    const changeSecretContents = ref<typeof ChangeSecretContents>();
     const store = useStore();
 
     const env = computed(() => store!.collections.envs.getOne(props.envId));
@@ -102,6 +136,8 @@ export default defineComponent({
 
     return {
       addSecret,
+      renameSecret,
+      changeSecretContents,
       collections,
       collectionSecrets,
     };

@@ -87,6 +87,9 @@
         v-model="contents"
         required
         :disabled="disabled"
+        autocomplete="off"
+        spellcheck="off"
+        autocapitalize="off"
       />
       <label class="form-label">Contents</label>
     </div>
