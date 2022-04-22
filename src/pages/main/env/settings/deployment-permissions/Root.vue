@@ -99,8 +99,7 @@ export default defineComponent({
 
     useHead({
       title: computed(
-        () =>
-          `Deployments Permissions - Settings - ${env.value.name} - Platz`
+        () => `Deployments Permissions - Settings - ${env.value.name} - Platz`
       ),
     });
 

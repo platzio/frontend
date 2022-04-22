@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import Root from './Root.vue'
-import DeploymentPermissions from './DeploymentPermissions.vue'
-import UserRoles from './UserRoles.vue'
+import DeploymentPermissions from './deployment-permissions/Root.vue'
+import UserRoles from './user-permissions/Root.vue'
 import SecretsCollection from './secrets/Collection.vue'
 
 const children: RouteRecordRaw[] = [
