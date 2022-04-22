@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 import Root from './Root.vue'
 import DeploymentPermissions from './deployment-permissions/Root.vue'
 import UserRoles from './user-permissions/Root.vue'
-import SecretsCollection from './secrets/Collection.vue'
+import Secrets from './secrets/Root.vue'
 
 const children: RouteRecordRaw[] = [
     {
@@ -17,9 +17,8 @@ const children: RouteRecordRaw[] = [
     },
     {
         name: 'env.settings.secrets',
-        path: 'secrets/:collection',
-        component: SecretsCollection,
-        props: true,
+        path: 'secrets',
+        component: Secrets,
     },
 ]
 

@@ -19,16 +19,9 @@
         </router-link>
       </li>
       <li class="nav-heading">Secrets</li>
-      <li
-        class="nav-item"
-        v-for="collection in secretCollections"
-        :key="collection"
-      >
-        <router-link
-          class="nav-link"
-          :to="{ name: 'env.settings.secrets', params: { collection } }"
-        >
-          {{ collection }}
+      <li class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'env.settings.secrets' }">
+          Manage Secrets
         </router-link>
       </li>
     </ul>
@@ -55,21 +48,11 @@ export default defineComponent({
     const store = useStore();
     const env = computed(() => store!.collections.envs.getOne(props.envId));
 
-    const secretCollections = computed(() =>
-      Array.from(
-        new Set(
-          store!.collections.secrets.all.map((secret) => secret.collection)
-        )
-      ).sort()
-    );
-
     useHead({
       title: computed(() => `Settings - ${env.value.name} - Platz`),
     });
 
-    return {
-      secretCollections,
-    };
+    return {};
   },
 });
 </script>

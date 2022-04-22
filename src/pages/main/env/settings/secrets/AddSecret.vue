@@ -2,22 +2,83 @@
   <Modal
     ref="modal"
     title="Add Secret"
+    size="lg"
     btn-class="btn-primary"
     :error="error"
-    :working="working"
+    :working="disabled"
     @submit="submit"
   >
+    <div class="mb-3">
+      <div class="my-2 form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="whichCollection"
+          id="useExistingCollection"
+          v-model="createNewCollection"
+          :value="false"
+          :disabled="collections.length === 0"
+        />
+        <label class="form-check-label" for="useExistingCollection">
+          Create secret in an existing collection
+        </label>
+      </div>
+      <div class="my-2 form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="whichCollection"
+          id="createNewCollection"
+          v-model="createNewCollection"
+          :value="true"
+        />
+        <label class="form-check-label" for="createNewCollection">
+          Create secret in a new collection
+        </label>
+      </div>
+    </div>
+
+    <div class="mb-3 form-floating" v-if="!createNewCollection">
+      <select
+        class="form-select"
+        id="collection"
+        v-model="collection"
+        :disabled="disabled"
+        required
+      >
+        <option v-for="option in collections" :key="option" :value="option">
+          {{ option }}
+        </option>
+        <option class="opacity-50" disabled>---------------------------</option>
+        <option :value="null">Create a new collection</option>
+      </select>
+      <label>Collection</label>
+    </div>
+
+    <div class="mb-3 form-floating" v-if="createNewCollection">
+      <input
+        type="text"
+        class="form-control"
+        id="collection"
+        v-model="collection"
+        required
+        :disabled="disabled"
+      />
+      <label class="form-label">Collection Name</label>
+    </div>
+
     <div class="mb-3 form-floating">
       <input
-        type="name"
+        type="text"
         class="form-control"
         id="name"
         v-model="name"
         required
-        :disabled="working"
+        :disabled="disabled"
       />
-      <label class="form-label">Name</label>
+      <label class="form-label">Secret Name</label>
     </div>
+
     <div class="mb-3 form-floating">
       <input
         type="contents"
@@ -25,7 +86,7 @@
         id="contents"
         v-model="contents"
         required
-        :disabled="working"
+        :disabled="disabled"
       />
       <label class="form-label">Contents</label>
     </div>
@@ -33,20 +94,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from "vue";
+import { defineComponent, PropType, reactive, ref, toRefs } from "vue";
 import Modal from "@/components/base/Modal.vue";
 import { useStore } from "@/store";
 
 function initialData(): {
   error: any;
-  working: boolean;
+  disabled: boolean;
   name?: string;
+  createNewCollection: boolean;
+  collection?: string;
   contents?: string;
 } {
   return {
     error: undefined,
-    working: false,
+    disabled: false,
     name: undefined,
+    createNewCollection: false,
+    collection: undefined,
     contents: undefined,
   };
 }
@@ -57,8 +122,8 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    collection: {
-      type: String,
+    collections: {
+      type: Array as PropType<Array<string>>,
       required: true,
     },
   },
@@ -74,6 +139,11 @@ export default defineComponent({
 
     function open() {
       Object.assign(state, initialData());
+      if (props.collections.length > 0) {
+        state.collection = props.collections[0];
+      } else {
+        state.createNewCollection = true;
+      }
       modal.value!.open();
     }
 
@@ -83,18 +153,18 @@ export default defineComponent({
 
     async function submit() {
       try {
-        state.working = true;
+        state.disabled = true;
         state.error = null;
         await store!.collections.secrets.createItem({
           env_id: props.envId,
-          collection: props.collection,
+          collection: state.collection,
           name: state.name,
           contents: state.contents,
         });
         modal.value!.close();
       } catch (error) {
         state.error = error;
-        state.working = false;
+        state.disabled = false;
       }
     }
 
