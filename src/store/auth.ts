@@ -5,6 +5,10 @@ import { User } from './models/user'
 
 const ACCESS_TOKEN_ITEM = 'access_token'
 
+interface AuthMeResponse {
+    User?: User;
+}
+
 export function createAuth() {
     const access_token = ref<string | null>(localStorage.getItem(ACCESS_TOKEN_ITEM))
 
@@ -23,9 +27,14 @@ export function createAuth() {
 
         try {
             const res = await axios.get('/api/v2/auth/me')
-            state.curUser = res.data.user as User
-            state.needsLogin = false
-            state.ready = true
+            const data = res.data as AuthMeResponse
+            if (data.User) {
+                state.curUser = data.User
+                state.needsLogin = false
+                state.ready = true
+            } else {
+                state.status = `🫠 It looks like you've logged-in as a deployments. Deployments don't use the frontend, silly.`
+            }
         } catch (err) {
             if (axios.isAxiosError(err) && err.response && err.response.status == StatusCodes.UNAUTHORIZED) {
                 state.needsLogin = true
