@@ -7,18 +7,18 @@
     <div class="my-3">
       <div class="card">
         <div class="card-body">
-          <div class="mb-3 d-flex flex-row align-items-start">
-            <div>
-              <span class="me-2 badge bg-success" v-if="env.auto_add_new_users">ON</span>
-              <span class="me-2 badge bg-danger" v-else>OFF</span>
+          <div class="mb-2 d-flex flex-row align-items-center">
+            <div class="flex-fill">
+              <span class="me-1 badge bg-success" v-if="env.auto_add_new_users">ON</span>
+              <span class="me-1 badge bg-danger" v-else>OFF</span>
               Automatically add new users to this env
             </div>
             <button class="btn btn-outline-primary" @click="editAutoAddNewUsers && editAutoAddNewUsers.open(env)">
-              Change
+              Edit
             </button>
           </div>
 
-          <div class="mb-3">
+          <div class="text-secondary">
             When enabled, new users signing into Platz will be added to this env
             automatically. New users are added with the User role and be
             upgraded to Admins manually.
@@ -31,12 +31,12 @@
       <div class="card">
         <div class="card-body">
           <div class="mb-4 d-flex flex-row align-items-start">
-            <div class="text-secondary">
+            <div class="text-secondary flex-fill">
               These settings control the nodes on which env deployments can run
               on. Note that once changed, all deployments of this env are
               automatically redeployed.
             </div>
-            <button class="btn btn-outline-primary" @click="editNodeSelector && editNodeSelector.open(env)">
+            <button class="ms-1 btn btn-outline-primary" @click="editNodeSelector && editNodeSelector.open(env)">
               Edit
             </button>
           </div>
