@@ -33,8 +33,15 @@
     />
 
     <div class="mt-1 small d-flex flex-row align-items-center">
-      <template v-if="task.user_id">
-        <User :id="task.user_id" :showName="true" size="sm" />
+      <template v-if="task.acting_user_id">
+        <User :id="task.acting_user_id" :showName="true" size="sm" />
+        <span>,&nbsp;</span>
+      </template>
+      <template v-if="task.acting_deployment_id">
+        <span v-if="formattedDeployment">
+          <fa :icon="formattedDeployment.icon" />
+          {{ formattedDeployment.text }}
+        </span>
         <span>,&nbsp;</span>
       </template>
       <Moment :value="task.created_at" />
@@ -54,6 +61,7 @@ import ReinstallParams from "./ReinstallParams.vue";
 import RecreateParams from "./RecreateParams.vue";
 import InvokeActionParams from "./InvokeActionParams.vue";
 import RestartK8sResourceParams from "./RestartK8sResourceParams.vue";
+import { useStore } from "@/store";
 
 export default defineComponent({
   props: {
@@ -77,12 +85,22 @@ export default defineComponent({
   },
 
   setup(props) {
+    const store = useStore()
+
     const isBad = computed(
       () => props.task.status == DeploymentTaskStatus.Failed
     );
 
+    const formattedDeployment = computed(() =>
+      props.task.acting_deployment_id &&
+      store!.collections.deployments.formatItem(
+        store!.collections.deployments.getOne(props.task.acting_deployment_id)
+      )
+    );
+
     return {
       isBad,
+      formattedDeployment,
     };
   },
 });

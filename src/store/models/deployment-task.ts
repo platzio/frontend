@@ -63,7 +63,8 @@ export interface DeploymentTask extends CollectionItem {
     operation: DeploymentTaskOperation;
     status: DeploymentTaskStatus;
     reason?: string;
-    user_id?: string;
+    acting_user_id?: string;
+    acting_deployment_id?: string;
 }
 
 export interface DeploymentTaskFilter {
