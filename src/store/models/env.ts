@@ -5,6 +5,7 @@ export interface Env extends CollectionItem {
     name: string;
     node_selector: Record<string, string>;
     tolerations: Record<string, string>;
+    auto_add_new_users: boolean;
 }
 
 export const collection = createCollection<Env>({
