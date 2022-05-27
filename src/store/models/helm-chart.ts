@@ -13,6 +13,11 @@ export interface HelmChart extends CollectionItem {
     actions_schema?: HelmChartActionsSchemaV0 | HelmChartActionsSchemaV1;
     features?: HelmChartFeaturesV0 | HelmChartFeaturesV1;
     error?: string;
+    tag_format_id?: string;
+    parsed_version?: string;
+    parsed_revision?: string;
+    parsed_branch?: string;
+    parsed_commit?: string;
 }
 
 export const collection = createCollection<HelmChart>({
@@ -27,3 +32,12 @@ export const collection = createCollection<HelmChart>({
         text: item.image_tag,
     })
 })
+
+export function chartForUpgrade(current: HelmChart): HelmChart | undefined {
+    const newer = collection.all
+        .filter(chart => current.helm_registry_id == chart.helm_registry_id)
+        .filter(chart => chart.created_at.localeCompare(current.created_at) == 1)
+        .filter(chart => current.parsed_branch === chart.parsed_branch)
+        .filter(chart => chart.available)
+    return newer[0]
+}

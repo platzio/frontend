@@ -5,13 +5,7 @@
       :class="{ 'alert alert-primary py-1 px-2 m-0': newerChart }"
     >
       <div :class="{ 'text-dark': newerChart }">
-        <HelmChart
-          :chart="chart"
-          :color="false"
-          format="git"
-          :time="false"
-          :digest="false"
-        />
+        <HelmChart :chart="chart" :color="false" format="git" :time="false" :digest="false" />
       </div>
       <div v-if="newerChart" class="ms-3">
         <button
@@ -41,7 +35,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, onBeforeUnmount } from "vue";
 import { Deployment } from "@/store/models/deployment";
-import { chartForUpgrade } from "@/store/chart-versions";
+import { chartForUpgrade } from "@/store/models/helm-chart";
 import { useStore } from "@/store";
 import { isDeploymentMaintainer } from "@/store/permissions";
 import EditDeployment from "./EditDeployment.vue";
@@ -87,18 +81,14 @@ export default defineComponent({
       keyDownController.abort();
     });
 
-    const isMaintainer = computed(() =>
-      isDeploymentMaintainer(props.envId, props.deployment.kind)
-    );
+    const isMaintainer = computed(() => isDeploymentMaintainer(props.envId, props.deployment.kind));
 
     const chart = computed(() =>
       store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
     );
 
     const newerChart = computed(() =>
-      isMaintainer.value && props.deployment.enabled
-        ? chartForUpgrade(chart.value)
-        : null
+      isMaintainer.value && props.deployment.enabled ? chartForUpgrade(chart.value) : null
     );
 
     const deploymentForUpgrade = computed(() =>
@@ -110,17 +100,14 @@ export default defineComponent({
     );
 
     const showUpgradeModal = () =>
-      editDeployment.value &&
-      editDeployment.value.openForEdit(deploymentForUpgrade.value);
+      editDeployment.value && editDeployment.value.openForEdit(deploymentForUpgrade.value);
 
     const upgradeImmediately = async () => {
       if (!editDeployment.value) {
         return;
       }
       disabled.value = true;
-      await editDeployment.value.submitWithoutOpening(
-        deploymentForUpgrade.value
-      );
+      await editDeployment.value.submitWithoutOpening(deploymentForUpgrade.value);
       disabled.value = false;
     };
 

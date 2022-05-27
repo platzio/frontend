@@ -1,25 +1,13 @@
 <template>
-  <div
-    class="d-flex flex-row align-items-center"
-    :class="classes"
-    v-if="format === 'helm'"
-  >
+  <div class="d-flex flex-row align-items-center" :class="classes" v-if="format === 'helm'">
     <fa icon="map" fixed-width class="me-1" />
     <span>{{ chart.image_tag }}</span>
-    <span v-if="!chart.available" class="ms-2 badge bg-light text-dark border">
-      DELETED
-    </span>
+    <span v-if="!chart.available" class="ms-2 badge bg-light text-dark border"> DELETED </span>
     <span v-else-if="chart.error" class="ms-2 badge bg-danger">ERROR</span>
   </div>
 
-  <div
-    class="d-flex flex-row align-items-baseline"
-    :class="classes"
-    v-if="format === 'git'"
-  >
-    <span v-if="!chart.available" class="me-2 badge bg-light text-dark border">
-      DELETED
-    </span>
+  <div class="d-flex flex-row align-items-baseline" :class="classes" v-if="format === 'git'">
+    <span v-if="!chart.available" class="me-2 badge bg-light text-dark border"> DELETED </span>
 
     <span
       v-if="isMaster"
@@ -27,7 +15,7 @@
       :style="pillStyle"
     >
       <fa icon="star" fixed-width />
-      {{ parsedVersion.branch || "master" }}
+      {{ chart.parsed_branch || "master" }}
     </span>
 
     <span
@@ -36,16 +24,13 @@
       :style="pillStyle"
     >
       <fa icon="code-branch" fixed-width />
-      {{ parsedVersion.branch || "master" }}
+      {{ chart.parsed_branch || "master" }}
     </span>
 
-    <span class="ms-2 fw-bold">{{ parsedVersion.version }}</span>
-    <span v-if="parsedVersion.revision">-{{ parsedVersion.revision }}</span>
-    <span
-      v-if="parsedVersion.commit"
-      class="ms-2 text-secondary font-monospace opacity75"
-    >
-      <fa icon="code" /><span class="ms-1">{{ parsedVersion.commit }}</span>
+    <span class="ms-2 fw-bold">{{ chart.parsed_version }}</span>
+    <span v-if="chart.parsed_revision">-{{ chart.parsed_revision }}</span>
+    <span v-if="chart.parsed_commit" class="ms-2 text-secondary font-monospace opacity75">
+      <fa icon="code" /><span class="ms-1">{{ chart.parsed_commit }}</span>
     </span>
   </div>
 
@@ -71,7 +56,6 @@
 import { computed, defineComponent, PropType } from "vue";
 import { useStore } from "@/store";
 import { HelmChart } from "@/store/models/helm-chart";
-import { parseHelmVersion } from "@/store/chart-versions";
 
 export default defineComponent({
   props: {
@@ -127,17 +111,17 @@ export default defineComponent({
       "font-size": props.size == "regular" ? "0.8rem" : "0.735rem",
     }));
 
-    const parsedVersion = computed(() => parseHelmVersion(props.chart));
     const isMaster = computed(
       () =>
-        !parsedVersion.value.branch || parsedVersion.value.branch === "master"
+        !props.chart.parsed_branch ||
+        props.chart.parsed_branch === "master" ||
+        props.chart.parsed_branch === "main"
     );
 
     return {
       registry,
       classes,
       pillStyle,
-      parsedVersion,
       isMaster,
     };
   },

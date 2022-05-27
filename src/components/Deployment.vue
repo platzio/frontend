@@ -10,12 +10,7 @@
         <DeploymentWarnings :deployment="deployment" />
       </div>
 
-      <Reason
-        class="mt-1"
-        :text="deployment.reason"
-        :allow-expand="false"
-        :is-bad="hasError"
-      />
+      <Reason class="mt-1" :text="deployment.reason" :allow-expand="false" :is-bad="hasError" />
 
       <div class="my-2 small opacity-75 d-flex flex-row align-items-center">
         <K8sClusterName :id="deployment.cluster_id" />
@@ -37,13 +32,7 @@
           <fa icon="arrow-circle-up" fixed-width />
         </div>
         <div class="text-secondary">
-          <HelmChart
-            :chart="chart"
-            :color="false"
-            format="git"
-            :time="false"
-            :digest="false"
-          />
+          <HelmChart :chart="chart" :color="false" format="git" :time="false" :digest="false" />
         </div>
       </div>
     </div>
@@ -56,7 +45,7 @@
 import { computed, defineComponent, PropType } from "vue";
 import { useStore } from "@/store";
 import { Deployment, DeploymentStatus } from "@/store/models/deployment";
-import { chartForUpgrade } from "@/store/chart-versions";
+import { chartForUpgrade } from "@/store/models/helm-chart";
 import { isDeploymentMaintainer } from "@/store/permissions";
 import Metric from "./Metric.vue";
 
@@ -75,28 +64,20 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
 
-    const hasError = computed(
-      () => props.deployment.status == DeploymentStatus.Error
-    );
+    const hasError = computed(() => props.deployment.status == DeploymentStatus.Error);
 
-    const formatted = computed(() =>
-      store!.collections.deployments.formatItem(props.deployment)
-    );
+    const formatted = computed(() => store!.collections.deployments.formatItem(props.deployment));
 
     const chart = computed(() =>
       store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
     );
 
     const hasUpgrade = computed(
-      () =>
-        props.deployment.enabled &&
-        (chart.value ? chartForUpgrade(chart.value) : null)
+      () => props.deployment.enabled && (chart.value ? chartForUpgrade(chart.value) : null)
     );
 
     const isMaintainer = computed(() => {
-      const envId = store!.collections.k8sClusters.getOne(
-        props.deployment.cluster_id
-      ).env_id;
+      const envId = store!.collections.k8sClusters.getOne(props.deployment.cluster_id).env_id;
       return envId && isDeploymentMaintainer(envId, props.deployment.kind);
     });
 

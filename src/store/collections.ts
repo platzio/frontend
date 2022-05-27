@@ -5,6 +5,7 @@ import { collection as deploymentResourceTypes } from './models/deployment-resou
 import { collection as deploymentResources } from './models/deployment-resource'
 import { collection as helmRegistries } from './models/helm-registry'
 import { collection as helmCharts } from './models/helm-chart'
+import { collection as helmTagFormats } from './models/helm-tag-format'
 import { collection as k8sClusters } from './models/k8s-cluster'
 import { collection as k8sResources } from './models/k8s-resource'
 import { collection as secrets } from './models/secret'
@@ -20,6 +21,7 @@ export type TableName =
     'deployment_resources' |
     'helm_registries' |
     'helm_charts' |
+    'helm_tag_formats' |
     'k8s_clusters' |
     'k8s_resources' |
     'secrets' |
@@ -36,6 +38,7 @@ export function createCollections() {
         deploymentResources,
         helmRegistries,
         helmCharts,
+        helmTagFormats,
         k8sClusters,
         k8sResources,
         secrets,
@@ -60,6 +63,8 @@ export function createCollections() {
                 return collections.helmRegistries
             case 'helm_charts':
                 return collections.helmCharts
+            case 'helm_tag_formats':
+                return collections.helmTagFormats
             case 'k8s_clusters':
                 return collections.k8sClusters
             case 'k8s_resources':
