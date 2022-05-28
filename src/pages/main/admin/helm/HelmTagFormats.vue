@@ -1,6 +1,14 @@
 <template>
   <div>
-    <div class="mt-0 h4 fw-bold">Helm Tag Formats</div>
+    <div class="d-flex flex-row align-items-start">
+      <div class="mt-0 flex-fill h4 fw-bold">Helm Tag Formats</div>
+      <div>
+        <button class="btn btn-primary" role="button" @click="addTagFormat && addTagFormat.open()">
+          <fa icon="plus" fixed-width />
+          Add Tag Format
+        </button>
+      </div>
+    </div>
 
     <div class="my-4">
       <div class="my-3">
@@ -31,26 +39,48 @@
 
     <Collection :items="tagFormats">
       <template #item="scope">
-        <CollectionItem>
-          <div class="my-2 text-success font-monospace">
-            {{ scope.item.pattern }}
-          </div>
-          <div class="small my-2">
-            Matched <strong>{{ numMatches(scope.item.id) }}</strong> Helm charts
-          </div>
-          <div class="small my-2 text-muted">Added <Moment :value="scope.item.created_at" /></div>
-        </CollectionItem>
+        <ItemWithActions>
+          <template #contents>
+            <div class="my-2 text-success font-monospace">
+              {{ scope.item.pattern }}
+            </div>
+            <div class="small my-2">
+              Matched <strong>{{ numMatches(scope.item.id) }}</strong> Helm charts
+            </div>
+            <div class="small my-2 text-muted">Added <Moment :value="scope.item.created_at" /></div>
+          </template>
+          <template #actions>
+            <li>
+              <a class="dropdown-item" @click="deleteTagFormat && deleteTagFormat.open(scope.item)">
+                <fa icon="trash" fixed-width />
+                Delete Tag Format
+              </a>
+            </li>
+          </template>
+        </ItemWithActions>
       </template>
     </Collection>
+
+    <AddTagFormat ref="addTagFormat" />
+    <DeleteTagFormat ref="deleteTagFormat" />
   </div>
 </template>
 
 <script lang="ts">
 import { useStore } from "@/store";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
+import AddTagFormat from "./AddTagFormat.vue";
+import DeleteTagFormat from "./DeleteTagFormat.vue";
 
 export default defineComponent({
+  components: {
+    AddTagFormat,
+    DeleteTagFormat,
+  },
+
   setup() {
+    const addTagFormat = ref<typeof AddTagFormat>();
+    const deleteTagFormat = ref<typeof DeleteTagFormat>();
     const store = useStore();
 
     const tagFormats = computed(() => store!.collections.helmTagFormats.all);
@@ -64,6 +94,8 @@ export default defineComponent({
     return {
       tagFormats,
       numMatches,
+      addTagFormat,
+      deleteTagFormat,
     };
   },
 });
