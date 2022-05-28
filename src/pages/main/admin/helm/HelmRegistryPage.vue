@@ -33,19 +33,13 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
           <li>
-            <a
-              class="dropdown-item"
-              @click="setIcon && setIcon.open(registry.id)"
-            >
+            <a class="dropdown-item" @click="setIcon && setIcon.open(registry.id)">
               <fa icon="crow" fixed-width />
               Set Icon
             </a>
           </li>
           <li>
-            <a
-              class="dropdown-item"
-              @click="setCategory && setCategory.open(registry.id)"
-            >
+            <a class="dropdown-item" @click="setCategory && setCategory.open(registry.id)">
               <fa icon="tag" fixed-width />
               Set Category
             </a>
@@ -102,20 +96,14 @@ export default defineComponent({
     const setIcon = ref<typeof SetHelmRegistryIcon>();
     const setCategory = ref<typeof SetHelmRegistryCategory>();
 
-    const registry = computed(() =>
-      store!.collections.helmRegistries.getOne(props.id)
-    );
+    const registry = computed(() => store!.collections.helmRegistries.getOne(props.id));
 
     const charts = computed(() =>
-      store!.collections.helmCharts.all.filter(
-        (chart) => chart.helm_registry_id == props.id
-      )
+      store!.collections.helmCharts.all.filter((chart) => chart.helm_registry_id == props.id)
     );
 
     useHead({
-      title: computed(
-        () => `${registry.value.repo_name} - Helm Registries - Admin - Platz`
-      ),
+      title: computed(() => `${registry.value.repo_name} - Helm Registries - Admin - Platz`),
     });
 
     return {

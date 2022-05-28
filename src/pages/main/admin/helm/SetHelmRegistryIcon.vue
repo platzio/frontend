@@ -57,8 +57,7 @@ export default defineComponent({
     function open(registry_id: string) {
       Object.assign(state, initialData());
       state.registry_id = registry_id;
-      state.new_fa_icon =
-        store!.collections.helmRegistries.getOne(registry_id).fa_icon;
+      state.new_fa_icon = store!.collections.helmRegistries.getOne(registry_id).fa_icon;
       modal.value!.open();
     }
 

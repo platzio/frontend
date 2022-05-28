@@ -3,8 +3,9 @@ import Root from './Root.vue'
 import Users from './Users.vue'
 import Envs from './envs/Root.vue'
 import EnvPage from './envs/EnvPage.vue'
-import HelmRegistries from './HelmRegistries.vue'
-import HelmRegistryPage from './HelmRegistryPage.vue'
+import HelmRegistries from './helm/HelmRegistries.vue'
+import HelmRegistryPage from './helm/HelmRegistryPage.vue'
+import HelmTagFormats from './helm/HelmTagFormats.vue'
 import K8sClusters from './k8s-clusters/K8sClusters.vue'
 import ClusterPage from './k8s-clusters/ClusterPage.vue'
 
@@ -52,6 +53,11 @@ const children: RouteRecordRaw[] = [
                 component: ClusterPage,
             },
         ]
+    },
+    {
+        name: 'admin.tag-formats',
+        path: 'tag-formats',
+        component: HelmTagFormats,
     },
 ]
 

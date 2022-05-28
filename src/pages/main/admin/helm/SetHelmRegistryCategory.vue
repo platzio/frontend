@@ -7,9 +7,7 @@
     :working="working"
     @submit="submit"
   >
-    <div class="mb-2">
-      Enter a category name for the helm registry:
-    </div>
+    <div class="mb-2">Enter a category name for the helm registry:</div>
     <div class="my-3">
       <input
         type="text"
@@ -19,8 +17,8 @@
         placeholder="Enter a category name"
       />
       <div class="small my-1 text-muted">
-        Category names are everything sensitive (case, whitespace, sign)
-        although they might be displayed as uppercase-only in some cases.
+        Category names are everything sensitive (case, whitespace, sign) although they might be
+        displayed as uppercase-only in some cases.
       </div>
     </div>
   </Modal>
@@ -41,13 +39,13 @@ function initialData(): {
     error: undefined,
     working: false,
     registry_id: undefined,
-    new_category: undefined
+    new_category: undefined,
   };
 }
 
 export default defineComponent({
   components: {
-    Modal
+    Modal,
   },
 
   setup() {
@@ -58,9 +56,7 @@ export default defineComponent({
     function open(registry_id: string) {
       Object.assign(state, initialData());
       state.registry_id = registry_id;
-      state.new_category = store!.collections.helmRegistries.getOne(
-        registry_id
-      ).category;
+      state.new_category = store!.collections.helmRegistries.getOne(registry_id).category;
       modal.value!.open();
     }
 
@@ -78,8 +74,8 @@ export default defineComponent({
         await store!.collections.helmRegistries.updateItem({
           id: state.registry_id,
           data: {
-            category: state.new_category
-          }
+            category: state.new_category,
+          },
         });
         modal.value!.close();
       } catch (error) {
@@ -93,8 +89,8 @@ export default defineComponent({
       open,
       close,
       submit,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>

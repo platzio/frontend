@@ -68,7 +68,7 @@ export default defineComponent({
       default: true,
     },
     format: {
-      type: String,
+      type: String as PropType<"helm" | "git">,
       default: "helm",
     },
     time: {
