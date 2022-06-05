@@ -1,4 +1,5 @@
 import { CollectionItem, createCollection } from './collection'
+import {collection as helmRegistries, getKind} from './helm-registry'
 import { HelmChartUiSchema } from '../chart-ext';
 import { HelmChartActionsSchemaV0, HelmChartActionsSchemaV1 } from '../chart-ext'
 import { HelmChartFeaturesV0, HelmChartFeaturesV1 } from '../chart-ext'
@@ -40,4 +41,11 @@ export function chartForUpgrade(current: HelmChart): HelmChart | undefined {
         .filter(chart => current.parsed_branch === chart.parsed_branch)
         .filter(chart => chart.available)
     return newer[0]
+}
+
+export function allChartsForKind(kind: string): HelmChart[] {
+    return collection.all.filter((chart) => {
+        const registry = helmRegistries.getOne(chart.helm_registry_id)
+        return getKind(registry) === kind
+    })
 }
