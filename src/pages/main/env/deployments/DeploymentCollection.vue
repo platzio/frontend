@@ -34,14 +34,7 @@
               />
               <label class="form-check-label" for="showAll"> Show All </label>
             </div>
-            <button
-              v-if="isOwner"
-              class="ms-4 btn btn-primary"
-              @click="editDeployment && editDeployment.openForCreate(kind)"
-            >
-              <fa icon="plus" fixed-width />
-              Create Deployment
-            </button>
+            <DeploymentCollectionActions :envId="envId" :kind="kind" />
           </div>
         </template>
 
@@ -68,14 +61,16 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
-import { isDeploymentOwner } from "@/store/permissions";
-import EditDeployment from "./EditDeployment.vue";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
 import { useHead } from "@vueuse/head";
+import { isDeploymentOwner } from "@/store/permissions";
+import DeploymentCollectionActions from "./DeploymentCollectionActions.vue";
+import EditDeployment from "./EditDeployment.vue";
 
 export default defineComponent({
   components: {
+    DeploymentCollectionActions,
     EditDeployment,
   },
 
