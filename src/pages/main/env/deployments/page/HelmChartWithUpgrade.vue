@@ -38,7 +38,7 @@ import { Deployment } from "@/store/models/deployment";
 import { chartForUpgrade } from "@/store/models/helm-chart";
 import { useStore } from "@/store";
 import { isDeploymentMaintainer } from "@/store/permissions";
-import EditDeployment from "./EditDeployment.vue";
+import EditDeployment from "../EditDeployment.vue";
 
 export default defineComponent({
   props: {

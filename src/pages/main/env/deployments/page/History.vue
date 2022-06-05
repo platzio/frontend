@@ -21,7 +21,7 @@ import { computed, defineComponent, onMounted, PropType } from "vue";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
 import { DeploymentTaskStatus } from "@/store/models/deployment-task";
-import DeploymentTask from "./tasks/DeploymentTask.vue";
+import DeploymentTask from "../tasks/DeploymentTask.vue";
 
 export default defineComponent({
   props: {
@@ -59,23 +59,17 @@ export default defineComponent({
     const numPending = computed(() =>
       loading.value
         ? 0
-        : tasks.value.filter(
-            (task) => task.status == DeploymentTaskStatus.Pending
-          ).length
+        : tasks.value.filter((task) => task.status == DeploymentTaskStatus.Pending).length
     );
 
     const numRunning = computed(() =>
       loading.value
         ? 0
-        : tasks.value.filter(
-            (task) => task.status == DeploymentTaskStatus.Started
-          ).length
+        : tasks.value.filter((task) => task.status == DeploymentTaskStatus.Started).length
     );
 
     const numFinished = computed(() =>
-      loading.value
-        ? 0
-        : tasks.value.length - numPending.value - numRunning.value
+      loading.value ? 0 : tasks.value.length - numPending.value - numRunning.value
     );
 
     const summary = computed(() => {

@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import Root from './Root.vue'
 import DeploymentCollection from './DeploymentCollection.vue'
-import DeploymentPage from './DeploymentPage.vue'
+import DeploymentPage from './page/DeploymentPage.vue'
 
 const routes: RouteRecordRaw[] = [
     {

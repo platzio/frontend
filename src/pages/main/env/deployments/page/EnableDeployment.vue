@@ -13,18 +13,14 @@
         <fa icon="exclamation-circle" />
         Careful
       </div>
-      <div>
-        You are about to enable this deployment
-      </div>
+      <div>You are about to enable this deployment</div>
     </div>
 
     <div class="border p-2" v-if="deployment">
       <Deployment :deployment="deployment" />
     </div>
 
-    <div class="mt-3">
-      Are you sure you want to continue?
-    </div>
+    <div class="mt-3">Are you sure you want to continue?</div>
   </Modal>
 </template>
 
@@ -42,13 +38,13 @@ function initialData(): {
   return {
     error: undefined,
     working: false,
-    deployment: undefined
+    deployment: undefined,
   };
 }
 
 export default defineComponent({
   components: {
-    Modal
+    Modal,
   },
 
   setup(props, { emit }) {
@@ -76,8 +72,8 @@ export default defineComponent({
         await store!.collections.deployments.updateItem({
           id: state.deployment.id,
           data: {
-            enabled: true
-          }
+            enabled: true,
+          },
         });
         modal.value!.close();
         emit("done");
@@ -92,8 +88,8 @@ export default defineComponent({
       open,
       close,
       submit,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>

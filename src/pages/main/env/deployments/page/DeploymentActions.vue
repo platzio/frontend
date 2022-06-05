@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="dropdown">
     <a
       class="btn btn-outline-primary"
@@ -15,14 +15,8 @@
     <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
       <template v-if="isMaintainer && filteredActions.length > 0">
         <li v-for="action in filteredActions" :key="action.id">
-          <a
-            class="dropdown-item"
-            @click="invokeAction && invokeAction.open(deployment, action)"
-          >
-            <fa
-              :icon="action.fontawesome_icon || 'flag-checkered'"
-              fixed-width
-            />
+          <a class="dropdown-item" @click="invokeAction && invokeAction.open(deployment, action)">
+            <fa :icon="action.fontawesome_icon || 'flag-checkered'" fixed-width />
             {{ action.title }}
           </a>
         </li>
@@ -39,10 +33,7 @@
       </li>
 
       <li v-if="isMaintainer">
-        <a
-          class="dropdown-item"
-          @click="editDeployment && editDeployment.openForEdit(deployment)"
-        >
+        <a class="dropdown-item" @click="editDeployment && editDeployment.openForEdit(deployment)">
           <fa icon="edit" fixed-width />
           Edit Deployment
         </a>
@@ -59,10 +50,7 @@
       </li>
 
       <li v-if="isMaintainer">
-        <a
-          class="dropdown-item"
-          @click="editDescription && editDescription.open(deployment)"
-        >
+        <a class="dropdown-item" @click="editDescription && editDescription.open(deployment)">
           <fa icon="message" fixed-width />
           Edit Description
         </a>
@@ -71,20 +59,14 @@
       <template v-if="isOwner">
         <li class="dropdown-divider" />
         <li v-if="!deployment.enabled">
-          <a
-            class="dropdown-item"
-            @click="enableDeployment && enableDeployment.open(deployment)"
-          >
+          <a class="dropdown-item" @click="enableDeployment && enableDeployment.open(deployment)">
             <fa icon="toggle-on" fixed-width />
             Enable Deployment
           </a>
         </li>
 
         <li v-if="deployment.enabled">
-          <a
-            class="dropdown-item"
-            @click="disableDeployment && disableDeployment.open(deployment)"
-          >
+          <a class="dropdown-item" @click="disableDeployment && disableDeployment.open(deployment)">
             <fa icon="toggle-off" fixed-width />
             Disable Deployment
           </a>
@@ -117,8 +99,8 @@ import { useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
 import { isDeploymentOwner, isDeploymentMaintainer } from "@/store/permissions";
-import InvokeAction from "./InvokeAction.vue";
-import EditDeployment from "./EditDeployment.vue";
+import InvokeAction from "../InvokeAction.vue";
+import EditDeployment from "../EditDeployment.vue";
 import EditDescription from "./EditDescription.vue";
 import EnableDeployment from "./EnableDeployment.vue";
 import DisableDeployment from "./DisableDeployment.vue";
@@ -155,13 +137,9 @@ export default defineComponent({
     const disableDeployment = ref<typeof DisableDeployment>();
     const deleteDeployment = ref<typeof DeleteDeployment>();
 
-    const isOwner = computed(() =>
-      isDeploymentOwner(props.envId, props.deployment.kind)
-    );
+    const isOwner = computed(() => isDeploymentOwner(props.envId, props.deployment.kind));
 
-    const isMaintainer = computed(() =>
-      isDeploymentMaintainer(props.envId, props.deployment.kind)
-    );
+    const isMaintainer = computed(() => isDeploymentMaintainer(props.envId, props.deployment.kind));
 
     const chart = computed(() =>
       store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)

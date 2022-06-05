@@ -9,16 +9,12 @@
         <DeploymentStatus class="me-2" :deployment="deployment" />
       </div>
 
-      <ActionsMenu :envId="envId" :deployment="deployment" />
+      <DeploymentActions :envId="envId" :deployment="deployment" />
     </div>
 
     <ul class="mt-2 nav nav-tabs">
       <li class="nav-item">
-        <a
-          class="nav-link"
-          :class="{ active: curTab == 'overview' }"
-          @click="curTab = 'overview'"
-        >
+        <a class="nav-link" :class="{ active: curTab == 'overview' }" @click="curTab = 'overview'">
           Overview
           <DeploymentWarnings :deployment="deployment" />
         </a>
@@ -33,20 +29,10 @@
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          :class="{ active: curTab == 'history' }"
-          @click="curTab = 'history'"
-        >
+        <a class="nav-link" :class="{ active: curTab == 'history' }" @click="curTab = 'history'">
           <span class="me-1">History</span>
           <span v-if="history">
-            <fa
-              v-if="history.loading"
-              class="opacity-75"
-              icon="circle-notch"
-              fixed-width
-              spin
-            />
+            <fa v-if="history.loading" class="opacity-75" icon="circle-notch" fixed-width spin />
             <span v-else>({{ history.summary }})</span>
           </span>
         </a>
@@ -78,11 +64,7 @@
             <Notices :deployment="deployment" />
 
             <div class="row justify-content-end">
-              <div
-                class="col-6 mb-3"
-                v-for="(metric, idx) in metrics"
-                :key="idx"
-              >
+              <div class="col-6 mb-3" v-for="(metric, idx) in metrics" :key="idx">
                 <div class="card">
                   <div class="card-body px-4 py-3">
                     <Metric :metric="metric" />
@@ -125,17 +107,17 @@ import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
 import { DeploymentStatus } from "@/store/models/deployment";
 import Metric from "@/components/Metric.vue";
-import ActionsMenu from "./ActionsMenu.vue";
+import ConfigValues from "../config/ConfigValues.vue";
+import DeploymentActions from "./DeploymentActions.vue";
 import HelmChartWithUpgrade from "./HelmChartWithUpgrade.vue";
 import Notices from "./Notices.vue";
-import ConfigValues from "./config/ConfigValues.vue";
 import History from "./History.vue";
 import K8sResources from "./K8sResources.vue";
 
 export default defineComponent({
   components: {
     Metric,
-    ActionsMenu,
+    DeploymentActions,
     HelmChartWithUpgrade,
     Notices,
     ConfigValues,
@@ -165,17 +147,11 @@ export default defineComponent({
 
     const env = computed(() => store!.collections.envs.getOne(props.envId));
 
-    const deployment = computed(() =>
-      store!.collections.deployments.getOne(props.id)
-    );
+    const deployment = computed(() => store!.collections.deployments.getOne(props.id));
 
-    const formatted = computed(() =>
-      store!.collections.deployments.formatItem(deployment.value)
-    );
+    const formatted = computed(() => store!.collections.deployments.formatItem(deployment.value));
 
-    const hasError = computed(
-      () => deployment.value.status == DeploymentStatus.Error
-    );
+    const hasError = computed(() => deployment.value.status == DeploymentStatus.Error);
 
     const cluster = computed(() =>
       store!.collections.k8sClusters.getOne(deployment.value.cluster_id)
@@ -185,9 +161,7 @@ export default defineComponent({
       const { reported_status } = deployment.value;
       return reported_status && reported_status.content
         ? (reported_status.content.metrics || []).concat(
-            reported_status.content.primary_metric
-              ? [reported_status.content.primary_metric]
-              : []
+            reported_status.content.primary_metric ? [reported_status.content.primary_metric] : []
           )
         : [];
     });

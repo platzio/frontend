@@ -103,15 +103,13 @@ export default defineComponent({
       store!.collections.deployments.all.filter(
         (deployment) =>
           deployment.kind == props.kind &&
-          store!.collections.k8sClusters.getOne(deployment.cluster_id).env_id ==
-            props.envId
+          store!.collections.k8sClusters.getOne(deployment.cluster_id).env_id == props.envId
       )
     );
 
     const allDisabled = computed(
       () =>
-        deployments.value.length > 0 &&
-        deployments.value.every((deployment) => !deployment.enabled)
+        deployments.value.length > 0 && deployments.value.every((deployment) => !deployment.enabled)
     );
 
     const filteredDeployments = computed(() =>
@@ -126,9 +124,7 @@ export default defineComponent({
     );
 
     useHead({
-      title: computed(
-        () => `${props.kind} - Deployments - ${env.value.name} - Platz`
-      ),
+      title: computed(() => `${props.kind} - Deployments - ${env.value.name} - Platz`),
     });
 
     return {
