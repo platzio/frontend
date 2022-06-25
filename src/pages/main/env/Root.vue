@@ -1,20 +1,31 @@
 <template>
   <router-view v-if="ok" />
-  <div v-else class="d-flex flex-row">
-    <div class="flex-fill" />
-    <div class="my-5 alert alert-warning">
-      <div class="mt-2 mb-3 h5 fw-bold">
-        <fa icon="city" fixed-width />
-        No Permissions
+  <div v-else class="my-5 row">
+    <div class="col" />
+    <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
+      <div class="alert alert-warning">
+        <div class="mt-2 mb-3 h5 fw-bold">
+          <fa icon="city" fixed-width />
+          No Permissions
+        </div>
+        <div class="my-1">It looks like you have no permissions to see any env.</div>
+        <div class="my-1 fw-bold" v-if="!curUser.is_admin">
+          Please ask an admin to grant you permissions to one of the envs.
+        </div>
       </div>
-      <div class="my-1">
-        It looks like you have no permissions to see any env.
-      </div>
-      <div class="my-1 fw-bold">
-        Please ask an admin to grant you permissions to one of the envs.
+      <div class="alert alert-primary">
+        <div class="mt-2 mb-3 h5 fw-bold">
+          <fa icon="shield-alt" fixed-width />
+          But Fear Not, You're an Admin!
+        </div>
+        <div class="my-1" v-if="curUser.is_admin">
+          You can go into the
+          <router-link :to="{ name: 'admin.envs' }">Envs Admin Section</router-link>
+          to create a new env or add yourself to an existing one.
+        </div>
       </div>
     </div>
-    <div class="flex-fill" />
+    <div class="col" />
   </div>
 </template>
 
@@ -53,6 +64,7 @@ export default defineComponent({
 
     return {
       ok,
+      curUser,
     };
   },
 });
