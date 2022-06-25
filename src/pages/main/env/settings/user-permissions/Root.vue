@@ -6,21 +6,15 @@
           <template #contents>
             <div class="mt-2 mb-1 d-flex flex-row align-items-center">
               <User :id="scope.item.user_id" :showName="true" />
-              <span class="ms-2 badge bg-success">{{
-                scope.item.role.toUpperCase()
-              }}</span>
+              <span class="ms-2 badge bg-success">{{ scope.item.role.toUpperCase() }}</span>
             </div>
-            <div class="small mb-1">
-              Added <Moment :value="scope.item.created_at" />
-            </div>
+            <div class="small mb-1">Added <Moment :value="scope.item.created_at" /></div>
           </template>
           <template #actions>
             <li>
               <a
                 class="dropdown-item"
-                @click="
-                  removeUserPermission && removeUserPermission.open(scope.item)
-                "
+                @click="removeUserPermission && removeUserPermission.open(scope.item)"
               >
                 <fa icon="trash-alt" fixed-width />
                 Remove Permission
@@ -44,9 +38,9 @@
           </div>
           <div class="my-3 text-muted text-start">
             <fa icon="info-circle" fixed-width />
-            Users listed here can see the env and everything in it (deployments
-            and custom resources). Admin users can perform any operation and
-            control permissions for all other users.
+            Users listed here can see the env and everything in it (deployments and custom
+            resources). Admin users can perform any operation and control permissions for all other
+            users.
           </div>
         </div>
       </template>
@@ -55,8 +49,7 @@
 
       <template #empty-action>
         <div class="my-2">
-          There are no user permissions defined for this env, let's create the
-          first one:
+          There are no user permissions defined for this env, let's create the first one:
         </div>
         <div class="my-4">
           <button
@@ -110,14 +103,14 @@ export default defineComponent({
       )
     );
 
-    const canEdit = computed(() =>
-      isEnvAdmin(props.envId, store!.auth.curUser!.id)
+    const curUser = computed(() => store!.auth.curUser!);
+
+    const canEdit = computed(
+      () => curUser.value.is_admin || isEnvAdmin(props.envId, curUser.value.id)
     );
 
     useHead({
-      title: computed(
-        () => `User Roles - Settings - ${env.value.name} - Platz`
-      ),
+      title: computed(() => `User Roles - Settings - ${env.value.name} - Platz`),
     });
 
     return {
