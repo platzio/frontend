@@ -73,27 +73,20 @@
     This field is only visible to deployment owners
   </div>
   <div class="mb-3 form-floating" v-show="isOwner">
-    <YamlInput
-      id="valuesOverride"
-      v-model="new_data.values_override"
-      :disabled="working"
-    />
-    <label for="valuesOverride" class="form-label">
-      Values Override (YAML)
-    </label>
+    <YamlInput id="valuesOverride" v-model="new_data.values_override" :disabled="working" />
+    <label for="valuesOverride" class="form-label"> Values Override (YAML) </label>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, PropType, watch } from "vue";
-import { capitalize, cloneDeep } from "lodash";
+import { cloneDeep } from "lodash";
 import moment from "moment";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
 import { chartFeatures, HelmChartCardinality } from "@/store/chart-ext";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
 import { isDeploymentOwner } from "@/store/permissions";
-import { getKind } from "@/store/models/helm-registry";
 
 export default defineComponent({
   components: {
@@ -120,15 +113,11 @@ export default defineComponent({
     const new_data = ref<Partial<Deployment>>({});
 
     const isOwner = computed(
-      () =>
-        new_data.value.kind &&
-        isDeploymentOwner(props.envId, new_data.value.kind)
+      () => new_data.value.kind && isDeploymentOwner(props.envId, new_data.value.kind)
     );
 
     // Max DNS name length, minus deployment prefix, minus the dash
-    const maxNameLength = computed(
-      () => 62 - (new_data.value.kind || "").length
-    );
+    const maxNameLength = computed(() => 62 - (new_data.value.kind || "").length);
 
     const possibleClusters = computed(() =>
       store!.collections.k8sClusters.all
@@ -138,11 +127,8 @@ export default defineComponent({
 
     const filteredCharts = computed(() =>
       store!.collections.helmCharts.all.filter((chart) => {
-        const registry = store!.collections.helmRegistries.getOne(
-          chart.helm_registry_id
-        );
-        const kind = getKind(registry);
-        return new_data.value.kind && kind === new_data.value.kind;
+        const registry = store!.collections.helmRegistries.getOne(chart.helm_registry_id);
+        return new_data.value.kind === registry.kind;
       })
     );
 
@@ -167,9 +153,7 @@ export default defineComponent({
       return features.cardinality == HelmChartCardinality.Many;
     });
 
-    const newUiSchema = computed(
-      () => newChart.value && newChart.value.values_ui
-    );
+    const newUiSchema = computed(() => newChart.value && newChart.value.values_ui);
 
     watch(
       () => props.currentData,
@@ -187,9 +171,7 @@ export default defineComponent({
         });
         return updated.id;
       }
-      const deployment = await store!.collections.deployments.createItem(
-        new_data.value
-      );
+      const deployment = await store!.collections.deployments.createItem(new_data.value);
       return deployment.id;
     }
 
