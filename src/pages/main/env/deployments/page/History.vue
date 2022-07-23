@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading">
+    <div v-if="tasksLoading || chartsLoading">
       <div class="my-2 h5 text-center text-muted">
         <fa icon="circle-notch" spin />
       </div>
@@ -42,13 +42,17 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
 
-    onMounted(() =>
+    onMounted(() => {
       store!.collections.deploymentTasks.setFilters({
         deployment_id: props.deployment.id,
-      })
-    );
+      });
+      store!.collections.helmCharts.setFilters({
+        kind: props.deployment.kind,
+      });
+    });
 
-    const loading = computed(() => store!.collections.deploymentTasks.loading);
+    const tasksLoading = computed(() => store!.collections.deploymentTasks.loading);
+    const chartsLoading = computed(() => store!.collections.helmCharts.loading);
 
     const tasks = computed(() =>
       store!.collections.deploymentTasks.all.filter(
@@ -57,23 +61,23 @@ export default defineComponent({
     );
 
     const numPending = computed(() =>
-      loading.value
+      tasksLoading.value
         ? 0
         : tasks.value.filter((task) => task.status == DeploymentTaskStatus.Pending).length
     );
 
     const numRunning = computed(() =>
-      loading.value
+      tasksLoading.value
         ? 0
         : tasks.value.filter((task) => task.status == DeploymentTaskStatus.Started).length
     );
 
     const numFinished = computed(() =>
-      loading.value ? 0 : tasks.value.length - numPending.value - numRunning.value
+      tasksLoading.value ? 0 : tasks.value.length - numPending.value - numRunning.value
     );
 
     const summary = computed(() => {
-      if (loading.value) {
+      if (tasksLoading.value) {
         return "";
       }
       let result = `${numFinished.value}`;
@@ -87,7 +91,8 @@ export default defineComponent({
     });
 
     return {
-      loading,
+      tasksLoading,
+      chartsLoading,
       tasks,
       numPending,
       numRunning,

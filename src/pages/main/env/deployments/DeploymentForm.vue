@@ -28,11 +28,7 @@
       required
       :disabled="working"
     >
-      <option
-        v-for="cluster in possibleClusters"
-        :key="cluster.id"
-        :value="cluster.id"
-      >
+      <option v-for="cluster in possibleClusters" :key="cluster.id" :value="cluster.id">
         {{ cluster.region_name }} / {{ cluster.name }}
       </option>
     </select>
@@ -58,7 +54,10 @@
         {{ chart.image_tag }} (from {{ fromNow(chart.created_at) }})
       </option>
     </select>
-    <label for="helmChartId" class="form-label"> Version </label>
+    <label for="helmChartId" class="form-label">
+      Version
+      <fa v-if="chartsLoading" icon="circle-notch" fixed-width spin />
+    </label>
   </div>
 
   <ConfigInputsForm
@@ -125,6 +124,16 @@ export default defineComponent({
         .filter((cluster) => cluster.env_id == props.envId)
     );
 
+    watch(
+      () => new_data.value.kind,
+      () =>
+        store!.collections.helmCharts.setFilters({
+          kind: new_data.value.kind,
+        })
+    );
+
+    const chartsLoading = computed(() => store!.collections.helmCharts.loading);
+
     const filteredCharts = computed(() =>
       store!.collections.helmCharts.all.filter((chart) => {
         const registry = store!.collections.helmRegistries.getOne(chart.helm_registry_id);
@@ -182,6 +191,7 @@ export default defineComponent({
     return {
       new_data,
       possibleClusters,
+      chartsLoading,
       filteredCharts,
       canHaveName,
       newUiSchema,

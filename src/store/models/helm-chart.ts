@@ -20,7 +20,14 @@ export interface HelmChart extends CollectionItem {
     parsed_commit?: string;
 }
 
-export const collection = createCollection<HelmChart>({
+export interface HelmChartFilters {
+    helm_registry_id?: string;
+    parsed_branch?: string;
+    kind?: string;
+    in_use?: boolean;
+}
+
+export const collection = createCollection<HelmChart,HelmChartFilters>({
     url: '/api/v2/helm-charts',
 
     sortFunc(x, y) {
@@ -30,7 +37,11 @@ export const collection = createCollection<HelmChart>({
     formatItem: (item: HelmChart) => ({
         icon: 'play',
         text: item.image_tag,
-    })
+    }),
+
+    initialFilters: {
+        in_use: true,
+    }
 })
 
 export function chartForUpgrade(current: HelmChart): HelmChart | undefined {

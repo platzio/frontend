@@ -41,13 +41,14 @@
       <template #item="scope">
         <ItemWithActions>
           <template #contents>
-            <div class="my-2 text-success font-monospace">
-              {{ scope.item.pattern }}
+            <div class="my-2">
+              <div class="my-1 text-success font-monospace">
+                {{ scope.item.pattern }}
+              </div>
+              <div class="small my-1 text-muted">
+                Added <Moment :value="scope.item.created_at" />
+              </div>
             </div>
-            <div class="small my-2">
-              Matched <strong>{{ numMatches(scope.item.id) }}</strong> Helm charts
-            </div>
-            <div class="small my-2 text-muted">Added <Moment :value="scope.item.created_at" /></div>
           </template>
           <template #actions>
             <li>
@@ -85,15 +86,8 @@ export default defineComponent({
 
     const tagFormats = computed(() => store!.collections.helmTagFormats.all);
 
-    const numMatches = computed(
-      () => (tagFormatId: string) =>
-        store!.collections.helmCharts.all.filter((chart) => chart.tag_format_id === tagFormatId)
-          .length
-    );
-
     return {
       tagFormats,
-      numMatches,
       addTagFormat,
       deleteTagFormat,
     };

@@ -51,7 +51,10 @@
 
   <div class="card my-3">
     <div class="card-header">Charts</div>
-    <Collection :items="charts" :flush="true">
+    <div v-if="loading" class="my-4 text-center">
+      <fa class="opacity-75" icon="circle-notch" fixed-width spin />
+    </div>
+    <Collection v-else :items="charts" :flush="true">
       <template #item="scope">
         <CollectionItem>
           <div class="my-1">
@@ -72,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { useStore } from "@/store";
 import SetHelmRegistryIcon from "./SetHelmRegistryIcon.vue";
 import SetHelmRegistryCategory from "./SetHelmRegistryCategory.vue";
@@ -96,6 +99,14 @@ export default defineComponent({
     const setIcon = ref<typeof SetHelmRegistryIcon>();
     const setCategory = ref<typeof SetHelmRegistryCategory>();
 
+    onMounted(() => {
+      store!.collections.helmCharts.setFilters({
+        helm_registry_id: props.id,
+      });
+    });
+
+    const loading = computed(() => store!.collections.helmCharts.loading);
+
     const registry = computed(() => store!.collections.helmRegistries.getOne(props.id));
 
     const charts = computed(() =>
@@ -110,6 +121,7 @@ export default defineComponent({
       registry,
       setIcon,
       setCategory,
+      loading,
       charts,
     };
   },

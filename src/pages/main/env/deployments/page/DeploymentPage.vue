@@ -32,7 +32,13 @@
         <a class="nav-link" :class="{ active: curTab == 'history' }" @click="curTab = 'history'">
           <span class="me-1">History</span>
           <span v-if="history">
-            <fa v-if="history.loading" class="opacity-75" icon="circle-notch" fixed-width spin />
+            <fa
+              v-if="history.tasksLoading"
+              class="opacity-75"
+              icon="circle-notch"
+              fixed-width
+              spin
+            />
             <span v-else>({{ history.summary }})</span>
           </span>
         </a>
