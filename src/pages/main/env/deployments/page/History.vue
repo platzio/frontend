@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div v-if="tasksLoading || chartsLoading">
-      <div class="my-2 h5 text-center text-muted">
-        <fa icon="circle-notch" spin />
-      </div>
+    <div v-if="tasksLoading" class="my-3 text-center text-muted">
+      <fa icon="circle-notch" spin fixed-width />
+      Loading tasks ({{ tasksLoadingPercent }}%)
+    </div>
+    <div v-if="chartsLoading" class="my-3 text-center text-muted">
+      <fa icon="circle-notch" spin fixed-width />
+      Loading charts ({{ chartsLoadingPercent }}%)
     </div>
 
     <Collection v-else :items="tasks" flush>
@@ -52,7 +55,9 @@ export default defineComponent({
     });
 
     const tasksLoading = computed(() => store!.collections.deploymentTasks.loading);
+    const tasksLoadingPercent = computed(() => store!.collections.deploymentTasks.loadingPercent);
     const chartsLoading = computed(() => store!.collections.helmCharts.loading);
+    const chartsLoadingPercent = computed(() => store!.collections.helmCharts.loadingPercent);
 
     const tasks = computed(() =>
       store!.collections.deploymentTasks.all.filter(
@@ -92,7 +97,9 @@ export default defineComponent({
 
     return {
       tasksLoading,
+      tasksLoadingPercent,
       chartsLoading,
+      chartsLoadingPercent,
       tasks,
       numPending,
       numRunning,

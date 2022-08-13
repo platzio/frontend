@@ -56,7 +56,10 @@
     </select>
     <label for="helmChartId" class="form-label">
       Version
-      <fa v-if="chartsLoading" icon="circle-notch" fixed-width spin />
+      <span v-if="chartsLoading" class="ms-2">
+        <fa icon="circle-notch" fixed-width spin />
+        {{ chartsLoadingPercent }}%
+      </span>
     </label>
   </div>
 
@@ -133,6 +136,7 @@ export default defineComponent({
     );
 
     const chartsLoading = computed(() => store!.collections.helmCharts.loading);
+    const chartsLoadingPercent = computed(() => store!.collections.helmCharts.loadingPercent);
 
     const filteredCharts = computed(() =>
       store!.collections.helmCharts.all.filter((chart) => {
@@ -192,6 +196,7 @@ export default defineComponent({
       new_data,
       possibleClusters,
       chartsLoading,
+      chartsLoadingPercent,
       filteredCharts,
       canHaveName,
       newUiSchema,

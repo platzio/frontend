@@ -51,8 +51,9 @@
 
   <div class="card my-3">
     <div class="card-header">Charts</div>
-    <div v-if="loading" class="my-4 text-center">
-      <fa class="opacity-75" icon="circle-notch" fixed-width spin />
+    <div v-if="chartsLoading" class="my-3 text-center text-muted">
+      <fa icon="circle-notch" spin fixed-width />
+      Loading charts ({{ chartsLoadingPercent }}%)
     </div>
     <Collection v-else :items="charts" :flush="true">
       <template #item="scope">
@@ -105,7 +106,8 @@ export default defineComponent({
       });
     });
 
-    const loading = computed(() => store!.collections.helmCharts.loading);
+    const chartsLoading = computed(() => store!.collections.helmCharts.loading);
+    const chartsLoadingPercent = computed(() => store!.collections.helmCharts.loadingPercent);
 
     const registry = computed(() => store!.collections.helmRegistries.getOne(props.id));
 
@@ -121,7 +123,8 @@ export default defineComponent({
       registry,
       setIcon,
       setCategory,
-      loading,
+      chartsLoading,
+      chartsLoadingPercent,
       charts,
     };
   },
