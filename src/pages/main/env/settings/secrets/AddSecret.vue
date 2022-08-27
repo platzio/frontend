@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Add Secret"
     size="lg"
@@ -88,17 +88,17 @@
         required
         :disabled="disabled"
         autocomplete="off"
-        spellcheck="off"
+        spellcheck="false"
         autocapitalize="off"
       />
       <label class="form-label">Contents</label>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 
 function initialData(): {
@@ -132,13 +132,13 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup(props) {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open() {
       Object.assign(state, initialData());

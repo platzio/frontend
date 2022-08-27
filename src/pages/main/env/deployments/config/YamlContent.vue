@@ -1,15 +1,13 @@
 <template>
   <div class="card" v-if="header">
     <div class="small card-header">
-      <div
-        class="my-1 d-flex flex-row justify-content-between align-items-start"
-      >
+      <div class="my-1 d-flex flex-row justify-content-between align-items-start">
         <div>
           <div>
             {{ header }}
           </div>
           <div class="small opacity-75" v-if="timestamp">
-            Updated <Moment :value="timestamp" />
+            Updated <PlatzMoment :value="timestamp" />
           </div>
         </div>
         <span class="ms-1 badge border text-dark">YAML</span>
@@ -20,12 +18,7 @@
     </div>
   </div>
   <div v-else>
-    <div
-      v-for="(line, i) in configYaml.split('\n')"
-      :key="i"
-      class="my-2"
-      style="white-space:pre;"
-    >
+    <div v-for="(line, i) in configYaml.split('\n')" :key="i" class="my-2" style="white-space: pre">
       {{ line }}
     </div>
   </div>
@@ -39,24 +32,24 @@ export default defineComponent({
   props: {
     config: {
       type: Object as PropType<Record<string, any>>,
-      required: true
+      required: true,
     },
     header: {
       type: String,
-      required: false
+      required: false,
     },
     timestamp: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
 
   setup(props) {
     const configYaml = computed(() => yaml.dump(props.config));
 
     return {
-      configYaml
+      configYaml,
     };
-  }
+  },
 });
 </script>

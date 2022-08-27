@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="my-2" v-if="formatted">
-      <fa :icon="formatted.icon" fixed-width />
+      <FaIcon :icon="formatted.icon" fixed-width />
       {{ formatted.text }}
     </div>
     <div class="my-2">
-      <Reason
+      <PlatzReason
         :text="resource.sync_reason"
         :isBad="resource.sync_status === SyncStatus.Error"
         :allowExpand="false"
@@ -15,18 +15,15 @@
             {{ resource.sync_status.toUpperCase() }}
           </div>
         </template>
-      </Reason>
+      </PlatzReason>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { useStore } from "@/store";
-import {
-  DeploymentResource,
-  SyncStatus,
-} from "@/store/models/deployment-resource";
-import { computed, defineComponent, PropType } from "@vue/runtime-core";
+import { DeploymentResource, SyncStatus } from "@/store/models/deployment-resource";
+import { computed, defineComponent, PropType } from "vue";
 
 export default defineComponent({
   props: {

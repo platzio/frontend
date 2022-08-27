@@ -11,7 +11,7 @@
         'text-secondary': !formattedItem.label && !formattedItem.inputLabel,
       }"
     >
-      <fa v-if="formattedItem.icon" :icon="formattedItem.icon" fixed-width />
+      <FaIcon v-if="formattedItem.icon" :icon="formattedItem.icon" fixed-width />
       {{ formattedItem.text }}
     </span>
   </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/runtime-core";
+import { computed, defineComponent, PropType } from "vue";
 import { HelmChartUiInput } from "@/store/chart-ext";
 import { getInputCollection } from "@/store/deployment-resources";
 
@@ -51,21 +51,15 @@ export default defineComponent({
 
   setup(props) {
     const collection = computed(
-      () =>
-        props.input.collection &&
-        getInputCollection(props.envId, props.input.collection)
+      () => props.input.collection && getInputCollection(props.envId, props.input.collection)
     );
 
     const item = computed(() =>
-      collection.value && props.value
-        ? collection.value.getOne(props.value)
-        : null
+      collection.value && props.value ? collection.value.getOne(props.value) : null
     );
 
     const formattedItem = computed(() =>
-      collection.value && item.value
-        ? collection.value.formatItem(item.value)
-        : null
+      collection.value && item.value ? collection.value.formatItem(item.value) : null
     );
 
     return {

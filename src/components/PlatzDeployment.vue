@@ -2,20 +2,25 @@
   <div class="d-flex flex-row justify-content-between align-items-center">
     <div>
       <div class="my-1">
-        <DeploymentStatus class="me-2" :deployment="deployment" />
+        <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
         <span v-if="formatted">
-          <fa :icon="formatted.icon" />
+          <FaIcon :icon="formatted.icon" />
           {{ formatted.text }}
         </span>
-        <DeploymentWarnings :deployment="deployment" />
+        <PlatzDeploymentWarnings :deployment="deployment" />
       </div>
 
-      <Reason class="mt-1" :text="deployment.reason" :allow-expand="false" :is-bad="hasError" />
+      <PlatzReason
+        class="mt-1"
+        :text="deployment.reason"
+        :allow-expand="false"
+        :is-bad="hasError"
+      />
 
       <div class="my-2 small opacity-75 d-flex flex-row align-items-center">
-        <K8sClusterName :id="deployment.cluster_id" />
-        <fa icon="angle-right" class="ms-2 me-1 opacity-75" />
-        <K8sResourceStatus
+        <PlatzClusterName :id="deployment.cluster_id" />
+        <FaIcon icon="angle-right" class="ms-2 me-1 opacity-75" />
+        <PlatzResourceStatus
           :id="resource.id"
           v-for="resource in k8sResources"
           :key="resource.id"
@@ -29,15 +34,21 @@
           style="font-size: 0.8rem"
           v-if="isMaintainer && hasUpgrade"
         >
-          <fa icon="arrow-circle-up" fixed-width />
+          <FaIcon icon="arrow-circle-up" fixed-width />
         </div>
         <div class="text-secondary">
-          <HelmChart :chart="chart" :color="false" format="git" :time="false" :digest="false" />
+          <PlatzHelmChart
+            :chart="chart"
+            :color="false"
+            format="git"
+            :time="false"
+            :digest="false"
+          />
         </div>
       </div>
     </div>
 
-    <Metric v-if="primaryMetric" :metric="primaryMetric" />
+    <PlatzMetric v-if="primaryMetric" :metric="primaryMetric" />
   </div>
 </template>
 
@@ -47,7 +58,7 @@ import { useStore } from "@/store";
 import { Deployment, DeploymentStatus } from "@/store/models/deployment";
 import { chartForUpgrade } from "@/store/models/helm-chart";
 import { isDeploymentMaintainer } from "@/store/permissions";
-import Metric from "./Metric.vue";
+import PlatzMetric from "./PlatzMetric.vue";
 
 export default defineComponent({
   props: {
@@ -58,7 +69,7 @@ export default defineComponent({
   },
 
   components: {
-    Metric,
+    PlatzMetric,
   },
 
   setup(props) {

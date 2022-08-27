@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Set Category"
     btn-class="btn-primary"
@@ -21,12 +21,12 @@
         displayed as uppercase-only in some cases.
       </div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 
 function initialData(): {
@@ -45,13 +45,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(registry_id: string) {
       Object.assign(state, initialData());

@@ -5,22 +5,22 @@
     </div>
   </div>
 
-  <Loader v-else />
+  <PlatzLoader v-else />
 
-  <FontPreloader />
+  <PlatzFontPreloader />
 </template>
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "@/store";
-import Loader from "./Loader.vue";
-import FontPreloader from "./FontPreloader.vue";
+import PlatzLoader from "./PlatzLoader.vue";
+import PlatzFontPreloader from "./PlatzFontPreloader.vue";
 
 export default defineComponent({
   components: {
-    Loader,
-    FontPreloader,
+    PlatzLoader,
+    PlatzFontPreloader,
   },
 
   setup() {

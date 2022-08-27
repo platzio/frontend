@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Navbar :envId="envId" />
+    <EnvsNavbar :envId="envId" />
     <router-view :envId="envId" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Navbar from "./Navbar.vue";
+import EnvsNavbar from "./EnvsNavbar.vue";
 
 export default defineComponent({
   props: {
@@ -18,7 +18,7 @@ export default defineComponent({
   },
 
   components: {
-    Navbar,
+    EnvsNavbar,
   },
 });
 </script>

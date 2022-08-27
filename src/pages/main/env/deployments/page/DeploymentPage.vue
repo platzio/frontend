@@ -3,10 +3,10 @@
     <div class="d-flex flex-row justify-content-between align-items-start">
       <div class="d-flex flex-row align-items-center">
         <div class="h1 me-3" v-if="formatted">
-          <fa :icon="formatted.icon" />
+          <FaIcon :icon="formatted.icon" />
           {{ formatted.text }}
         </div>
-        <DeploymentStatus class="me-2" :deployment="deployment" />
+        <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
       </div>
 
       <DeploymentActions :envId="envId" :deployment="deployment" />
@@ -16,7 +16,7 @@
       <li class="nav-item">
         <a class="nav-link" :class="{ active: curTab == 'overview' }" @click="curTab = 'overview'">
           Overview
-          <DeploymentWarnings :deployment="deployment" />
+          <PlatzDeploymentWarnings :deployment="deployment" />
         </a>
       </li>
       <li class="nav-item">
@@ -32,7 +32,7 @@
         <a class="nav-link" :class="{ active: curTab == 'history' }" @click="curTab = 'history'">
           <span class="me-1">History</span>
           <span v-if="history">
-            <fa
+            <FaIcon
               v-if="history.tasksLoading"
               class="opacity-75"
               icon="circle-notch"
@@ -51,14 +51,14 @@
           <!-- Overview left part -->
           <div class="col-7">
             <div v-if="deployment.description_md">
-              <Markdown :source="deployment.description_md" />
+              <PlatzMarkdown :source="deployment.description_md" />
             </div>
             <div class="my-2 text-secondary">
               <HelmChartWithUpgrade :envId="envId" :deployment="deployment" />
             </div>
 
             <div class="my-2 text-secondary">
-              <K8sClusterName :id="deployment.cluster_id" />
+              <PlatzClusterName :id="deployment.cluster_id" />
             </div>
             <div>
               <ConfigValues :envId="envId" :deployment="deployment" />
@@ -67,19 +67,19 @@
 
           <!-- Overview right part -->
           <div class="col-5">
-            <Notices :deployment="deployment" />
+            <DeploymentNotices :deployment="deployment" />
 
             <div class="row justify-content-end">
               <div class="col-6 mb-3" v-for="(metric, idx) in metrics" :key="idx">
                 <div class="card">
                   <div class="card-body px-4 py-3">
-                    <Metric :metric="metric" />
+                    <PlatzMetric :metric="metric" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <Reason
+            <PlatzReason
               class="my-3 py-2 px-3 reason rounded border"
               :text="deployment.reason"
               :auto-expand="true"
@@ -94,7 +94,7 @@
       </div>
 
       <div class="card-body px-0 py-1" v-show="curTab == 'history'">
-        <History :deployment="deployment" :envId="envId" ref="history" />
+        <DeploymentHistory :deployment="deployment" :envId="envId" ref="history" />
       </div>
     </div>
   </div>
@@ -112,22 +112,22 @@ import { onBeforeRouteUpdate } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
 import { DeploymentStatus } from "@/store/models/deployment";
-import Metric from "@/components/Metric.vue";
+import PlatzMetric from "@/components/PlatzMetric.vue";
 import ConfigValues from "../config/ConfigValues.vue";
 import DeploymentActions from "./DeploymentActions.vue";
 import HelmChartWithUpgrade from "./HelmChartWithUpgrade.vue";
-import Notices from "./Notices.vue";
-import History from "./History.vue";
+import DeploymentNotices from "./DeploymentNotices.vue";
+import DeploymentHistory from "./DeploymentHistory.vue";
 import K8sResources from "./K8sResources.vue";
 
 export default defineComponent({
   components: {
-    Metric,
+    PlatzMetric,
     DeploymentActions,
     HelmChartWithUpgrade,
-    Notices,
+    DeploymentNotices,
     ConfigValues,
-    History,
+    DeploymentHistory,
     K8sResources,
   },
 

@@ -1,14 +1,14 @@
 <template>
   <div>
     <span v-if="showRegion">
-      <fa icon="globe" fixed-width />
+      <FaIcon icon="globe" fixed-width />
       {{ cluster.region_name }}
     </span>
     <span v-if="showRegion">
-      <fa icon="angle-right" class="mx-2 opacity-75" />
+      <FaIcon icon="angle-right" class="mx-2 opacity-75" />
     </span>
     <span>
-      <fa icon="cubes" fixed-width />
+      <FaIcon icon="cubes" fixed-width />
       {{ cluster.name }}
     </span>
   </div>
@@ -32,9 +32,7 @@ export default defineComponent({
 
   setup(props) {
     const store = useStore();
-    const cluster = computed(() =>
-      store!.collections.k8sClusters.getOne(props.id)
-    );
+    const cluster = computed(() => store!.collections.k8sClusters.getOne(props.id));
 
     return {
       cluster,

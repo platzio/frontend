@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Collection :items="allPermissions">
+    <PlatzCollection :items="allPermissions">
       <template #item="scope">
-        <ItemWithActions>
+        <PlatzItemWithActions>
           <template #contents>
             <div class="mt-2 mb-1 d-flex flex-row align-items-center">
-              <User :id="scope.item.user_id" :showName="true" />
+              <PlatzUser :id="scope.item.user_id" :showName="true" />
               <span class="ms-2 badge bg-success">{{ scope.item.role.toUpperCase() }}</span>
             </div>
-            <div class="small mb-1">Added <Moment :value="scope.item.created_at" /></div>
+            <div class="small mb-1">Added <PlatzMoment :value="scope.item.created_at" /></div>
           </template>
           <template #actions>
             <li>
@@ -16,12 +16,12 @@
                 class="dropdown-item"
                 @click="removeUserPermission && removeUserPermission.open(scope.item)"
               >
-                <fa icon="trash-alt" fixed-width />
+                <FaIcon icon="trash-alt" fixed-width />
                 Remove Permission
               </a>
             </li>
           </template>
-        </ItemWithActions>
+        </PlatzItemWithActions>
       </template>
 
       <template #global-actions>
@@ -32,12 +32,12 @@
               class="btn btn-primary"
               @click="addUserPermission && addUserPermission.open()"
             >
-              <fa icon="plus" fixed-width />
+              <FaIcon icon="plus" fixed-width />
               Add User Permission
             </button>
           </div>
           <div class="my-3 text-muted text-start">
-            <fa icon="info-circle" fixed-width />
+            <FaIcon icon="info-circle" fixed-width />
             Users listed here can see the env and everything in it (deployments and custom
             resources). Admin users can perform any operation and control permissions for all other
             users.
@@ -57,12 +57,12 @@
             class="btn btn-lg btn-primary"
             @click="addUserPermission && addUserPermission.open()"
           >
-            <fa icon="plus" fixed-width />
+            <FaIcon icon="plus" fixed-width />
             Add User Permission
           </button>
         </div>
       </template>
-    </Collection>
+    </PlatzCollection>
 
     <AddUserPermission ref="addUserPermission" :envId="envId" />
     <RemoveUserPermission ref="removeUserPermission" />

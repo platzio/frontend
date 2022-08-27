@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     :title="action ? action.title : ''"
     size="lg"
@@ -31,17 +31,17 @@
           v-model="confirm_danger"
         />
         <label class="form-check-label">
-          I, being of sound mind and body, herby declare that I am aware that
-          this action is dangerous, and willfuly perform it
+          I, being of sound mind and body, herby declare that I am aware that this action is
+          dangerous, and willfuly perform it
         </label>
       </div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { Deployment } from "@/store/models/deployment";
 import { HelmChartActionSchemaV0 } from "@/store/chart-ext";
 import { useStore } from "@/store";
@@ -74,14 +74,14 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
     ConfigInputsForm,
   },
 
   setup(props, { emit }) {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(deployment: Deployment, action: HelmChartActionSchemaV0) {
       Object.assign(state, initialData());

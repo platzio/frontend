@@ -15,13 +15,13 @@
     />
     <div class="ps-2 mb-3">
       <a class="text-secondary" @click="removeFromArray(idx)">
-        <fa icon="times-circle" fixed-width />
+        <FaIcon icon="times-circle" fixed-width />
       </a>
     </div>
   </div>
   <div class="small mb-4">
     <a class="text-primary" @click="addToArray">
-      <fa icon="plus-circle" fixed-width />
+      <FaIcon icon="plus-circle" fixed-width />
       Add {{ input.label }}
     </a>
   </div>

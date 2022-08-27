@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <AdminNavbar />
   <div class="sidenav">
     <ul class="nav nav-pills flex-column">
       <li class="nav-heading">General</li>
@@ -36,11 +36,11 @@
 <script lang="ts">
 import { useHead } from "@vueuse/head";
 import { defineComponent } from "vue";
-import Navbar from "./Navbar.vue";
+import AdminNavbar from "./AdminNavbar.vue";
 
 export default defineComponent({
   components: {
-    Navbar,
+    AdminNavbar,
   },
 
   setup() {

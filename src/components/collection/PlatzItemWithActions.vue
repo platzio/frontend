@@ -1,7 +1,5 @@
 <template>
-  <CollectionItem
-    class="d-flex flex-row align-items-center justify-content-between"
-  >
+  <PlatzCollectionItem class="d-flex flex-row align-items-center justify-content-between">
     <div class="w-100">
       <slot name="contents" />
     </div>
@@ -13,11 +11,11 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <fa icon="ellipsis-v" fixed-width />
+        <FaIcon icon="ellipsis-v" fixed-width />
       </a>
       <ul class="dropdown-menu">
         <slot name="actions" />
       </ul>
     </div>
-  </CollectionItem>
+  </PlatzCollectionItem>
 </template>

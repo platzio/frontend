@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Change Secret Contents"
     size="lg"
@@ -26,12 +26,12 @@
       />
       <label class="form-label">New Contents</label>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { Secret } from "@/store/models/secret";
 
@@ -60,13 +60,13 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(secret: Secret) {
       Object.assign(state, initialData());

@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     size="lg"
     title="Edit Node Selector and Tolerations"
@@ -9,19 +9,11 @@
     @submit="submit"
     submitText="Save Changes"
   >
-    <div class="mb-3">
-      Please enter updated values for node selector and tolerations:
-    </div>
+    <div class="mb-3">Please enter updated values for node selector and tolerations:</div>
 
     <div class="form-floating">
-      <YamlInput
-        id="nodeSelector"
-        v-model="node_selector"
-        :disabled="working"
-      />
-      <label for="nodeSelector" class="form-label">
-        Node Selector (YAML)
-      </label>
+      <YamlInput id="nodeSelector" v-model="node_selector" :disabled="working" />
+      <label for="nodeSelector" class="form-label"> Node Selector (YAML) </label>
     </div>
 
     <div class="form-floating">
@@ -31,20 +23,20 @@
 
     <div class="mt-1 alert alert-warning">
       <div class="my-1 fw-bold">
-        <fa icon="exclamation-triangle" fixed-width />
+        <FaIcon icon="exclamation-triangle" fixed-width />
         Careful
       </div>
       <div class="my-1">
-        Saving these changes, even without changing anything, will immediately
-        re-deploy all currently enabled deployments in this env.
+        Saving these changes, even without changing anything, will immediately re-deploy all
+        currently enabled deployments in this env.
       </div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { Env } from "@/store/models/env";
 
@@ -64,7 +56,7 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   props: {
@@ -77,7 +69,7 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(env: Env) {
       Object.assign(state, initialData());

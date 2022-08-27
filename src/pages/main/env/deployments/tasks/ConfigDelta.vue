@@ -12,7 +12,7 @@
       :showLabel="true"
       :showEmpty="true"
     />
-    <span class="mx-2 small opacity50"><fa icon="arrow-right" /></span>
+    <span class="mx-2 small opacity50"><FaIcon icon="arrow-right" /></span>
     <ConfigValue
       :input="inputFor(key)"
       :value="changes[1]"

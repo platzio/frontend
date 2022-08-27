@@ -1,20 +1,15 @@
 <template>
   <div v-if="isParentRoute">
-    <Collection :items="allResources">
+    <PlatzCollection :items="allResources">
       <template #item="scope">
-        <LinkedItem
-          :to="{ name: 'env.resources.page', params: { id: scope.item.id } }"
-        >
+        <PlatzLinkedItem :to="{ name: 'env.resources.page', params: { id: scope.item.id } }">
           <ResourceRow :resource="scope.item" />
-        </LinkedItem>
+        </PlatzLinkedItem>
       </template>
 
       <template #global-actions v-if="canEdit">
-        <button
-          class="btn btn-primary"
-          @click="editResource && editResource.open()"
-        >
-          <fa icon="plus" fixed-width />
+        <button class="btn btn-primary" @click="editResource && editResource.open()">
+          <FaIcon icon="plus" fixed-width />
           Add {{ resourceType.spec.name_singular }}
         </button>
       </template>
@@ -22,20 +17,13 @@
       <template #empty-title>No {{ resourceType.spec.name_plural }}</template>
 
       <template #empty-action v-if="canEdit">
-        <button
-          class="btn btn-lg btn-primary"
-          @click="editResource && editResource.open()"
-        >
-          <fa icon="plus" fixed-width />
+        <button class="btn btn-lg btn-primary" @click="editResource && editResource.open()">
+          <FaIcon icon="plus" fixed-width />
           Add First {{ resourceType.spec.name_singular }}
         </button>
       </template>
-    </Collection>
-    <EditResource
-      ref="editResource"
-      :envId="envId"
-      :resourceTypeId="resourceTypeId"
-    />
+    </PlatzCollection>
+    <EditResource ref="editResource" :envId="envId" :resourceTypeId="resourceTypeId" />
   </div>
   <div v-else>
     <router-view :envId="envId" />
@@ -84,9 +72,7 @@ export default defineComponent({
 
     // TODO: Check allowed_role
     const canEdit = computed(
-      () =>
-        resourceType.value.spec.lifecycle &&
-        resourceType.value.spec.lifecycle.create
+      () => resourceType.value.spec.lifecycle && resourceType.value.spec.lifecycle.create
     );
 
     const allResources = computed(() =>
@@ -96,10 +82,7 @@ export default defineComponent({
     );
 
     useHead({
-      title: computed(
-        () =>
-          `${resourceType.value.spec.name_plural} - ${env.value.name} - Platz`
-      ),
+      title: computed(() => `${resourceType.value.spec.name_plural} - ${env.value.name} - Platz`),
     });
 
     return {

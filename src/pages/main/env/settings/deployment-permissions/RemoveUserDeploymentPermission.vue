@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     :title="`Remove ${kind} ${role}`"
     btn-class="btn-danger"
@@ -8,27 +8,22 @@
     @submit="submit"
   >
     <div class="alert alert-danger mb-2">
-      <fa icon="exclamation-triangle" fixed-width />
+      <FaIcon icon="exclamation-triangle" fixed-width />
       You are about to remove the following
       {{ role && role.toLowerCase() }} from {{ kind && kind.toLowerCase() }}:
     </div>
     <div class="my-3 p-3 rounded border fw-bold bg-light" v-if="permission">
-      <User :id="permission.user_id" :show-name="true" />
+      <PlatzUser :id="permission.user_id" :show-name="true" />
     </div>
-    <div class="mt-2">
-      Are you sure you want to continue?
-    </div>
-  </Modal>
+    <div class="mt-2">Are you sure you want to continue?</div>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
-import {
-  DeploymentPermission,
-  UserDeploymentRole
-} from "@/store/models/deployment-permission";
+import { DeploymentPermission, UserDeploymentRole } from "@/store/models/deployment-permission";
 
 function initialData(): {
   error: any;
@@ -42,25 +37,21 @@ function initialData(): {
     working: false,
     kind: undefined,
     role: undefined,
-    permission: undefined
+    permission: undefined,
   };
 }
 
 export default defineComponent({
   components: {
-    Modal
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
-    function open(
-      kind: string,
-      role: UserDeploymentRole,
-      permission: DeploymentPermission
-    ) {
+    function open(kind: string, role: UserDeploymentRole, permission: DeploymentPermission) {
       Object.assign(state, initialData());
       state.kind = kind;
       state.role = role;
@@ -79,9 +70,7 @@ export default defineComponent({
       try {
         state.working = true;
         state.error = null;
-        await store!.collections.deploymentPermissions.deleteItem(
-          state.permission.id
-        );
+        await store!.collections.deploymentPermissions.deleteItem(state.permission.id);
         modal.value!.close();
       } catch (error) {
         state.error = error;
@@ -94,8 +83,8 @@ export default defineComponent({
       open,
       close,
       submit,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>

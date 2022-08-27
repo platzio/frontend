@@ -1,26 +1,26 @@
 <template>
   <div>
     <div v-if="parentRoute">
-      <Collection :items="allHelmRegistries">
+      <PlatzCollection :items="allHelmRegistries">
         <template #item="scope">
-          <LinkedItem
+          <PlatzLinkedItem
             :to="{
               name: 'admin.helm-registry-page',
               params: { id: scope.item.id },
             }"
           >
             <div class="my-1">
-              <HelmRegistry :registry="scope.item" :showCategory="true" />
+              <PlatzHelmRegistry :registry="scope.item" :showCategory="true" />
             </div>
-          </LinkedItem>
+          </PlatzLinkedItem>
         </template>
 
         <template #empty-title> No Helm Registries </template>
         <template #empty-text>
-          Helm registries are created automatically when a new Helm chart is
-          detected, there's nothing you have to do to make them appear here.
+          Helm registries are created automatically when a new Helm chart is detected, there's
+          nothing you have to do to make them appear here.
         </template>
-      </Collection>
+      </PlatzCollection>
     </div>
     <div v-else>
       <router-view />
@@ -42,9 +42,7 @@ export default defineComponent({
       () => Object.keys(route.params).length == Object.keys(props).length
     );
 
-    const allHelmRegistries = computed(
-      () => store!.collections.helmRegistries.all
-    );
+    const allHelmRegistries = computed(() => store!.collections.helmRegistries.all);
 
     useHead({
       title: "Helm Registries - Admin - Platz",

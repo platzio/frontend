@@ -1,5 +1,5 @@
 <template>
-  <CenteredLogo :progress="loadingProgress" :text="loadingStatus" />
+  <PlatzCenteredLogo :progress="loadingProgress" :text="loadingStatus" />
 </template>
 
 <script lang="ts">
@@ -12,8 +12,8 @@ export default defineComponent({
 
     return {
       loadingProgress: store!.loadingProgress,
-      loadingStatus: store!.loadingStatus
+      loadingStatus: store!.loadingStatus,
     };
-  }
+  },
 });
 </script>

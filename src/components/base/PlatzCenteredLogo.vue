@@ -2,7 +2,7 @@
   <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="d-flex flex-column align-items-center">
       <div>
-        <Logo size="3.25rem" />
+        <PlatzLogo size="3.25rem" />
       </div>
       <div class="my-3 progress" style="width: 7rem; height: 7px" v-if="!error">
         <div
@@ -12,7 +12,7 @@
           aria-valuemax="100"
           :style="{ width: `${progress}%` }"
           :class="{
-            'progress-bar-striped progress-bar-animated': animateProgress
+            'progress-bar-striped progress-bar-animated': animateProgress,
           }"
           :aria-valuenow="progress"
         />
@@ -20,7 +20,7 @@
       <div class="status" :class="{ 'show-status': !!text }" v-if="!error">
         {{ text }}
       </div>
-      <Error class="my-3" :error="error" v-else />
+      <PlatzError class="my-3" :error="error" v-else />
     </div>
   </div>
 </template>
@@ -45,20 +45,20 @@ export default defineComponent({
   props: {
     progress: {
       type: Number,
-      default: 0
+      default: 0,
     },
     animateProgress: {
       type: Boolean,
-      default: false
+      default: false,
     },
     text: {
       type: String,
-      default: ""
+      default: "",
     },
     error: {
       type: Object,
-      required: false
-    }
-  }
+      required: false,
+    },
+  },
 });
 </script>

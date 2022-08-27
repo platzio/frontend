@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     size="lg"
     :title="title"
@@ -9,17 +9,12 @@
     :working="working"
     @submit="submit"
   >
-    <DeploymentForm
-      :envId="envId"
-      :current-data="current"
-      :working="working"
-      ref="form"
-    />
-  </Modal>
+    <DeploymentForm :envId="envId" :current-data="current" :working="working" ref="form" />
+  </PlatzModal>
 </template>
 
 <script lang="ts">
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
 import { cloneDeep } from "lodash";
@@ -56,14 +51,14 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
     DeploymentForm,
   },
 
   setup() {
     const store = useStore();
     const state = reactive(initialData());
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
     const form = ref<typeof DeploymentForm>();
 
     function openForCreate(kind: string) {

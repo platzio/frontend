@@ -5,9 +5,7 @@
     @change="changed"
     :style="{
       'padding-top': '2rem',
-      height: `calc(2.5rem + calc(1.3rem * max(2, ${
-        yaml.split('\n').length
-      })))`,
+      height: `calc(2.5rem + calc(1.3rem * max(2, ${yaml.split('\n').length})))`,
     }"
     v-model="yaml"
     :disabled="disabled"
@@ -18,7 +16,7 @@
   />
   <div class="form-text opacity-75">
     <span class="text-danger" v-if="error">
-      <fa icon="exclamation-triangle" fixed-width />
+      <FaIcon icon="exclamation-triangle" fixed-width />
       YAML parse error: {{ error.reason }}
     </span>
     <span v-else>&nbsp;</span>

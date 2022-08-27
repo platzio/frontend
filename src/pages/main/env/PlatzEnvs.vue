@@ -5,7 +5,7 @@
     <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
       <div class="alert alert-warning">
         <div class="mt-2 mb-3 h5 fw-bold">
-          <fa icon="city" fixed-width />
+          <FaIcon icon="city" fixed-width />
           No Permissions
         </div>
         <div class="my-1">It looks like you have no permissions to see any env.</div>
@@ -13,12 +13,12 @@
           Please ask an admin to grant you permissions to one of the envs.
         </div>
       </div>
-      <div class="alert alert-primary">
+      <div class="alert alert-primary" v-if="curUser.is_admin">
         <div class="mt-2 mb-3 h5 fw-bold">
-          <fa icon="shield-alt" fixed-width />
+          <FaIcon icon="shield-alt" fixed-width />
           But Fear Not, You're an Admin!
         </div>
-        <div class="my-1" v-if="curUser.is_admin">
+        <div class="my-1">
           You can go into the
           <router-link :to="{ name: 'admin.envs' }">Envs Admin Section</router-link>
           to create a new env or add yourself to an existing one.

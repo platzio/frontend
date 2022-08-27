@@ -1,5 +1,5 @@
 <template>
-  <CenteredLogo
+  <PlatzCenteredLogo
     :progress="100"
     :animate-progress="true"
     text="🚀 redirecting to google"

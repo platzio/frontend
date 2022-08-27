@@ -9,14 +9,14 @@
       aria-expanded="false"
     >
       Actions
-      <fa icon="angle-down" fixed-width />
+      <FaIcon icon="angle-down" fixed-width />
     </a>
 
     <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
       <template v-if="isMaintainer && filteredActions.length > 0">
         <li v-for="action in filteredActions" :key="action.id">
           <a class="dropdown-item" @click="invokeAction && invokeAction.open(deployment, action)">
-            <fa :icon="action.fontawesome_icon || 'flag-checkered'" fixed-width />
+            <FaIcon :icon="action.fontawesome_icon || 'flag-checkered'" fixed-width />
             {{ action.title }}
           </a>
         </li>
@@ -26,15 +26,15 @@
 
       <li v-if="logsUrl">
         <a class="dropdown-item" :href="logsUrl" target="_blank">
-          <fa icon="stream" fixed-width />
+          <FaIcon icon="stream" fixed-width />
           Open logs
-          <fa icon="external-link-alt" fixed-width />
+          <FaIcon icon="external-link-alt" fixed-width />
         </a>
       </li>
 
       <li v-if="isMaintainer">
         <a class="dropdown-item" @click="editDeployment && editDeployment.openForEdit(deployment)">
-          <fa icon="edit" fixed-width />
+          <FaIcon icon="edit" fixed-width />
           Edit Deployment
         </a>
       </li>
@@ -44,14 +44,14 @@
           class="dropdown-item"
           @click="editDeployment && editDeployment.openForCloneFrom(deployment)"
         >
-          <fa icon="edit" fixed-width />
+          <FaIcon icon="edit" fixed-width />
           Clone From Deployment
         </a>
       </li>
 
       <li v-if="isMaintainer">
         <a class="dropdown-item" @click="editDescription && editDescription.open(deployment)">
-          <fa icon="message" fixed-width />
+          <FaIcon icon="message" fixed-width />
           Edit Description
         </a>
       </li>
@@ -60,14 +60,14 @@
         <li class="dropdown-divider" />
         <li v-if="!deployment.enabled">
           <a class="dropdown-item" @click="enableDeployment && enableDeployment.open(deployment)">
-            <fa icon="toggle-on" fixed-width />
+            <FaIcon icon="toggle-on" fixed-width />
             Enable Deployment
           </a>
         </li>
 
         <li v-if="deployment.enabled">
           <a class="dropdown-item" @click="disableDeployment && disableDeployment.open(deployment)">
-            <fa icon="toggle-off" fixed-width />
+            <FaIcon icon="toggle-off" fixed-width />
             Disable Deployment
           </a>
         </li>
@@ -77,7 +77,7 @@
             class="dropdown-item"
             @click="deleteDeployment && deleteDeployment.open(deployment.id)"
           >
-            <fa icon="trash" fixed-width />
+            <FaIcon icon="trash" fixed-width />
             Delete Deployment
           </a>
         </li>

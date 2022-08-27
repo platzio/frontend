@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-platz">
-    <router-link tag="a" class="navbar-brand" :to="{ name: 'main' }">
-      <Logo size="2.5rem" />
+    <router-link class="navbar-brand" :to="{ name: 'main' }">
+      <PlatzLogo size="2.5rem" />
     </router-link>
 
     <button
@@ -23,11 +23,7 @@
             Deployments
           </router-link>
         </li>
-        <li
-          class="nav-item"
-          v-for="resourceType in resourceTypes"
-          :key="resourceType.id"
-        >
+        <li class="nav-item" v-for="resourceType in resourceTypes" :key="resourceType.id">
           <router-link
             class="nav-link"
             :to="{
@@ -50,17 +46,12 @@
             aria-expanded="false"
           >
             <div class="d-flex flex-row align-items-center">
-              <Env :id="envId" :showInfo="false" />
-              <fa icon="angle-down" class="ms-2" />
+              <PlatzEnv :id="envId" :showInfo="false" />
+              <FaIcon icon="angle-down" class="ms-2" />
             </div>
           </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="env-dropdown"
-          >
-            <li class="nav-heading mt-1 mb-2" v-if="otherEnvs.length > 0">
-              Switch Env
-            </li>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="env-dropdown">
+            <li class="nav-heading mt-1 mb-2" v-if="otherEnvs.length > 0">Switch Env</li>
             <li v-for="env in otherEnvs" :key="env.id">
               <router-link
                 class="dropdown-item"
@@ -68,27 +59,19 @@
                   params: { envId: env.id },
                 }"
               >
-                <Env :id="env.id" />
+                <PlatzEnv :id="env.id" />
               </router-link>
             </li>
             <li class="dropdown-divider" v-if="otherEnvs.length > 0" />
             <li>
-              <router-link
-                :to="{ name: 'env.settings' }"
-                class="dropdown-item"
-                active-class=""
-              >
-                <fa icon="sliders-h" fixed-width />
+              <router-link :to="{ name: 'env.settings' }" class="dropdown-item" active-class="">
+                <FaIcon icon="sliders-h" fixed-width />
                 This Env's Settings
               </router-link>
             </li>
             <li v-if="curUser.is_admin">
-              <router-link
-                :to="{ name: 'admin' }"
-                class="dropdown-item"
-                active-class=""
-              >
-                <fa icon="cog" fixed-width />
+              <router-link :to="{ name: 'admin' }" class="dropdown-item" active-class="">
+                <FaIcon icon="cog" fixed-width />
                 Global Site Settings
               </router-link>
             </li>
@@ -104,19 +87,16 @@
             aria-expanded="false"
           >
             <div class="d-flex flex-row align-items-center">
-              <User :id="curUser.id" :show-name="true" />
+              <PlatzUser :id="curUser.id" :show-name="true" />
               <div class="ms-2">
-                <fa icon="angle-down" />
+                <FaIcon icon="angle-down" />
               </div>
             </div>
           </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="user-dropdown"
-          >
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
             <li>
               <router-link :to="{ name: 'auth.logout' }" class="dropdown-item">
-                <fa icon="sign-out-alt" fixed-width />
+                <FaIcon icon="sign-out-alt" fixed-width />
                 Logout
               </router-link>
             </li>

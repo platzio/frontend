@@ -1,17 +1,17 @@
 <template>
   <div>
     <div v-if="parentRoute">
-      <Collection :items="filteredDeployments">
+      <PlatzCollection :items="filteredDeployments">
         <template #item="scope">
-          <LinkedItem
+          <PlatzLinkedItem
             :to="{
               name: 'env.deployments.page',
               params: { envId, kind, id: scope.item.id },
             }"
             append
           >
-            <Deployment :deployment="scope.item" :showPrimaryMetric="true" />
-          </LinkedItem>
+            <PlatzDeployment :deployment="scope.item" :showPrimaryMetric="true" />
+          </PlatzLinkedItem>
         </template>
 
         <template #global-actions>
@@ -46,11 +46,11 @@
             class="btn btn-lg btn-primary"
             @click="editDeployment && editDeployment.openForCreate(kind)"
           >
-            <fa icon="plus" fixed-width />
+            <FaIcon icon="plus" fixed-width />
             Create Deployment
           </button>
         </template>
-      </Collection>
+      </PlatzCollection>
       <EditDeployment ref="editDeployment" :envId="envId" />
     </div>
     <div v-else>

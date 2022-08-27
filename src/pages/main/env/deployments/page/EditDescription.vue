@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     size="lg"
     title="Edit Deployment Description"
@@ -9,8 +9,8 @@
     @submit="submit"
   >
     <div class="mb-3 text-secondary">
-      The description below would appear in the deployment page, use an empty
-      value to remove the deployment description.
+      The description below would appear in the deployment page, use an empty value to remove the
+      deployment description.
     </div>
     <textarea
       class="form-control font-monospace"
@@ -25,14 +25,14 @@
       placeholder="Enter a description, or leave empty to remove it"
     />
     <div class="my-2 small text-muted">
-      <fa :icon="['fab', 'markdown']" brand fixed-width />
+      <FaIcon :icon="['fab', 'markdown']" brand fixed-width />
       Markdown formatting is supported, emojis encouraged ⭐️
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { Deployment } from "@/store/models/deployment";
 import { defineComponent, reactive, ref, toRefs } from "vue";
@@ -53,13 +53,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(deployment: Deployment) {
       Object.assign(state, initialData());

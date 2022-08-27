@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Add User Permission"
     btn-class="btn-primary"
@@ -32,8 +32,8 @@
         <label class="form-check-label" for="userRoleRegular">
           <div class="">Regular User</div>
           <div class="mt-1 text-muted">
-            Can see and access the env, perform actions based on the permissions
-            granted by other admins.
+            Can see and access the env, perform actions based on the permissions granted by other
+            admins.
           </div>
         </label>
       </div>
@@ -49,20 +49,19 @@
         <label class="form-check-label" for="userRoleAdmin">
           <div class="">Admin User</div>
           <div class="mt-1 text-muted">
-            Can perform any operation for deployments and custom resources,
-            without specifically adding permissions for each operation. Also,
-            can change all env settings, including adding and removing
-            permissions for deployments and custom resources.
+            Can perform any operation for deployments and custom resources, without specifically
+            adding permissions for each operation. Also, can change all env settings, including
+            adding and removing permissions for deployments and custom resources.
           </div>
         </label>
       </div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { EnvUserRole } from "@/store/models/env-user-permission";
 
@@ -89,13 +88,13 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup(props) {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     const possibleUsers = computed(() =>
       store!.collections.users.all.filter((user) =>

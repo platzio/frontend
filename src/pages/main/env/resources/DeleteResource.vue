@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     :title="`Delete ${resourceType && resourceType.spec.name_singular}`"
     btn-class="btn-danger"
@@ -9,7 +9,7 @@
   >
     <div class="alert alert-danger">
       <div class="mb-1 fw-bold">
-        <fa icon="exclamation-circle" />
+        <FaIcon icon="exclamation-circle" />
         Careful
       </div>
       <div>
@@ -23,12 +23,12 @@
     </div>
 
     <div class="mt-3">Are you sure you want to continue?</div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import ResourceRow from "./ResourceRow.vue";
 
@@ -42,14 +42,14 @@ function initialData(): { error: any; disabled: boolean; id?: string } {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
     ResourceRow,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     const resource = computed(() =>
       state.id ? store!.collections.deploymentResources.getOne(state.id) : null
@@ -57,10 +57,7 @@ export default defineComponent({
 
     const resourceType = computed(
       () =>
-        resource.value &&
-        store!.collections.deploymentResourceTypes.getOne(
-          resource.value.type_id
-        )
+        resource.value && store!.collections.deploymentResourceTypes.getOne(resource.value.type_id)
     );
 
     function open(id: string) {

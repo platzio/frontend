@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     :title="title"
     :submit-text="submitText"
@@ -14,12 +14,12 @@
       :resourceTypeId="resourceTypeId"
       ref="form"
     />
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { DeploymentResource } from "@/store/models/deployment-resource";
 import ResourceForm from "./ResourceForm.vue";
@@ -49,14 +49,14 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
     ResourceForm,
   },
 
   setup(props) {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
     const form = ref<typeof ResourceForm>();
 
     const resourceType = computed(() =>
@@ -70,9 +70,7 @@ export default defineComponent({
         }`
     );
 
-    const submitText = computed(() =>
-      state.current.id ? "Save Changes" : title.value
-    );
+    const submitText = computed(() => (state.current.id ? "Save Changes" : title.value));
 
     function open(current: DeploymentResource) {
       Object.assign(state, initialData());

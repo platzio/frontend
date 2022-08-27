@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Delete Tag Format"
     btn-class="btn-danger"
@@ -10,7 +10,7 @@
   >
     <div class="my-3 alert alert-danger">
       <div class="my-2 fw-bold">
-        <fa icon="triangle-exclamation" fixed-width />
+        <FaIcon icon="triangle-exclamation" fixed-width />
         Careful
       </div>
       <div class="my-2">You are about to delete the following tag format:</div>
@@ -21,12 +21,12 @@
     </div>
 
     <div class="my-3">Are you sure you want to continue?</div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { HelmTagFormat } from "@/store/models/helm-tag-format";
 
@@ -44,13 +44,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(item: HelmTagFormat) {
       Object.assign(state, initialData());

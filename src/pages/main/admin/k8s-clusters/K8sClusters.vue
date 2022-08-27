@@ -1,24 +1,23 @@
 <template>
   <div>
     <div v-if="parentRoute">
-      <Collection :items="allK8sClusters">
+      <PlatzCollection :items="allK8sClusters">
         <template #item="scope">
-          <LinkedItem
+          <PlatzLinkedItem
             :to="{
               name: 'admin.k8s-cluster-page',
               params: { id: scope.item.id },
             }"
           >
             <ClusterRow :cluster="scope.item" />
-          </LinkedItem>
+          </PlatzLinkedItem>
         </template>
 
         <template #empty-title> No Kubernetes Clusters </template>
         <template #empty-text>
-          Platz scans for Kubernetes clusters automatically in the same AWS
-          account where it runs.
+          Platz scans for Kubernetes clusters automatically in the same AWS account where it runs.
         </template>
-      </Collection>
+      </PlatzCollection>
     </div>
     <div v-else>
       <router-view />

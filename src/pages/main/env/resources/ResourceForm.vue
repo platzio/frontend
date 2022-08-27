@@ -15,7 +15,7 @@
         :disabled="disabled"
       />
       <label for="name" class="form-label">
-        <fa :icon="resourceType.spec.fontawesome_icon" fixed-width />
+        <FaIcon :icon="resourceType.spec.fontawesome_icon" fixed-width />
         {{ resourceType.spec.name_singular }} Name
       </label>
     </div>
@@ -95,9 +95,7 @@ export default defineComponent({
     const possibleDeployments = computed(() =>
       store!.collections.deployments
         .allForEnv(props.envId)
-        .filter(
-          (deployment) => deployment.kind === resourceType.value.deployment_kind
-        )
+        .filter((deployment) => deployment.kind === resourceType.value.deployment_kind)
     );
 
     const new_data = ref<Partial<DeploymentResource>>({});
@@ -113,15 +111,13 @@ export default defineComponent({
 
     async function save() {
       if (isNew.value) {
-        const updated = await store!.collections.deploymentResources.updateItem(
-          {
-            id: props.currentData.id,
-            data: {
-              name: new_data.value.name,
-              props: new_data.value.props,
-            },
-          }
-        );
+        const updated = await store!.collections.deploymentResources.updateItem({
+          id: props.currentData.id,
+          data: {
+            name: new_data.value.name,
+            props: new_data.value.props,
+          },
+        });
         return updated.id;
       }
       const resource = await store!.collections.deploymentResources.createItem({
@@ -131,9 +127,7 @@ export default defineComponent({
       return resource.id;
     }
 
-    const formatDeployment = computed(
-      () => store!.collections.deployments.formatItem
-    );
+    const formatDeployment = computed(() => store!.collections.deployments.formatItem);
 
     return {
       new_data,

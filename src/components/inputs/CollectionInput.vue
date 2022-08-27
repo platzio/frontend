@@ -19,13 +19,11 @@
     </template>
     <div v-else class="small alert alert-warning">
       <div class="mb-1 fw-bold">
-        <fa icon="exclamation-triangle" fixed-width />
+        <FaIcon icon="exclamation-triangle" fixed-width />
         Can't Render This Field
       </div>
       <div>
-        This chart required an input from an unknown collection named "{{
-          input.collection
-        }}".
+        This chart required an input from an unknown collection named "{{ input.collection }}".
       </div>
     </div>
   </div>
@@ -33,14 +31,7 @@
 
 <script lang="ts">
 import { isEqual } from "lodash";
-import {
-  computed,
-  defineComponent,
-  ref,
-  watch,
-  watchEffect,
-  PropType,
-} from "vue";
+import { computed, defineComponent, ref, watch, watchEffect, PropType } from "vue";
 import { HelmChartUiInput } from "@/store/chart-ext";
 import { getInputCollection } from "@/store/deployment-resources";
 
@@ -90,9 +81,7 @@ export default defineComponent({
     });
 
     const collection = computed(
-      () =>
-        props.input.collection &&
-        getInputCollection(props.envId, props.input.collection)
+      () => props.input.collection && getInputCollection(props.envId, props.input.collection)
     );
 
     const collectionItems = computed(() => {

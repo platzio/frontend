@@ -1,10 +1,10 @@
 <template>
-  <Collection :items="resources" flush>
+  <PlatzCollection :items="resources" flush>
     <template #item="scope">
-      <ItemWithActions>
+      <PlatzItemWithActions>
         <template #contents>
           <div class="my-1 fw-bold d-flex flex-row align-items-baseline">
-            <K8sResourceStatus :id="scope.item.id" class="me-2" />
+            <PlatzResourceStatus :id="scope.item.id" class="me-2" />
             <div>{{ scope.item.name }}</div>
           </div>
           <div class="my-1 small text-secondary">
@@ -18,14 +18,14 @@
               @click="restartResource(scope.item)"
               :class="{ disabled: !isMaintainer }"
             >
-              <fa icon="sync" fixed-width />
+              <FaIcon icon="sync" fixed-width />
               Restart {{ scope.item.kind }}
             </a>
           </li>
         </template>
-      </ItemWithActions>
+      </PlatzItemWithActions>
     </template>
-  </Collection>
+  </PlatzCollection>
 </template>
 
 <script lang="ts">
@@ -49,9 +49,7 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
 
-    const isMaintainer = computed(() =>
-      isDeploymentMaintainer(props.envId, props.deployment.kind)
-    );
+    const isMaintainer = computed(() => isDeploymentMaintainer(props.envId, props.deployment.kind));
 
     const resources = computed(() =>
       store!.collections.k8sResources.all

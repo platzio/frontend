@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     :title="title"
     btn-class="btn-danger"
@@ -15,18 +15,18 @@
       You are about to <strong>UN-INGORE</strong> the following cluster:
     </div>
     <div class="my-3 rounded border p-3" v-if="cluster">
-      <K8sClusterName :id="cluster.id" />
+      <PlatzClusterName :id="cluster.id" />
     </div>
     <div class="my-3 alert alert-danger">
-      This can cause a lot of damage, please make sure you've read ALL the text
-      in the cluster page to understand what you're about to do.
+      This can cause a lot of damage, please make sure you've read ALL the text in the cluster page
+      to understand what you're about to do.
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { K8sCluster } from "@/store/models/k8s-cluster";
 
@@ -40,23 +40,21 @@ function initialData(): {
     error: undefined,
     working: false,
     cluster: undefined,
-    ignore: false
+    ignore: false,
   };
 }
 
 export default defineComponent({
   components: {
-    Modal
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
     const title = computed(() =>
-      state.cluster && state.cluster.ignore
-        ? "Un-Ignore Cluster"
-        : "Ignore Cluster"
+      state.cluster && state.cluster.ignore ? "Un-Ignore Cluster" : "Ignore Cluster"
     );
 
     function open(cluster: K8sCluster) {
@@ -80,8 +78,8 @@ export default defineComponent({
         await store!.collections.k8sClusters.updateItem({
           id: state.cluster.id,
           data: {
-            ignore: state.ignore
-          }
+            ignore: state.ignore,
+          },
         });
         modal.value!.close();
       } catch (error) {
@@ -96,8 +94,8 @@ export default defineComponent({
       open,
       close,
       submit,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>

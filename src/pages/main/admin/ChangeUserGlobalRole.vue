@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Change Global User Role"
     btn-class="btn-primary"
@@ -10,7 +10,7 @@
     <div>Choose the global role for the following user:</div>
 
     <div class="my-3 p-3 rounded border" v-if="user">
-      <User :id="user.id" :showName="true" />
+      <PlatzUser :id="user.id" :showName="true" />
     </div>
 
     <div class="my-3">
@@ -26,8 +26,7 @@
         <label class="form-check-label" for="userRoleRegular">
           <div class="">Regular User</div>
           <div class="mt-1 text-muted">
-            Can use the site like a normal person, can't access this admin
-            section.
+            Can use the site like a normal person, can't access this admin section.
           </div>
         </label>
       </div>
@@ -43,18 +42,18 @@
         <label class="form-check-label" for="userRoleAdmin">
           <div class="">Global Admin User</div>
           <div class="mt-1 text-muted">
-            Can access this admin section, create envs, assign clusters to
-            envs and set other users as global admins.
+            Can access this admin section, create envs, assign clusters to envs and set other users
+            as global admins.
           </div>
         </label>
       </div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { User } from "@/store/models/user";
 
@@ -74,13 +73,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(user: User) {
       Object.assign(state, initialData());

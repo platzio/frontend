@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Set Cluster Domain"
     btn-class="btn-primary"
@@ -9,13 +9,13 @@
     @submit="submit"
   >
     <div class="mb-3">
-      This sets a domain for the cluster, allowing deployments to automatically
-      create an ingress using the deployment name and the domain set here.
+      This sets a domain for the cluster, allowing deployments to automatically create an ingress
+      using the deployment name and the domain set here.
     </div>
 
     <div class="mb-3">
-      The TLS secret name is a Kubernetes secret for configuring TLS for the
-      ingress. The secret is usually managed automatically by cert-manager.
+      The TLS secret name is a Kubernetes secret for configuring TLS for the ingress. The secret is
+      usually managed automatically by cert-manager.
     </div>
 
     <div class="mb-3 form-floating">
@@ -30,7 +30,7 @@
       />
       <label for="domain" class="form-label">Domain</label>
       <div id="domain" class="form-text">
-        <fa icon="keyboard" class="ms-1" fixed-width />
+        <FaIcon icon="keyboard" class="ms-1" fixed-width />
         Enter a valid DNS name
       </div>
     </div>
@@ -45,16 +45,14 @@
         required
         :disabled="working"
       />
-      <label for="domain_tls_secret_name" class="form-label">
-        TLS Secret Name
-      </label>
+      <label for="domain_tls_secret_name" class="form-label"> TLS Secret Name </label>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { K8sCluster } from "@/store/models/k8s-cluster";
 
@@ -76,13 +74,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(cluster: K8sCluster) {
       Object.assign(state, initialData());

@@ -1,74 +1,58 @@
 <template>
   <div>
     <div v-if="collections.length > 0">
-      <div
-        class="mb-5"
-        v-for="(collection, idx) in collections"
-        :key="collection"
-      >
+      <div class="mb-5" v-for="(collection, idx) in collections" :key="collection">
         <div class="d-flex flex-row align-items-end">
           <div class="mt-0 mb-3 h4 flex-fill">
             {{ collection }}
           </div>
           <div class="float-end mb-4" v-if="idx === 0">
-            <button
-              class="btn btn-primary"
-              @click="addSecret && addSecret.open()"
-            >
-              <fa icon="plus" fixed-width />
+            <button class="btn btn-primary" @click="addSecret && addSecret.open()">
+              <FaIcon icon="plus" fixed-width />
               Add Secret
             </button>
           </div>
         </div>
 
-        <Collection :items="collectionSecrets(collection)">
+        <PlatzCollection :items="collectionSecrets(collection)">
           <template #item="scope">
-            <ItemWithActions>
+            <PlatzItemWithActions>
               <template #contents>
                 <div class="my-1">
                   {{ scope.item.name }}
                 </div>
                 <div class="my-1 small">
-                  <fa icon="clock" />
-                  Last updated <Moment :value="scope.item.updated_at" />
+                  <FaIcon icon="clock" />
+                  Last updated <PlatzMoment :value="scope.item.updated_at" />
                 </div>
               </template>
               <template #actions>
                 <li>
-                  <a
-                    class="dropdown-item"
-                    @click="renameSecret && renameSecret.open(scope.item)"
-                  >
-                    <fa icon="id-card" fixed-width />
+                  <a class="dropdown-item" @click="renameSecret && renameSecret.open(scope.item)">
+                    <FaIcon icon="id-card" fixed-width />
                     Rename Secret
                   </a>
                 </li>
                 <li>
                   <a
                     class="dropdown-item"
-                    @click="
-                      changeSecretContents &&
-                        changeSecretContents.open(scope.item)
-                    "
+                    @click="changeSecretContents && changeSecretContents.open(scope.item)"
                   >
-                    <fa icon="pencil" fixed-width />
+                    <FaIcon icon="pencil" fixed-width />
                     Change Secret Contents
                   </a>
                 </li>
                 <li class="dropdown-divider" />
                 <li>
-                  <a
-                    class="dropdown-item"
-                    @click="deleteSecret && deleteSecret.open(scope.item)"
-                  >
-                    <fa icon="trash-can" fixed-width />
+                  <a class="dropdown-item" @click="deleteSecret && deleteSecret.open(scope.item)">
+                    <FaIcon icon="trash-can" fixed-width />
                     Delete Secret
                   </a>
                 </li>
               </template>
-            </ItemWithActions>
+            </PlatzItemWithActions>
           </template>
-        </Collection>
+        </PlatzCollection>
       </div>
     </div>
 
@@ -80,11 +64,8 @@
           <code>values-ui.yaml</code> file
         </div>
         <div class="mb-5">
-          <button
-            class="btn btn-lg btn-primary"
-            @click="addSecret && addSecret.open()"
-          >
-            <fa icon="plus" fixed-width />
+          <button class="btn btn-lg btn-primary" @click="addSecret && addSecret.open()">
+            <FaIcon icon="plus" fixed-width />
             Add First Secret
           </button>
         </div>
@@ -134,9 +115,7 @@ export default defineComponent({
     const collections = computed(() =>
       Array.from(
         new Set(
-          store!.collections.secrets
-            .allForEnv(props.envId)
-            .map((secret) => secret.collection)
+          store!.collections.secrets.allForEnv(props.envId).map((secret) => secret.collection)
         )
       ).sort()
     );

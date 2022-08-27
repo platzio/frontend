@@ -1,16 +1,12 @@
 <template>
   <div>
     <div>
-      <fa icon="city" fixed-width />
+      <FaIcon icon="city" fixed-width />
       {{ env.name }}
     </div>
     <div class="mt-1 small text-muted" v-if="showInfo">
       {{ userCount === 1 ? "1 user" : `${userCount} users` }},
-      {{
-        deploymentCount === 1
-          ? "1 deployment"
-          : `${deploymentCount} deployments`
-      }}
+      {{ deploymentCount === 1 ? "1 deployment" : `${deploymentCount} deployments` }}
     </div>
   </div>
 </template>
@@ -46,8 +42,7 @@ export default defineComponent({
       () =>
         store!.collections.deployments.all.filter(
           (deployment) =>
-            store!.collections.k8sClusters.getOne(deployment.cluster_id)
-              .env_id == props.id
+            store!.collections.k8sClusters.getOne(deployment.cluster_id).env_id == props.id
         ).length
     );
 

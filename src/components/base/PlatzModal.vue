@@ -7,34 +7,20 @@
             <h5 class="modal-title" :id="`${id}Label`">
               {{ title }}
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              @click="close"
-              :disabled="working"
-            />
+            <button type="button" class="btn-close" @click="close" :disabled="working" />
           </div>
 
           <div class="modal-body">
-            <Error :error="topError" />
+            <PlatzError :error="topError" />
             <slot />
-            <Error :error="error" />
+            <PlatzError :error="error" />
           </div>
 
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-link"
-              @click="close"
-              :disabled="working"
-            >
+            <button type="button" class="btn btn-link" @click="close" :disabled="working">
               Cancel
             </button>
-            <button
-              type="submit"
-              :class="['btn', btnClass]"
-              :disabled="working"
-            >
+            <button type="submit" :class="['btn', btnClass]" :disabled="working">
               {{ submitText || title }}
             </button>
           </div>
@@ -86,9 +72,7 @@ export default defineComponent({
     const id = ref(`modal${Math.round(Math.random() * 10000000000000000)}`);
     const modal = ref<Modal>();
 
-    const dialogClasses = computed(() =>
-      props.size ? `modal-${props.size}` : ""
-    );
+    const dialogClasses = computed(() => (props.size ? `modal-${props.size}` : ""));
 
     onMounted(() => {
       const elem = document.getElementById(id.value);

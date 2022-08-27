@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Set Cluster Env"
     btn-class="btn-primary"
@@ -8,11 +8,9 @@
     :working="working"
     @submit="submit"
   >
-    <div class="mb-2">
-      This will set or move the following cluster between envs:
-    </div>
+    <div class="mb-2">This will set or move the following cluster between envs:</div>
     <div class="my-2 rounded border p-2" v-if="cluster">
-      <K8sClusterName :id="cluster.id" />
+      <PlatzClusterName :id="cluster.id" />
     </div>
     <div class="my-3">
       <select class="form-select" v-model="env_id">
@@ -22,12 +20,12 @@
         </option>
       </select>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { K8sCluster } from "@/store/models/k8s-cluster";
 
@@ -47,13 +45,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
     const envs = computed(() => store!.collections.envs.all);
 
     function open(cluster: K8sCluster) {

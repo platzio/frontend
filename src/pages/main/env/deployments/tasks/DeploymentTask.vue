@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Reason class="flex-fill" :text="task.reason" :is-bad="isBad">
+    <PlatzReason class="flex-fill" :text="task.reason" :is-bad="isBad">
       <template #before>
         <TaskBadge class="me-2" :task="task" />
       </template>
-    </Reason>
+    </PlatzReason>
 
     <UpgradeParams
       v-if="task.operation.Upgrade"
@@ -12,15 +12,9 @@
       :envId="envId"
     />
 
-    <ReinstallParams
-      v-if="task.operation.Reinstall"
-      :operation="task.operation.Reinstall"
-    />
+    <ReinstallParams v-if="task.operation.Reinstall" :operation="task.operation.Reinstall" />
 
-    <RecreateParams
-      v-if="task.operation.Recreate"
-      :operation="task.operation.Recreate"
-    />
+    <RecreateParams v-if="task.operation.Recreate" :operation="task.operation.Recreate" />
 
     <InvokeActionParams
       v-if="task.operation.InvokeAction"
@@ -34,27 +28,24 @@
 
     <div class="mt-1 small d-flex flex-row align-items-center">
       <template v-if="task.acting_user_id">
-        <User :id="task.acting_user_id" :showName="true" size="sm" />
+        <PlatzUser :id="task.acting_user_id" :showName="true" size="sm" />
         <span>,&nbsp;</span>
       </template>
       <template v-if="task.acting_deployment_id">
         <span v-if="formattedDeployment">
-          <fa :icon="formattedDeployment.icon" />
+          <FaIcon :icon="formattedDeployment.icon" />
           {{ formattedDeployment.text }}
         </span>
         <span>,&nbsp;</span>
       </template>
-      <Moment :value="task.created_at" />
+      <PlatzMoment :value="task.created_at" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import {
-  DeploymentTaskStatus,
-  DeploymentTask,
-} from "@/store/models/deployment-task";
+import { DeploymentTaskStatus, DeploymentTask } from "@/store/models/deployment-task";
 import TaskBadge from "./TaskBadge.vue";
 import UpgradeParams from "./UpgradeParams.vue";
 import ReinstallParams from "./ReinstallParams.vue";
@@ -85,17 +76,16 @@ export default defineComponent({
   },
 
   setup(props) {
-    const store = useStore()
+    const store = useStore();
 
-    const isBad = computed(
-      () => props.task.status == DeploymentTaskStatus.Failed
-    );
+    const isBad = computed(() => props.task.status == DeploymentTaskStatus.Failed);
 
-    const formattedDeployment = computed(() =>
-      props.task.acting_deployment_id &&
-      store!.collections.deployments.formatItem(
-        store!.collections.deployments.getOne(props.task.acting_deployment_id)
-      )
+    const formattedDeployment = computed(
+      () =>
+        props.task.acting_deployment_id &&
+        store!.collections.deployments.formatItem(
+          store!.collections.deployments.getOne(props.task.acting_deployment_id)
+        )
     );
 
     return {

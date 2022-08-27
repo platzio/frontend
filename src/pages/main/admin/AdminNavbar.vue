@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-platz">
-    <router-link tag="a" class="navbar-brand" :to="{ name: 'main' }">
-      <Logo size="2.5rem" />
+    <router-link class="navbar-brand" :to="{ name: 'main' }">
+      <PlatzLogo size="2.5rem" />
     </router-link>
 
     <button
@@ -21,7 +21,7 @@
 
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item text-secondary">
-          <User :id="curUser.id" :show-name="true" />
+          <PlatzUser :id="curUser.id" :show-name="true" />
         </li>
       </ul>
     </div>

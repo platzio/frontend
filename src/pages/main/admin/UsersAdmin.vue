@@ -1,16 +1,11 @@
 <template>
   <div>
-    <Collection :items="allUsers">
+    <PlatzCollection :items="allUsers">
       <template #item="scope">
-        <ItemWithActions>
+        <PlatzItemWithActions>
           <template #contents>
             <div class="my-1">
-              <User
-                :id="scope.item.id"
-                :showName="true"
-                :showEmail="true"
-                :showAdmin="true"
-              />
+              <PlatzUser :id="scope.item.id" :showName="true" :showEmail="true" :showAdmin="true" />
             </div>
           </template>
           <template #actions>
@@ -19,17 +14,17 @@
                 class="dropdown-item"
                 @click="changeGlobalRole && changeGlobalRole.open(scope.item)"
               >
-                <fa icon="shield-alt" fixed-width />
+                <FaIcon icon="shield-alt" fixed-width />
                 Change Global Role
               </a>
             </li>
           </template>
-        </ItemWithActions>
+        </PlatzItemWithActions>
       </template>
 
       <template #empty-title> No Users </template>
       <template #empty-text> Nobody's here </template>
-    </Collection>
+    </PlatzCollection>
 
     <ChangeUserGlobalRole ref="changeGlobalRole" />
   </div>

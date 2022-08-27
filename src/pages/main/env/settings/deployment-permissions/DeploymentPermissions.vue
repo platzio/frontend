@@ -4,11 +4,7 @@
       <li class="list-group-item bg-light">
         <div class="row">
           <div class="col-3 py-2 px-3" />
-          <div
-            class="col py-2 px-3 fw-bold"
-            v-for="role in UserDeploymentRole"
-            :key="role"
-          >
+          <div class="col py-2 px-3 fw-bold" v-for="role in UserDeploymentRole" :key="role">
             {{ role }}s
           </div>
         </div>
@@ -16,17 +12,13 @@
       <li class="list-group-item" v-for="kind in deploymentKinds" :key="kind">
         <div class="row">
           <div class="col-3 py-2 px-3 fw-bold">{{ kind }}</div>
-          <div
-            class="col py-2 px-3"
-            v-for="role in UserDeploymentRole"
-            :key="role"
-          >
+          <div class="col py-2 px-3" v-for="role in UserDeploymentRole" :key="role">
             <div
               v-for="permission in permissionsByRole(kind, role)"
               :key="permission.id"
               class="mb-2 d-flex flex-row align-items-end"
             >
-              <User :id="permission.user_id" :show-name="true" />
+              <PlatzUser :id="permission.user_id" :show-name="true" />
               <a
                 v-if="canEdit"
                 class="small ms-2"
@@ -35,12 +27,8 @@
                 remove
               </a>
             </div>
-            <a
-              v-if="canEdit"
-              class="small"
-              @click="addUser && addUser.open(kind, role)"
-            >
-              <fa icon="plus" fixed-width />
+            <a v-if="canEdit" class="small" @click="addUser && addUser.open(kind, role)">
+              <FaIcon icon="plus" fixed-width />
               Add User
             </a>
           </div>
@@ -88,19 +76,14 @@ export default defineComponent({
     const permissionsByRole = computed(
       () => (kind: string, role: UserDeploymentRole) =>
         store!.collections.deploymentPermissions.all.filter(
-          (perm) =>
-            perm.env_id == props.envId && perm.kind == kind && perm.role == role
+          (perm) => perm.env_id == props.envId && perm.kind == kind && perm.role == role
         )
     );
 
-    const canEdit = computed(() =>
-      isEnvAdmin(props.envId, store!.auth.curUser!.id)
-    );
+    const canEdit = computed(() => isEnvAdmin(props.envId, store!.auth.curUser!.id));
 
     useHead({
-      title: computed(
-        () => `Deployments Permissions - Settings - ${env.value.name} - Platz`
-      ),
+      title: computed(() => `Deployments Permissions - Settings - ${env.value.name} - Platz`),
     });
 
     return {

@@ -1,9 +1,5 @@
 <template>
-  <CenteredLogo
-    :progress="100"
-    :animate-progress="true"
-    text="סטופ כיבוי אישור"
-  />
+  <PlatzCenteredLogo :progress="100" :animate-progress="true" />
 </template>
 
 <script lang="ts">
@@ -22,6 +18,6 @@ export default defineComponent({
     });
 
     return {};
-  }
+  },
 });
 </script>

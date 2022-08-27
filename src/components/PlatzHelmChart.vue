@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row align-items-center" :class="classes" v-if="format === 'helm'">
-    <fa icon="map" fixed-width class="me-1" />
+    <FaIcon icon="map" fixed-width class="me-1" />
     <span>{{ chart.image_tag }}</span>
     <span v-if="!chart.available" class="ms-2 badge bg-light text-dark border"> DELETED </span>
     <span v-else-if="chart.error" class="ms-2 badge bg-danger">ERROR</span>
@@ -14,7 +14,7 @@
       class="badge rounded-pill fw-normal border border-primary bg-light text-primary"
       :style="pillStyle"
     >
-      <fa icon="star" fixed-width />
+      <FaIcon icon="star" fixed-width />
       {{ chart.parsed_branch || "master" }}
     </span>
 
@@ -23,14 +23,14 @@
       class="badge rounded-pill fw-normal border bg-light text-dark"
       :style="pillStyle"
     >
-      <fa icon="code-branch" fixed-width />
+      <FaIcon icon="code-branch" fixed-width />
       {{ chart.parsed_branch || "master" }}
     </span>
 
     <span class="ms-2 fw-bold">{{ chart.parsed_version }}</span>
     <span v-if="chart.parsed_revision">-{{ chart.parsed_revision }}</span>
     <span v-if="chart.parsed_commit" class="ms-2 text-secondary font-monospace opacity75">
-      <fa icon="code" /><span class="ms-1">{{ chart.parsed_commit }}</span>
+      <FaIcon icon="code" /><span class="ms-1">{{ chart.parsed_commit }}</span>
     </span>
   </div>
 
@@ -42,12 +42,12 @@
       'text-muted': !chart.available,
     }"
   >
-    <fa icon="clock" fixed-width />
-    Uploaded <Moment :value="chart.created_at" />
+    <FaIcon icon="clock" fixed-width />
+    Uploaded <PlatzMoment :value="chart.created_at" />
   </div>
 
   <div v-if="digest" class="small text-muted">
-    <fa icon="barcode" fixed-width />
+    <FaIcon icon="barcode" fixed-width />
     {{ chart.image_digest }}
   </div>
 </template>

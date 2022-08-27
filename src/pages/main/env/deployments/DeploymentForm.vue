@@ -13,7 +13,7 @@
     />
     <label for="name" class="form-label"> Deployment Name </label>
     <div id="nameHelp" class="form-text" v-if="new_data.name">
-      <fa icon="keyboard" class="ms-1" fixed-width />
+      <FaIcon icon="keyboard" class="ms-1" fixed-width />
       Enter a valid DNS name,
       {{ maxNameLength - new_data.name.length }} characters left
     </div>
@@ -57,7 +57,7 @@
     <label for="helmChartId" class="form-label">
       Version
       <span v-if="chartsLoading" class="ms-2">
-        <fa icon="circle-notch" fixed-width spin />
+        <FaIcon icon="circle-notch" fixed-width spin />
         {{ chartsLoadingPercent }}%
       </span>
     </label>
@@ -71,7 +71,7 @@
   />
 
   <div class="small my-1 opacity-50">
-    <fa icon="shield-alt" fixed-width />
+    <FaIcon icon="shield-alt" fixed-width />
     This field is only visible to deployment owners
   </div>
   <div class="mb-3 form-floating" v-show="isOwner">

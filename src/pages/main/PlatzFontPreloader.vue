@@ -15,7 +15,7 @@
     <div class="fst-normal">fst-normal</div>
     <div class="font-monospace">font-monospace</div>
     <div class="nav-heading">nav-heading</div>
-    <fa icon="umbrella" />
+    <FaIcon icon="umbrella" />
   </div>
 </template>
 

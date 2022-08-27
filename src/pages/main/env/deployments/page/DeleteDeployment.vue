@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Delete Deployment"
     size="lg"
@@ -10,44 +10,40 @@
   >
     <div class="alert alert-danger">
       <div class="mb-1 fw-bold">
-        <fa icon="exclamation-circle" />
+        <FaIcon icon="exclamation-circle" />
         Careful
       </div>
-      <div>
-        You are about to delete this deployment
-      </div>
+      <div>You are about to delete this deployment</div>
     </div>
 
     <div class="border p-2" v-if="deployment">
-      <Deployment :deployment="deployment" />
+      <PlatzDeployment :deployment="deployment" />
     </div>
 
-    <div class="mt-3">
-      Are you sure you want to continue?
-    </div>
-  </Modal>
+    <div class="mt-3">Are you sure you want to continue?</div>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 
 function initialData(): { error: any; working: boolean; id?: string } {
   return {
     error: undefined,
     working: false,
-    id: undefined
+    id: undefined,
   };
 }
 
 export default defineComponent({
   components: {
-    Modal
+    PlatzModal,
   },
 
   setup(props, { emit }) {
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
     const state = reactive({ ...initialData() });
 
     const store = useStore();
@@ -87,8 +83,8 @@ export default defineComponent({
       close,
       submit,
       deployment,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>

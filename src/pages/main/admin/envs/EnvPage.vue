@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-0 mb-3 h3">
-      <Env :id="env.id" />
+      <PlatzEnv :id="env.id" />
     </div>
 
     <div class="my-3">
@@ -11,7 +11,7 @@
             <div class="flex-fill">
               <template v-if="numAdmins === 0">
                 <div class="mb-1 fw-bold">
-                  <fa icon="triangle-exclamation" fixed-width />
+                  <FaIcon icon="triangle-exclamation" fixed-width />
                   It looks like this env has no admins
                 </div>
                 <div>
@@ -28,12 +28,11 @@
               </template>
             </div>
             <router-link
-              tag="button"
               class="px-3 btn btn-sm btn-outline-primary"
               :to="{ name: 'env.settings.user-roles', params: { envId } }"
             >
               Manage Env Users
-              <fa icon="angle-right" fixed-width />
+              <FaIcon icon="angle-right" fixed-width />
             </router-link>
           </div>
         </div>

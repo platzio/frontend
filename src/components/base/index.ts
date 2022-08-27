@@ -1,14 +1,14 @@
-import { App } from 'vue'
-import Logo from './Logo.vue'
-import CenteredLogo from './CenteredLogo.vue'
-import Error from './Error.vue'
-import Moment from './Moment.vue'
-import Reason from './Reason.vue'
+import { App } from "vue";
+import PlatzLogo from "./PlatzLogo.vue";
+import PlatzCenteredLogo from "./PlatzCenteredLogo.vue";
+import PlatzError from "./PlatzError.vue";
+import PlatzMoment from "./PlatzMoment.vue";
+import PlatzReason from "./PlatzReason.vue";
 
 export function installComponents(app: App) {
-    app.component('Logo', Logo)
-    app.component('CenteredLogo', CenteredLogo)
-    app.component('Error', Error)
-    app.component('Moment', Moment)
-    app.component('Reason', Reason)
+  app.component("PlatzLogo", PlatzLogo);
+  app.component("PlatzCenteredLogo", PlatzCenteredLogo);
+  app.component("PlatzError", PlatzError);
+  app.component("PlatzMoment", PlatzMoment);
+  app.component("PlatzReason", PlatzReason);
 }

@@ -55,7 +55,7 @@
     <div v-else>
       <span class="text-secondary me-2">{{ input.label }}:</span>
       <span class="text-danger">
-        <fa icon="exclamation-triangle" /> I don't know how to render
+        <FaIcon icon="exclamation-triangle" /> I don't know how to render
         {{ input.type }}
         fields
       </span>
@@ -98,9 +98,7 @@ export default defineComponent({
     const shouldDisplay = computed(
       () =>
         !props.input.showIfAll ||
-        props.input.showIfAll.every(
-          (fv) => props.allValues[fv.field] === fv.value
-        )
+        props.input.showIfAll.every((fv) => props.allValues[fv.field] === fv.value)
     );
     return {
       shouldDisplay,

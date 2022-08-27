@@ -6,11 +6,7 @@
         <span class="ms-2 text-danger" v-if="input.required">*</span>
       </div>
       <div class="d-flex flex-row align-items-center">
-        <div
-          class="form-check form-check-inline"
-          v-for="(day_name, idx) in DAY_NAMES"
-          :key="idx"
-        >
+        <div class="form-check form-check-inline" v-for="(day_name, idx) in DAY_NAMES" :key="idx">
           <input
             class="form-check-input"
             type="checkbox"
@@ -146,8 +142,8 @@ export default defineComponent({
       (newInner) => {
         const rendered = {
           run_days: Object.entries(newInner.days)
-            .filter(([day, is_enabled]) => is_enabled)
-            .map(([day, is_enabled]) => day)
+            .filter(([_day, is_enabled]) => is_enabled)
+            .map(([day, _is_enabled]) => day)
             .join(","),
           schedule: `${newInner.hour}:${newInner.minute}`,
         };

@@ -3,7 +3,7 @@
     <div class="d-flex flex-row justify-content-between align-items-start">
       <div class="d-flex flex-row align-items-center">
         <div class="h1 me-3">
-          <fa v-if="formatted.icon" :icon="formatted.icon" fixed-width />
+          <FaIcon v-if="formatted.icon" :icon="formatted.icon" fixed-width />
           {{ formatted.text }}
         </div>
       </div>
@@ -18,26 +18,20 @@
           aria-expanded="false"
         >
           Actions
-          <fa icon="angle-down" fixed-width />
+          <FaIcon icon="angle-down" fixed-width />
         </a>
         <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
           <li v-if="canEdit">
-            <a
-              class="dropdown-item"
-              @click="editResource && editResource.open(resource)"
-            >
-              <fa icon="edit" fixed-width />
+            <a class="dropdown-item" @click="editResource && editResource.open(resource)">
+              <FaIcon icon="edit" fixed-width />
               Edit {{ resourceType.spec.name_singular }}
             </a>
           </li>
           <template v-if="canDelete">
             <li class="dropdown-divider" />
             <li>
-              <a
-                class="dropdown-item"
-                @click="deleteResource && deleteResource.open(resource.id)"
-              >
-                <fa icon="trash" fixed-width />
+              <a class="dropdown-item" @click="deleteResource && deleteResource.open(resource.id)">
+                <FaIcon icon="trash" fixed-width />
                 Delete {{ resourceType.spec.name_singular }}
               </a>
             </li>
@@ -48,11 +42,7 @@
 
     <div class="my-3">
       <div v-if="resourceType.spec.values_ui">
-        <div
-          v-for="input in resourceType.spec.values_ui.inputs"
-          :key="input.id"
-          class="mt-2"
-        >
+        <div v-for="input in resourceType.spec.values_ui.inputs" :key="input.id" class="mt-2">
           <ConfigValue
             :input="input"
             :envId="envId"
@@ -67,11 +57,10 @@
       <div class="card-header">Managed By</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item" v-if="managingDeployment">
-          <Deployment :deployment="managingDeployment" />
+          <PlatzDeployment :deployment="managingDeployment" />
         </li>
         <li class="list-group-item text-muted text-center" v-else>
-          This {{ resourceType.spec.name_singular }} is not managed by any
-          deployment
+          This {{ resourceType.spec.name_singular }} is not managed by any deployment
         </li>
       </ul>
     </div>
@@ -79,27 +68,16 @@
     <div class="my-3 card">
       <div class="card-header">Using Deployments</div>
       <div class="list-group list-group-flush">
-        <div
-          class="list-group-item"
-          v-for="deployment in deployments"
-          :key="deployment.id"
-        >
-          <Deployment :deployment="deployment" />
+        <div class="list-group-item" v-for="deployment in deployments" :key="deployment.id">
+          <PlatzDeployment :deployment="deployment" />
         </div>
-        <div
-          v-if="deployments.length === 0"
-          class="my-5 text-muted text-center"
-        >
+        <div v-if="deployments.length === 0" class="my-5 text-muted text-center">
           No deployments are using this {{ resourceType.spec.name_singular }}
         </div>
       </div>
     </div>
 
-    <EditResource
-      ref="editResource"
-      :envId="envId"
-      :resourceTypeId="resourceTypeId"
-    />
+    <EditResource ref="editResource" :envId="envId" :resourceTypeId="resourceTypeId" />
     <DeleteResource ref="deleteResource" />
   </div>
 </template>
@@ -142,9 +120,7 @@ export default defineComponent({
 
     const env = computed(() => store!.collections.envs.getOne(props.envId));
 
-    const resource = computed(() =>
-      store!.collections.deploymentResources.getOne(props.id)
-    );
+    const resource = computed(() => store!.collections.deploymentResources.getOne(props.id));
 
     const resourceType = computed(() =>
       store!.collections.deploymentResourceTypes.getOne(props.resourceTypeId)

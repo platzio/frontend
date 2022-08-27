@@ -5,7 +5,7 @@
       :class="{ 'alert alert-primary py-1 px-2 m-0': newerChart }"
     >
       <div :class="{ 'text-dark': newerChart }">
-        <HelmChart :chart="chart" :color="false" format="git" :time="false" :digest="false" />
+        <PlatzHelmChart :chart="chart" :color="false" format="git" :time="false" :digest="false" />
       </div>
       <div v-if="newerChart" class="ms-3">
         <button
@@ -14,7 +14,7 @@
           v-if="!altState"
           :disabled="disabled"
         >
-          <fa icon="arrow-circle-up" fixed-width />
+          <FaIcon icon="arrow-circle-up" fixed-width />
           New Version Available
         </button>
         <button
@@ -23,7 +23,7 @@
           v-if="altState"
           :disabled="disabled"
         >
-          <fa icon="fast-forward" fixed-width />
+          <FaIcon icon="fast-forward" fixed-width />
           Upgrade Immediately
         </button>
       </div>

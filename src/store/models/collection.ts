@@ -126,7 +126,7 @@ export function createCollection<T extends CollectionItem<K>, F = null, K = stri
   };
 
   const setFilters = (filters: F) => {
-    state.filters = filters;
+    state.filters = filters || {};
     readAllItems();
   };
 

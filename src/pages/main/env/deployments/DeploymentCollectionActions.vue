@@ -9,13 +9,13 @@
       aria-expanded="false"
     >
       Actions
-      <fa icon="angle-down" fixed-width />
+      <FaIcon icon="angle-down" fixed-width />
     </a>
 
     <ul class="dropdown-menu" aria-labelledby="collectionActionsDropdown">
       <li>
         <a class="dropdown-item" @click="editDeployment && editDeployment.openForCreate(kind)">
-          <fa icon="plus" fixed-width />
+          <FaIcon icon="plus" fixed-width />
           New {{ kind }} Deployment
         </a>
       </li>
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
-import { isDeploymentOwner, isDeploymentMaintainer } from "@/store/permissions";
+import { isDeploymentOwner } from "@/store/permissions";
 import EditDeployment from "./EditDeployment.vue";
 
 export default defineComponent({

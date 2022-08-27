@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     :title="`Add ${kind} ${role}`"
     btn-class="btn-primary"
@@ -8,31 +8,25 @@
     @submit="submit"
   >
     <div class="mb-2">
-      Select a user to be added as {{ article }}
-      {{ role && role.toLowerCase() }} for
+      Select a user to be added as {{ article }} {{ role && role.toLowerCase() }} for
       {{ kind && kind.toLowerCase() }}
     </div>
     <div class="my-3">
-      <select
-        class="form-select"
-        v-model="user_id"
-        :disabled="possibleUsers.length === 0"
-      >
+      <select class="form-select" v-model="user_id" :disabled="possibleUsers.length === 0">
         <option v-for="user in possibleUsers" :value="user.id" :key="user.id">
           {{ user.display_name }}
         </option>
       </select>
       <div class="small text-muted" v-if="possibleUsers.length === 0">
-        It looks like all possible users already have permissions for this
-        deployment kind.
+        It looks like all possible users already have permissions for this deployment kind.
       </div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { UserDeploymentRole } from "@/store/models/deployment-permission";
 
@@ -61,17 +55,15 @@ export default defineComponent({
   },
 
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup(props) {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
-    const article = computed(() =>
-      state.role && state.role.match(/^([aeiou])/i) ? "an" : "a"
-    );
+    const article = computed(() => (state.role && state.role.match(/^([aeiou])/i) ? "an" : "a"));
 
     const possibleUsers = computed(() =>
       store!.collections.users.all.filter((user) =>

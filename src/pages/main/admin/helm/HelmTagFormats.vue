@@ -4,7 +4,7 @@
       <div class="mt-0 flex-fill h4 fw-bold">Helm Tag Formats</div>
       <div>
         <button class="btn btn-primary" role="button" @click="addTagFormat && addTagFormat.open()">
-          <fa icon="plus" fixed-width />
+          <FaIcon icon="plus" fixed-width />
           Add Tag Format
         </button>
       </div>
@@ -37,30 +37,30 @@
       </div>
     </div>
 
-    <Collection :items="tagFormats">
+    <PlatzCollection :items="tagFormats">
       <template #item="scope">
-        <ItemWithActions>
+        <PlatzItemWithActions>
           <template #contents>
             <div class="my-2">
               <div class="my-1 text-success font-monospace">
                 {{ scope.item.pattern }}
               </div>
               <div class="small my-1 text-muted">
-                Added <Moment :value="scope.item.created_at" />
+                Added <PlatzMoment :value="scope.item.created_at" />
               </div>
             </div>
           </template>
           <template #actions>
             <li>
               <a class="dropdown-item" @click="deleteTagFormat && deleteTagFormat.open(scope.item)">
-                <fa icon="trash" fixed-width />
+                <FaIcon icon="trash" fixed-width />
                 Delete Tag Format
               </a>
             </li>
           </template>
-        </ItemWithActions>
+        </PlatzItemWithActions>
       </template>
-    </Collection>
+    </PlatzCollection>
 
     <AddTagFormat ref="addTagFormat" />
     <DeleteTagFormat ref="deleteTagFormat" />

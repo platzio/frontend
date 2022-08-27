@@ -1,12 +1,8 @@
 <template>
   <div class="newer-version" v-if="hasNewVersion">
-    <button
-      class="alert alert-success py-2"
-      @click="reload"
-      :disabled="reloading"
-    >
+    <button class="alert alert-success py-2" @click="reload" :disabled="reloading">
       <div>
-        <fa icon="gift" fixed-width />
+        <FaIcon icon="gift" fixed-width />
         New UI Version Available
       </div>
       <div class="fw-bold">Click here to upgrade</div>

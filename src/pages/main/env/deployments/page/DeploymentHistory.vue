@@ -1,21 +1,21 @@
 <template>
   <div>
     <div v-if="tasksLoading" class="my-3 text-center text-muted">
-      <fa icon="circle-notch" spin fixed-width />
+      <FaIcon icon="circle-notch" spin fixed-width />
       Loading tasks ({{ tasksLoadingPercent }}%)
     </div>
     <div v-if="chartsLoading" class="my-3 text-center text-muted">
-      <fa icon="circle-notch" spin fixed-width />
+      <FaIcon icon="circle-notch" spin fixed-width />
       Loading charts ({{ chartsLoadingPercent }}%)
     </div>
 
-    <Collection v-else :items="tasks" flush>
+    <PlatzCollection v-else :items="tasks" flush>
       <template #item="scope">
-        <CollectionItem>
+        <PlatzCollectionItem>
           <DeploymentTask :task="scope.item" :envId="envId" />
-        </CollectionItem>
+        </PlatzCollectionItem>
       </template>
-    </Collection>
+    </PlatzCollection>
   </div>
 </template>
 

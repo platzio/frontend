@@ -2,23 +2,18 @@
   <div class="my-1" :class="klass">
     <span class="me-1 badge bg-secondary" v-if="cluster.ignore">IGNORED</span>
     <span class="fw-bold">
-      <fa icon="cubes" fixed-width />
+      <FaIcon icon="cubes" fixed-width />
       {{ cluster.name }}
     </span>
   </div>
 
-  <div
-    class="my-1 small text-muted d-flex flex-row"
-    :class="{ opacity50: cluster.ignore }"
-  >
+  <div class="my-1 small text-muted d-flex flex-row" :class="{ opacity50: cluster.ignore }">
     <div>
-      <fa icon="globe" class="me-1" />
+      <FaIcon icon="globe" class="me-1" />
       {{ cluster.region_name }}
     </div>
     <div v-if="!cluster.ignore" class="mx-2 text-muted">/</div>
-    <div v-if="!cluster.ignore">
-      Last seen <Moment :value="cluster.last_seen_at" />
-    </div>
+    <div v-if="!cluster.ignore">Last seen <PlatzMoment :value="cluster.last_seen_at" /></div>
   </div>
 </template>
 
@@ -30,8 +25,8 @@ export default defineComponent({
   props: {
     cluster: {
       type: Object as PropType<K8sCluster>,
-      required: true
-    }
+      required: true,
+    },
   },
 
   setup(props) {
@@ -46,8 +41,8 @@ export default defineComponent({
     });
 
     return {
-      klass
+      klass,
     };
-  }
+  },
 });
 </script>

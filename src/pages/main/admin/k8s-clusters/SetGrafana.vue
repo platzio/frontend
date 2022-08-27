@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <PlatzModal
     ref="modal"
     title="Configure Grafana"
     btn-class="btn-primary"
@@ -9,13 +9,11 @@
     @submit="submit"
   >
     <div class="mb-3">
-      This sets the Grafana "explore" URL and Loki data-source name for deployments
-      running in this cluster.
+      This sets the Grafana "explore" URL and Loki data-source name for deployments running in this
+      cluster.
     </div>
 
-    <div class="mb-3 text-secondary">
-      Set empty values to disable this feature.
-    </div>
+    <div class="mb-3 text-secondary">Set empty values to disable this feature.</div>
 
     <div class="mb-3 form-floating">
       <input
@@ -28,8 +26,8 @@
       />
       <label for="grafana_url" class="form-label">Grafana URL</label>
       <div class="form-text">
-        Provide a full URL to the Grafana explore view, that would work for users outside the cluster,
-        including http:// or https:// (e.g. https://my.grafana.instance/explore)
+        Provide a full URL to the Grafana explore view, that would work for users outside the
+        cluster, including http:// or https:// (e.g. https://my.grafana.instance/explore)
       </div>
     </div>
 
@@ -42,17 +40,15 @@
         v-model="grafana_datasource_name"
         :disabled="working"
       />
-      <label for="grafana_datasource_name" class="form-label">
-        Loki Data-Source Name
-      </label>
+      <label for="grafana_datasource_name" class="form-label"> Loki Data-Source Name </label>
       <div class="form-text">The data-source is usually named "Loki"</div>
     </div>
-  </Modal>
+  </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Modal from "@/components/base/Modal.vue";
+import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import { K8sCluster } from "@/store/models/k8s-cluster";
 
@@ -74,13 +70,13 @@ function initialData(): {
 
 export default defineComponent({
   components: {
-    Modal,
+    PlatzModal,
   },
 
   setup() {
     const store = useStore();
     const state = reactive({ ...initialData() });
-    const modal = ref<typeof Modal>();
+    const modal = ref<typeof PlatzModal>();
 
     function open(cluster: K8sCluster) {
       Object.assign(state, initialData());

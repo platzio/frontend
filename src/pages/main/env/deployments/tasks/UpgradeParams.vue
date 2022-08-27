@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="oldChart" class="mt-1 mb-2 d-flex flex-row align-items-center">
-      <HelmChart
+      <PlatzHelmChart
         :chart="oldChart"
         :color="false"
         format="git"
@@ -10,9 +10,9 @@
         size="sm"
       />
       <div class="mx-2 small opacity50">
-        <fa icon="arrow-right" fixed-width />
+        <FaIcon icon="arrow-right" fixed-width />
       </div>
-      <HelmChart
+      <PlatzHelmChart
         :chart="newChart"
         :color="false"
         format="git"
@@ -65,9 +65,7 @@ export default defineComponent({
     );
 
     const oldChart = computed(() =>
-      oldChartId.value
-        ? store!.collections.helmCharts.getOne(oldChartId.value)
-        : null
+      oldChartId.value ? store!.collections.helmCharts.getOne(oldChartId.value) : null
     );
 
     const newChart = computed(() =>

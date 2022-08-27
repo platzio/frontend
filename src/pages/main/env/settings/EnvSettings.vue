@@ -2,14 +2,11 @@
   <div class="sidenav">
     <ul class="nav nav-pills flex-column">
       <li class="h5 ms-3">
-        <Env :id="envId" :showInfo="false" />
+        <PlatzEnv :id="envId" :showInfo="false" />
       </li>
       <li class="nav-heading">Permissions</li>
       <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :to="{ name: 'env.settings.deployment-permissions' }"
-        >
+        <router-link class="nav-link" :to="{ name: 'env.settings.deployment-permissions' }">
           Deployments
         </router-link>
       </li>
