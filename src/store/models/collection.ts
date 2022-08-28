@@ -15,7 +15,7 @@ export interface CreateCollectionOptions<T, F> {
   formatItem: (item: any) => {
     inputLabel?: boolean;
     label?: string;
-    icon: string;
+    icon?: string;
     text: string;
   };
   envFilter?: (item: T, envId: string) => boolean;

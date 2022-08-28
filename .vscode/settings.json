@@ -1,5 +1,7 @@
 {
     "volar.autoCompleteRefs": true,
     "volar.completion.preferredAttrNameCase": "camel",
-    "volar.completion.preferredTagNameCase": "pascal"
+    "volar.completion.preferredTagNameCase": "pascal",
+    "editor.tabSize": 4,
+    "prettier.tabWidth": 4
 }
