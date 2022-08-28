@@ -1,5 +1,5 @@
 <template>
-  <PlatzCenteredLogo text="finishing login" :error="error" />
+  <PlatzProgressPage text="finishing login" :error="error" />
 </template>
 
 <script lang="ts">

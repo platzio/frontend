@@ -1,5 +1,5 @@
 <template>
-  <PlatzCenteredLogo :progress="100" :animate-progress="true" />
+  <PlatzProgressPage :progress="100" :animate-progress="true" />
 </template>
 
 <script lang="ts">

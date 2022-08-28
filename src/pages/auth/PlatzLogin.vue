@@ -1,5 +1,5 @@
 <template>
-  <PlatzCenteredLogo
+  <PlatzProgressPage
     :progress="100"
     :animate-progress="true"
     text="🚀 redirecting to google"

@@ -2,9 +2,9 @@
   <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="d-flex flex-column align-items-center">
       <div>
-        <PlatzLogo size="3.25rem" />
+        <img src="@/assets/AntStacking.svg" style="width: 20rem; height: 20rem" />
       </div>
-      <div class="my-3 progress" style="width: 7rem; height: 7px" v-if="!error">
+      <div class="my-3 progress" style="width: 17rem; height: 9px" v-if="!error">
         <div
           class="progress-bar bg-danger"
           role="progressbar"
