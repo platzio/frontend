@@ -53,29 +53,49 @@
     </div>
 
     <div class="my-4 card">
-      <div class="card-header">Domain</div>
+      <div class="card-header">Ingress Settings</div>
       <div class="card-body">
-        <div class="mb-3">
-          When assigned, a cluster domain lets Platz allocate a domain name for each deployment.
-          These deployments can then use the domain name and create an ingress for their services.
+        <div class="mb-2">
+          These settings control the injected ingress section when installing deployments.
+        </div>
+        <div class="mb-2">
+          When a deployment has the ingress feature enabled in its features.yaml, Platz creates a
+          domain name under the ingress domain. If an ingress class is set, it's also injected to
+          the deployment chart values when installing.
+        </div>
+        <div class="mb-2">
+          Ingress TLS secret name turns on TLS for the ingress. Note that Platz doesn't check if the
+          secret exists: This allows for using both a wildcard certificate replicated to all
+          namespaces by services such as Reflector, or having a certificate created in the chart
+          itself.
         </div>
         <div class="my-3">
-          <span>Domain: </span>
-          <span class="fw-bold" v-if="cluster.domain">
-            {{ cluster.domain }}
+          <span>Ingress Domain: </span>
+          <span class="fw-bold" v-if="cluster.ingress_domain">
+            {{ cluster.ingress_domain }}
+          </span>
+          <span class="text-muted fst-italic" v-else>(not set)</span>
+        </div>
+        <div class="my-3">
+          <span>Ingress Class: </span>
+          <span class="fw-bold" v-if="cluster.ingress_class">
+            {{ cluster.ingress_class }}
           </span>
           <span class="text-muted fst-italic" v-else>(not set)</span>
         </div>
         <div class="my-3">
           <span>TLS Secret Name: </span>
-          <span class="fw-bold" v-if="cluster.domain_tls_secret_name">
-            {{ cluster.domain_tls_secret_name }}
+          <span class="fw-bold" v-if="cluster.ingress_tls_secret_name">
+            {{ cluster.ingress_tls_secret_name }}
           </span>
           <span class="text-muted fst-italic" v-else>(not set)</span>
         </div>
 
-        <button class="btn btn-outline-primary" @click="setDomain && setDomain.open(cluster)">
-          Edit Domain Settings
+        <button
+          class="btn btn-outline-primary"
+          @click="editIngressSettings && editIngressSettings.open(cluster)"
+        >
+          Edit Ingress Settings
         </button>
       </div>
     </div>
@@ -159,7 +179,7 @@
     </div>
 
     <ChangeEnv ref="changeEnv" />
-    <SetDomain ref="setDomain" />
+    <EditIngressSettings ref="editIngressSettings" />
     <SetIgnore ref="setIgnore" />
     <SetGrafana ref="setGrafana" />
   </div>
@@ -169,7 +189,7 @@
 import { useStore } from "@/store";
 import { computed, defineComponent, ref } from "vue";
 import ChangeEnv from "./ChangeEnv.vue";
-import SetDomain from "./SetDomain.vue";
+import EditIngressSettings from "./EditIngressSettings.vue";
 import SetIgnore from "./SetIgnore.vue";
 import SetGrafana from "./SetGrafana.vue";
 
@@ -183,7 +203,7 @@ export default defineComponent({
 
   components: {
     ChangeEnv,
-    SetDomain,
+    EditIngressSettings,
     SetIgnore,
     SetGrafana,
   },
@@ -191,7 +211,7 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const changeEnv = ref<typeof ChangeEnv>();
-    const setDomain = ref<typeof SetDomain>();
+    const editIngressSettings = ref<typeof EditIngressSettings>();
     const setIgnore = ref<typeof SetIgnore>();
     const setGrafana = ref<typeof SetGrafana>();
     const cluster = computed(() => store!.collections.k8sClusters.getOne(props.id));
@@ -204,7 +224,7 @@ export default defineComponent({
       cluster,
       changeEnv,
       deployments,
-      setDomain,
+      editIngressSettings,
       setIgnore,
       setGrafana,
     };
