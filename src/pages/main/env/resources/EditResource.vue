@@ -1,6 +1,7 @@
 <template>
   <PlatzModal
     ref="modal"
+    size="lg"
     :title="title"
     :submit-text="submitText"
     :error="error"

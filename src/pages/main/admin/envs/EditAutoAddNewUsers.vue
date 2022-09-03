@@ -1,7 +1,6 @@
 <template>
   <PlatzModal
     ref="modal"
-    size="lg"
     title="Edit Auto Add New Users"
     btn-class="btn-primary"
     :error="error"
