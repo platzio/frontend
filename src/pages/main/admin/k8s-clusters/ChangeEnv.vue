@@ -14,7 +14,7 @@
     </div>
     <div class="my-3">
       <select class="form-select" v-model="env_id">
-        <option :value="null">(no cluster)</option>
+        <option :value="null">(No Env)</option>
         <option v-for="env in envs" :value="env.id" :key="env.id">
           {{ env.name }}
         </option>
