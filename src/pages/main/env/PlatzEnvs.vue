@@ -47,7 +47,7 @@ export default defineComponent({
     const check = () => {
       if (route.name == "envs" && store!.collections.envs.ready) {
         const possibleEnvs = store!.collections.envs.all.filter((env) =>
-          isEnvUser(env.id, curUser.value.id)
+          isEnvUser(env.id, curUser.value)
         );
         if (possibleEnvs.length > 0) {
           ok.value = true;

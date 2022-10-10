@@ -127,7 +127,7 @@ export default defineComponent({
 
     const otherEnvs = computed(() =>
       store!.collections.envs.all.filter(
-        (env) => env.id != props.envId && isEnvUser(env.id, curUser.value.id)
+        (env) => env.id != props.envId && isEnvUser(env.id, curUser.value)
       )
     );
 

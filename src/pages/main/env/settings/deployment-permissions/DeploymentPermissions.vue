@@ -80,7 +80,7 @@ export default defineComponent({
         )
     );
 
-    const canEdit = computed(() => isEnvAdmin(props.envId, store!.auth.curUser!.id));
+    const canEdit = computed(() => isEnvAdmin(props.envId, store!.auth.curUser!));
 
     useHead({
       title: computed(() => `Deployments Permissions - Settings - ${env.value.name} - Platz`),

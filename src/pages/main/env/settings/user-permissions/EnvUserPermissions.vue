@@ -106,7 +106,7 @@ export default defineComponent({
     const curUser = computed(() => store!.auth.curUser!);
 
     const canEdit = computed(
-      () => curUser.value.is_admin || isEnvAdmin(props.envId, curUser.value.id)
+      () => curUser.value.is_admin || isEnvAdmin(props.envId, curUser.value)
     );
 
     useHead({
