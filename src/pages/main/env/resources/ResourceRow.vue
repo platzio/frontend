@@ -1,65 +1,41 @@
 <template>
-  <div>
-    <div class="my-2" v-if="formatted">
-      <FaIcon :icon="formatted.icon" fixed-width />
-      {{ formatted.text }}
+    <div>
+        <div class="my-2" v-if="formatted">
+            <FaIcon :icon="formatted.icon" fixed-width />
+            {{ formatted.text }}
+        </div>
+        <ResourceReason class="my-2" :resource="resource" />
     </div>
-    <div class="my-2">
-      <PlatzReason
-        :text="resource.sync_reason"
-        :isBad="resource.sync_status === SyncStatus.Error"
-        :allowExpand="false"
-      >
-        <template #before>
-          <div class="me-2 badge" :class="syncStatusClass">
-            {{ resource.sync_status.toUpperCase() }}
-          </div>
-        </template>
-      </PlatzReason>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
-import { useStore } from "@/store";
-import { DeploymentResource, SyncStatus } from "@/store/models/deployment-resource";
 import { computed, defineComponent, PropType } from "vue";
+import { useStore } from "@/store";
+import { DeploymentResource } from "@/store/models/deployment-resource";
+import ResourceReason from "./ResourceReason.vue";
 
 export default defineComponent({
-  props: {
-    resource: {
-      type: Object as PropType<DeploymentResource>,
-      required: true,
+    copmponents: {
+        ResourceReason,
     },
-  },
 
-  setup(props) {
-    const store = useStore();
+    props: {
+        resource: {
+            type: Object as PropType<DeploymentResource>,
+            required: true,
+        },
+    },
 
-    const formatted = computed(() =>
-      store!.collections.deploymentResources.formatItem(props.resource)
-    );
+    setup(props) {
+        const store = useStore();
 
-    const syncStatusClass = computed(() => {
-      switch (props.resource.sync_status) {
-        case SyncStatus.Creating:
-        case SyncStatus.Updating:
-          return "bg-primary";
-        case SyncStatus.Deleting:
-          return "bg-warning";
-        case SyncStatus.Ready:
-          return "bg-success";
-        case SyncStatus.Error:
-          return "bg-danger";
-      }
-      return "bg-secondary";
-    });
+        const formatted = computed(() =>
+            store!.collections.deploymentResources.formatItem(props.resource)
+        );
 
-    return {
-      formatted,
-      syncStatusClass,
-      SyncStatus,
-    };
-  },
+        return {
+            formatted,
+        };
+    },
 });
 </script>
