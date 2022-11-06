@@ -44,9 +44,8 @@ export const collection = createCollection<HelmChart, HelmChartFilters>({
   },
 });
 
-export function chartIcon(chart: HelmChart): string | undefined {
+export function chartIcon(chart?: HelmChart): string | undefined {
   const features = chartFeatures(chart);
-  console.log(features);
   if (features) {
     return features.display.icon?.font_awesome;
   }

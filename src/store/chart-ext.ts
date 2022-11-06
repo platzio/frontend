@@ -145,8 +145,8 @@ function isChartFeaturesV1Beta2(
   return (features as HelmChartFeaturesV1Beta2).apiVersion === "platz.io/v1beta2";
 }
 
-export function chartFeatures(chart: HelmChart): HelmChartFeaturesV1Beta2Spec | undefined {
-  if (!chart.features) {
+export function chartFeatures(chart?: HelmChart): HelmChartFeaturesV1Beta2Spec | undefined {
+  if (!chart || !chart.features) {
     return undefined;
   }
 
