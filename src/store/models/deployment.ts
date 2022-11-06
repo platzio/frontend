@@ -1,6 +1,7 @@
 import { CollectionItem, createCollection } from "./collection";
 import { DeploymentReportedStatus } from "./deployment-status";
 import { collection as k8sClusters } from "./k8s-cluster";
+import { collection as helmRegistries } from "./helm-registry";
 import { chartIcon, collection as helmCharts } from "./helm-chart";
 
 export enum DeploymentStatus {
@@ -53,9 +54,10 @@ export const collection = createCollection<Deployment>({
 
   formatItem: (item: Deployment) => {
     const chart = helmCharts.getOne(item.helm_chart_id);
+    const registry = helmRegistries.getOne(chart.helm_registry_id)
     return {
       inputLabel: true,
-      icon: chartIcon(chart),
+      icon: chartIcon(chart) || registry.fa_icon,
       text: item.name || item.kind.toLowerCase(),
     };
   },
