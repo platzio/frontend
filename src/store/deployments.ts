@@ -13,7 +13,13 @@ export function findCollectionDependencies(
         const chart = store!.collections.helmCharts.getOne(
             deployment.helm_chart_id
         );
-        if (!chart || !chart.values_ui) {
+
+        if (!chart) {
+            console.log("Could not find chart for deployment", deployment.helm_chart_id);
+            continue;
+        }
+
+        if (!chart.values_ui) {
             continue;
         }
 
