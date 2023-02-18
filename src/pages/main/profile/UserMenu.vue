@@ -20,6 +20,17 @@
         >
             <li>
                 <router-link
+                    :to="{ name: 'profile' }"
+                    class="dropdown-item"
+                    activeClass="no-active-class"
+                >
+                    <FaIcon icon="user-circle" fixed-width />
+                    Profile
+                </router-link>
+            </li>
+            <li class="dropdown-divider" />
+            <li>
+                <router-link
                     :to="{ name: 'auth.logout' }"
                     class="dropdown-item"
                     activeClass="no-active-class"
