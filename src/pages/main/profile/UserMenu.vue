@@ -1,0 +1,49 @@
+<template>
+    <div class="dropdown">
+        <a
+            class="nav-link pe-0"
+            id="user-dropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+        >
+            <div class="d-flex flex-row align-items-center">
+                <PlatzUser :id="curUser.id" :show-name="true" />
+                <div class="ms-2">
+                    <FaIcon icon="angle-down" />
+                </div>
+            </div>
+        </a>
+        <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="user-dropdown"
+        >
+            <li>
+                <router-link
+                    :to="{ name: 'auth.logout' }"
+                    class="dropdown-item"
+                    activeClass="no-active-class"
+                >
+                    <FaIcon icon="sign-out-alt" fixed-width />
+                    Logout
+                </router-link>
+            </li>
+        </ul>
+    </div>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent } from "vue";
+import { useStore } from "@/store";
+
+export default defineComponent({
+    setup() {
+        const store = useStore();
+        const curUser = computed(() => store!.auth.curUser!);
+
+        return {
+            curUser,
+        };
+    },
+});
+</script>
