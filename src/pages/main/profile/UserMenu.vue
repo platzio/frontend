@@ -25,7 +25,7 @@
                     activeClass="no-active-class"
                 >
                     <FaIcon icon="user-circle" fixed-width />
-                    Profile
+                    My Profile
                 </router-link>
             </li>
             <li class="dropdown-divider" />
