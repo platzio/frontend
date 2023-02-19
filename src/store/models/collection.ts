@@ -7,7 +7,7 @@ export interface CollectionItem<ID = string> {
 }
 
 type SortFunction<T> = (x: T, y: T) => number;
-type CollectionFilters = Record<string, string | number | boolean>;
+export type CollectionFilters = Record<string, string | number | boolean>;
 
 export interface CreateCollectionOptions<T> {
     url: string;

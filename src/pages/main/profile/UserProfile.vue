@@ -7,6 +7,15 @@
                     <FaIcon icon="child-reaching" fixed-width /> You
                 </router-link>
             </li>
+            <li class="nav-heading">Authentication</li>
+            <li class="nav-item">
+                <router-link
+                    class="nav-link"
+                    :to="{ name: 'profile.user-tokens' }"
+                >
+                    User Tokens
+                </router-link>
+            </li>
         </ul>
         <div class="content">
             <router-view />
