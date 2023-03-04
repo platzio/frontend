@@ -1,66 +1,53 @@
 <template>
-  <div v-if="chart">
-    <div v-if="chart.values_ui">
-      <div v-for="input in chart.values_ui.inputs" :key="input.id" class="mt-2">
-        <ConfigValue
-          :input="input"
-          :envId="envId"
-          :value="deployment.config[input.id]"
-          :allValues="deployment.config"
-        />
-      </div>
+    <div v-if="config">
+        <div v-if="uiSchema">
+            <div v-for="input in uiSchema.inputs" :key="input.id" class="mt-2">
+                <ConfigValue
+                    :input="input"
+                    :envId="envId"
+                    :value="config[input.id]"
+                    :allValues="config"
+                />
+            </div>
+        </div>
+
+        <div v-else>
+            <YamlContent :config="config" />
+        </div>
     </div>
 
-    <div v-else>
-      <YamlContent :config="deployment.config" />
-    </div>
     <div
-      class="my-3"
-      v-if="
-        deployment.values_override &&
-        Object.keys(deployment.values_override).length
-      "
+        class="my-3"
+        v-if="valuesOverride && Object.keys(valuesOverride).length"
     >
-      <YamlContent
-        header="Values Override"
-        :config="deployment.values_override"
-      />
+        <YamlContent header="Values Override" :config="valuesOverride" />
     </div>
-  </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { Deployment } from "@/store/models/deployment";
+import { defineComponent, PropType } from "vue";
+import { HelmChartUiSchema } from "@/store/chart-ext";
 import YamlContent from "./YamlContent.vue";
-import { useStore } from "@/store";
 
 export default defineComponent({
-  props: {
-    envId: {
-      type: String,
-      required: true,
+    props: {
+        envId: {
+            type: String,
+            required: true,
+        },
+        uiSchema: {
+            type: Object as PropType<HelmChartUiSchema>,
+        },
+        config: {
+            type: Object,
+        },
+        valuesOverride: {
+            type: Object,
+        },
     },
-    deployment: {
-      type: Object as PropType<Deployment>,
-      required: true,
+
+    components: {
+        YamlContent,
     },
-  },
-
-  components: {
-    YamlContent,
-  },
-
-  setup(props) {
-    const store = useStore();
-
-    const chart = computed(() =>
-      store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
-    );
-
-    return {
-      chart,
-    };
-  },
 });
 </script>
