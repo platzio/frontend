@@ -22,7 +22,7 @@ So, while users see one domain in production, any downtime of the frontend can't
 The easiest and most common way to develop the frontend is against the production backend. To do that, run the following command:
 
 ```
-PLATZ_BACKEND=https://platz.example.com yarn serve
+PLATZ_BACKEND=https://platz.example.com npm run serve
 ```
 
 The frontend is then served from http://localhost:8080, and as mentioned above acts as a reverse-proxy to all backend traffic.
@@ -32,7 +32,7 @@ The frontend is then served from http://localhost:8080, and as mentioned above a
 When running a backend locally, run the same command without defining the `PLATZ_BACKEND` environment variable:
 
 ```
-yarn serve
+npm run serve
 ```
 
 Note that the frontend always tries to authenticate users, therefore authentication has to be properly configured in the backend for the frontend to work correctly.

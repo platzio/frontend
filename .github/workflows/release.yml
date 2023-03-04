@@ -18,14 +18,14 @@ jobs:
         with:
           node-version: 18
 
-      - name: 🧶 Yarn install
-        run: yarn install
+      - name: 📦 npm install
+        run: npm install
 
-      - name: 🧶 Yarn lint
-        run: yarn lint
+      - name: 📦 npm lint
+        run: npm lint
 
-      - name: 🧶 Yarn build
-        run: yarn build
+      - name: 📦 npm build
+        run: npm build
 
       - name: 🏷 Get tag
         id: tag
