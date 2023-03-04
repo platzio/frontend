@@ -91,6 +91,16 @@
                                 This Env's Settings
                             </router-link>
                         </li>
+                        <li>
+                            <router-link
+                                :to="{ name: 'playground' }"
+                                class="dropdown-item"
+                                activeClass=""
+                            >
+                                <FaIcon icon="gamepad" fixed-width />
+                                Chart Playground
+                            </router-link>
+                        </li>
                         <li v-if="curUser.is_admin">
                             <router-link
                                 :to="{ name: 'admin' }"
