@@ -32,7 +32,8 @@
                 style="font-size: 1.1rem"
             ><code>[profile.default]
 url = "{{ server_url }}"
-user_token = "{{ createdToken.created_token }}"</code></pre>
+user_token = "{{ createdToken.created_token }}"
+default_profile = true</code></pre>
             <div class="mt-4 mb-2 h5 fw-bold">Using in API Calls</div>
             <div class="my-2">
                 Alternatively, you can use your new token by passing it in the
