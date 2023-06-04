@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import { HelmChartUiInput } from "@/store/chart-ext";
+import { UiSchemaInput } from "@platzio/sdk";
 
 export default defineComponent({
     props: {
@@ -75,7 +75,7 @@ export default defineComponent({
             required: true,
         },
         input: {
-            type: Object as PropType<HelmChartUiInput>,
+            type: Object as PropType<UiSchemaInput>,
         },
         value: {
             required: true,

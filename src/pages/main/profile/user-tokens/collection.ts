@@ -1,16 +1,12 @@
-import { CollectionItem, createCollection } from "@/store/models/collection";
+import { createCollection } from "@/store/models/collection";
+import { CreateUserToken, CreatedUserToken, UserToken } from "@platzio/sdk";
 
-export interface UserToken extends CollectionItem {
-    user_id: string;
-    created_at: string;
-    created_token: string;
-}
-
-export interface CreatedToken {
-    created_token: string;
-}
-
-export const userTokens = createCollection<UserToken>({
+export const userTokens = createCollection<
+    UserToken,
+    CreateUserToken,
+    CreatedUserToken,
+    void
+>({
     url: "/api/v2/user-tokens",
 
     sortFunc(x, y) {

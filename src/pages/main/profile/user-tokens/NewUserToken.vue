@@ -64,12 +64,13 @@ default_profile = true</code></pre>
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import PlatzModal from "@/components/base/PlatzModal.vue";
-import { CreatedToken, userTokens } from "./collection";
+import { userTokens } from "./collection";
+import { CreatedUserToken } from "@platzio/sdk";
 
 function initialData(): {
     error: any;
     working: boolean;
-    createdToken?: CreatedToken;
+    createdToken?: CreatedUserToken;
 } {
     return {
         error: undefined,
@@ -92,8 +93,7 @@ export default defineComponent({
             Object.assign(state, initialData());
             modal.value!.open();
             try {
-                const res = await userTokens.createItem({});
-                state.createdToken = res as CreatedToken;
+                state.createdToken = await userTokens.createItem({});
             } catch (err) {
                 state.error = err;
             }

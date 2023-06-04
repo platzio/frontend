@@ -1,7 +1,7 @@
 <template>
     <PlatzReason
         :text="resource.sync_reason"
-        :isBad="resource.sync_status === SyncStatus.Error"
+        :isBad="resource.sync_status === DeploymentResourceSyncStatus.Error"
         :allowExpand="false"
     >
         <template #before>
@@ -14,10 +14,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import {
-    DeploymentResource,
-    SyncStatus,
-} from "@/store/models/deployment-resource";
+import { DeploymentResource, DeploymentResourceSyncStatus } from "@platzio/sdk";
 
 export default defineComponent({
     props: {
@@ -30,14 +27,14 @@ export default defineComponent({
     setup(props) {
         const syncStatusClass = computed(() => {
             switch (props.resource.sync_status) {
-                case SyncStatus.Creating:
-                case SyncStatus.Updating:
+                case DeploymentResourceSyncStatus.Creating:
+                case DeploymentResourceSyncStatus.Updating:
                     return "bg-primary";
-                case SyncStatus.Deleting:
+                case DeploymentResourceSyncStatus.Deleting:
                     return "bg-warning";
-                case SyncStatus.Ready:
+                case DeploymentResourceSyncStatus.Ready:
                     return "bg-success";
-                case SyncStatus.Error:
+                case DeploymentResourceSyncStatus.Error:
                     return "bg-danger";
             }
             return "bg-secondary";
@@ -45,7 +42,7 @@ export default defineComponent({
 
         return {
             syncStatusClass,
-            SyncStatus,
+            DeploymentResourceSyncStatus,
         };
     },
 });

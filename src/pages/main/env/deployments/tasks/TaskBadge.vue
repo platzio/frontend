@@ -22,11 +22,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
+import { DeploymentTask, DeploymentTaskStatus } from "@platzio/sdk";
 import { useStore } from "@/store";
-import {
-    DeploymentTask,
-    DeploymentTaskStatus,
-} from "@/store/models/deployment-task";
 import { chartActionsSchema } from "@/store/chart-ext";
 
 export default defineComponent({
@@ -45,13 +42,13 @@ export default defineComponent({
                 case DeploymentTaskStatus.Pending:
                     return "border text-dark bg-light bg-gradient";
                 case DeploymentTaskStatus.Started:
-                    return props.task.operation.InvokeAction ||
-                        props.task.operation.RestartK8sResource
+                    return "InvokeAction" in props.task.operation ||
+                        "RestartK8sResource" in props.task.operation
                         ? "border border-primary text-primary"
                         : "border border-success text-success";
                 case DeploymentTaskStatus.Done:
-                    return props.task.operation.InvokeAction ||
-                        props.task.operation.RestartK8sResource
+                    return "InvokeAction" in props.task.operation ||
+                        "RestartK8sResource" in props.task.operation
                         ? "bg-primary bg-gradient"
                         : "bg-success bg-gradient";
                 case DeploymentTaskStatus.Failed:
@@ -62,12 +59,12 @@ export default defineComponent({
         });
 
         const title = computed(() => {
-            if (props.task.operation.Install) {
+            if ("Install" in props.task.operation) {
                 return props.task.status == DeploymentTaskStatus.Started
                     ? "Installing"
                     : "Install";
             }
-            if (props.task.operation.Upgrade) {
+            if ("Upgrade" in props.task.operation) {
                 const operation = props.task.operation.Upgrade;
                 if (!operation.prev_helm_chart_id) {
                     return props.task.status == DeploymentTaskStatus.Started
@@ -97,22 +94,22 @@ export default defineComponent({
                     ? "Reconfiguring"
                     : "Reconfigure";
             }
-            if (props.task.operation.Reinstall) {
+            if ("Reinstall" in props.task.operation) {
                 return props.task.status == DeploymentTaskStatus.Started
                     ? "Reinstalling"
                     : "Reinstall";
             }
-            if (props.task.operation.Recreate) {
+            if ("Recreate" in props.task.operation) {
                 return props.task.status == DeploymentTaskStatus.Started
                     ? "Recreating"
                     : "Recreate";
             }
-            if (props.task.operation.Uninstall) {
+            if ("Uninstall" in props.task.operation) {
                 return props.task.status == DeploymentTaskStatus.Started
                     ? "Uninstalling"
                     : "Uninstall";
             }
-            if (props.task.operation.RestartK8sResource) {
+            if ("RestartK8sResource" in props.task.operation) {
                 return props.task.status == DeploymentTaskStatus.Started
                     ? "Restarting"
                     : "Restart";

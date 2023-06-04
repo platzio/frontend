@@ -24,8 +24,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
+import { UserToken } from "@platzio/sdk";
 import PlatzModal from "@/components/base/PlatzModal.vue";
-import { UserToken, userTokens } from "./collection";
+import { userTokens } from "./collection";
 
 function initialData(): {
     error: any;

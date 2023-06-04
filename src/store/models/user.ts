@@ -1,21 +1,15 @@
-import { CollectionItem, createCollection } from './collection'
+import { UpdateUser, User } from "@platzio/sdk";
+import { createCollection } from "./collection";
 
-export interface User extends CollectionItem {
-    created_at: string;
-    display_name: string;
-    email: string;
-    is_admin: boolean;
-}
-
-export const collection = createCollection<User>({
-    url: '/api/v2/users',
+export const collection = createCollection<User, void, User, UpdateUser>({
+    url: "/api/v2/users",
 
     sortFunc(x, y) {
-        return x.display_name.localeCompare(y.display_name)
+        return x.display_name.localeCompare(y.display_name);
     },
 
     formatItem: (item: User) => ({
-        icon: 'user',
+        icon: "user",
         text: item.display_name,
-    })
-})
+    }),
+});

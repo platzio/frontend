@@ -1,5 +1,4 @@
-import { Deployment } from "./models/deployment";
-import { DbTableOrDeploymentResource } from "./chart-ext";
+import { DbTableOrDeploymentResource, Deployment } from "@platzio/sdk";
 import { useStore } from "./";
 
 export function findCollectionDependencies(
@@ -15,7 +14,10 @@ export function findCollectionDependencies(
         );
 
         if (!chart) {
-            console.log("Could not find chart for deployment", deployment.helm_chart_id);
+            console.log(
+                "Could not find chart for deployment",
+                deployment.helm_chart_id
+            );
             continue;
         }
 

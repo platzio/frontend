@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
+import { DeploymentResource } from "@platzio/sdk";
 import { useStore } from "@/store";
-import { DeploymentResource } from "@/store/models/deployment-resource";
 import ResourceReason from "./ResourceReason.vue";
 
 export default defineComponent({

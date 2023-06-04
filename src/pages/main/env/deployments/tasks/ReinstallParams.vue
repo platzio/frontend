@@ -1,19 +1,19 @@
 <template>
-  <div class="mt-1 mb-2 small text-muted">
-    Deployment reinstalled: <strong>{{ operation.reason }}</strong>
-  </div>
+    <div class="mt-1 mb-2 small text-muted">
+        Deployment reinstalled: <strong>{{ operation.reason }}</strong>
+    </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { DeploymentReinstallTask } from "@/store/models/deployment-task";
+import { DeploymentReinstallTask } from "@platzio/sdk";
 
 export default defineComponent({
-  props: {
-    operation: {
-      type: Object as PropType<DeploymentReinstallTask>,
-      required: true,
+    props: {
+        operation: {
+            type: Object as PropType<DeploymentReinstallTask>,
+            required: true,
+        },
     },
-  },
 });
 </script>

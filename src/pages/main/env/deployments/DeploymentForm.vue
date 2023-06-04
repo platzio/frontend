@@ -94,9 +94,9 @@
 import { computed, defineComponent, ref, PropType, watch } from "vue";
 import { cloneDeep } from "lodash";
 import moment from "moment";
+import { Deployment, ChartExtCardinality } from "@platzio/sdk";
 import { useStore } from "@/store";
-import { Deployment } from "@/store/models/deployment";
-import { chartFeatures, HelmChartCardinality } from "@/store/chart-ext";
+import { chartFeatures } from "@/store/chart-ext";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
 import { isDeploymentOwner } from "@/store/permissions";
 
@@ -188,7 +188,7 @@ export default defineComponent({
             if (!features) {
                 return true;
             }
-            return features.cardinality == HelmChartCardinality.Many;
+            return features.cardinality == ChartExtCardinality.Many;
         });
 
         const newUiSchema = computed(
@@ -213,9 +213,21 @@ export default defineComponent({
                 );
                 return updated.id;
             }
-            const deployment = await store!.collections.deployments.createItem(
-                new_data.value
-            );
+            if (
+                !new_data.value.kind ||
+                !new_data.value.cluster_id ||
+                !new_data.value.helm_chart_id
+            ) {
+                return;
+            }
+            const deployment = await store!.collections.deployments.createItem({
+                name: new_data.value.name,
+                kind: new_data.value.kind,
+                cluster_id: new_data.value.cluster_id,
+                helm_chart_id: new_data.value.helm_chart_id,
+                config: new_data.value.config,
+                values_override: new_data.value.values_override,
+            });
             return deployment.id;
         }
 

@@ -137,7 +137,7 @@ import { computed, defineComponent, ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
-import { DeploymentStatus } from "@/store/models/deployment";
+import { DeploymentStatus } from "@platzio/sdk";
 import PlatzMetric from "@/components/PlatzMetric.vue";
 import ConfigValues from "../config/ConfigValues.vue";
 import DeploymentActions from "./DeploymentActions.vue";

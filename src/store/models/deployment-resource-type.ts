@@ -1,44 +1,24 @@
-import { CollectionItem, createCollection } from './collection'
-import { ChartExtActionTarget, HelmChartUiSchema } from '../chart-ext';
-import { UserDeploymentRole } from './deployment-permission';
+import {
+    DeploymentResourceType,
+    NewDeploymentResource,
+    UpdateDeploymentResource,
+} from "@platzio/sdk";
+import { createCollection } from "./collection";
 
-export interface DeploymentResourceType extends CollectionItem {
-    created_at: string;
-    env_id?: string;
-    deployment_kind: string;
-    key: string;
-    spec: ChartExtResourceTypeSpec;
-}
-
-export interface ChartExtResourceTypeSpec {
-    name_singular: string;
-    name_plural: string;
-    fontawesome_icon: string;
-    global: boolean;
-    values_ui: HelmChartUiSchema;
-    lifecycle: ChartExtResourceLifecycle;
-}
-
-export interface ChartExtResourceLifecycle {
-    create?: ResourceLifecycle;
-    update?: ResourceLifecycle;
-    delete?: ResourceLifecycle;
-}
-
-export interface ResourceLifecycle {
-    allowed_role?: UserDeploymentRole;
-    target?: ChartExtActionTarget;
-}
-
-export const collection = createCollection<DeploymentResourceType>({
-    url: '/api/v2/deployment-resource-types',
+export const collection = createCollection<
+    DeploymentResourceType,
+    NewDeploymentResource,
+    DeploymentResourceType,
+    UpdateDeploymentResource
+>({
+    url: "/api/v2/deployment-resource-types",
 
     sortFunc(x, y) {
-        return x.spec.name_singular.localeCompare(y.spec.name_singular)
+        return x.spec.name_singular.localeCompare(y.spec.name_singular);
     },
 
     formatItem: (item: DeploymentResourceType) => ({
-        icon: 'city',
+        icon: "city",
         text: item.spec.name_singular,
-    })
-})
+    }),
+});

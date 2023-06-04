@@ -1,19 +1,20 @@
-import { CollectionItem, createCollection } from './collection'
+import { HelmTagFormat, NewHelmTagFormat } from "@platzio/sdk";
+import { createCollection } from "./collection";
 
-export interface HelmTagFormat extends CollectionItem {
-    created_at: string;
-    pattern: string;
-}
-
-export const collection = createCollection<HelmTagFormat>({
-    url: '/api/v2/helm-tag-formats',
+export const collection = createCollection<
+    HelmTagFormat,
+    NewHelmTagFormat,
+    HelmTagFormat,
+    void
+>({
+    url: "/api/v2/helm-tag-formats",
 
     sortFunc(x, y) {
-        return y.created_at.localeCompare(x.created_at)
+        return y.created_at.localeCompare(x.created_at);
     },
 
     formatItem: (item: HelmTagFormat) => ({
-        icon: 'tag',
+        icon: "tag",
         text: item.pattern,
     }),
-})
+});

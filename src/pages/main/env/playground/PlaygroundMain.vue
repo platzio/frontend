@@ -91,14 +91,14 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
-import {
-    ChartExtIngressHostnameFormat,
-    HelmChartCardinality,
-    HelmChartFeaturesV1Beta2,
-    HelmChartUiSchema,
-} from "@/store/chart-ext";
 import ConfigValues from "../deployments/config/ConfigValues.vue";
 import ConfigInputsForm from "../deployments/config/ConfigInputsForm.vue";
+import {
+    ChartExtCardinality,
+    ChartExtFeaturesV1Beta2,
+    ChartExtIngressHostnameFormat,
+    UiSchema,
+} from "@platzio/sdk";
 
 export default defineComponent({
     components: {
@@ -123,7 +123,7 @@ export default defineComponent({
 
         const kind = ref<string>("shop");
 
-        const ui_schema = ref<HelmChartUiSchema>({
+        const ui_schema = ref<UiSchema>({
             apiVersion: "platz.io/v1beta1",
             kind: "ValuesUi",
             inputs: [
@@ -131,7 +131,7 @@ export default defineComponent({
                     id: "required_num",
                     type: "number",
                     label: "Required num",
-                    minimum: 0,
+                    minimum: "0",
                     required: true,
                     initialValue: 600,
                 },
@@ -274,7 +274,7 @@ export default defineComponent({
             },
         });
 
-        const features = ref<HelmChartFeaturesV1Beta2>({
+        const features = ref<ChartExtFeaturesV1Beta2>({
             apiVersion: "platz.io/v1beta2",
             kind: "Features",
             spec: {
@@ -282,7 +282,7 @@ export default defineComponent({
                     enabled: true,
                     hostname_format: ChartExtIngressHostnameFormat.KindAndName,
                 },
-                cardinality: HelmChartCardinality.Many,
+                cardinality: ChartExtCardinality.Many,
                 reinstall_dependencies: false,
                 node_selector_paths: [],
                 tolerations_paths: [],

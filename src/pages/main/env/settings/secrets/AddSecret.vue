@@ -157,6 +157,9 @@ export default defineComponent({
         }
 
         async function submit() {
+            if (!state.collection || !state.name || !state.contents) {
+                return;
+            }
             try {
                 state.disabled = true;
                 state.error = null;

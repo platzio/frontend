@@ -1,89 +1,93 @@
 <template>
-  <PlatzModal
-    ref="modal"
-    title="Delete Tag Format"
-    btn-class="btn-danger"
-    :error="error"
-    :working="disabled"
-    size="lg"
-    @submit="submit"
-  >
-    <div class="my-3 alert alert-danger">
-      <div class="my-2 fw-bold">
-        <FaIcon icon="triangle-exclamation" fixed-width />
-        Careful
-      </div>
-      <div class="my-2">You are about to delete the following tag format:</div>
-    </div>
+    <PlatzModal
+        ref="modal"
+        title="Delete Tag Format"
+        btn-class="btn-danger"
+        :error="error"
+        :working="disabled"
+        size="lg"
+        @submit="submit"
+    >
+        <div class="my-3 alert alert-danger">
+            <div class="my-2 fw-bold">
+                <FaIcon icon="triangle-exclamation" fixed-width />
+                Careful
+            </div>
+            <div class="my-2">
+                You are about to delete the following tag format:
+            </div>
+        </div>
 
-    <div v-if="item" class="my-3 font-monospace rounded border p-3">
-      {{ item.pattern }}
-    </div>
+        <div v-if="item" class="my-3 font-monospace rounded border p-3">
+            {{ item.pattern }}
+        </div>
 
-    <div class="my-3">Are you sure you want to continue?</div>
-  </PlatzModal>
+        <div class="my-3">Are you sure you want to continue?</div>
+    </PlatzModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
+import { HelmTagFormat } from "@platzio/sdk";
 import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
-import { HelmTagFormat } from "@/store/models/helm-tag-format";
 
 function initialData(): {
-  error: any;
-  disabled: boolean;
-  item?: HelmTagFormat;
+    error: any;
+    disabled: boolean;
+    item?: HelmTagFormat;
 } {
-  return {
-    error: undefined,
-    disabled: false,
-    item: undefined,
-  };
+    return {
+        error: undefined,
+        disabled: false,
+        item: undefined,
+    };
 }
 
 export default defineComponent({
-  components: {
-    PlatzModal,
-  },
+    components: {
+        PlatzModal,
+    },
 
-  setup() {
-    const store = useStore();
-    const state = reactive({ ...initialData() });
-    const modal = ref<typeof PlatzModal>();
+    setup() {
+        const store = useStore();
+        const state = reactive({ ...initialData() });
+        const modal = ref<typeof PlatzModal>();
 
-    function open(item: HelmTagFormat) {
-      Object.assign(state, initialData());
-      state.item = item;
-      modal.value!.open();
-    }
+        function open(item: HelmTagFormat) {
+            Object.assign(state, initialData());
+            state.item = item;
+            modal.value!.open();
+        }
 
-    function close() {
-      modal.value!.close();
-    }
+        function close() {
+            modal.value!.close();
+        }
 
-    async function submit() {
-      if (!state.item || !state.item.id) {
-        return;
-      }
-      try {
-        state.disabled = true;
-        state.error = null;
-        await store!.collections.helmTagFormats.deleteItem(state.item.id);
-        modal.value!.close();
-      } catch (error) {
-        state.error = error;
-        state.disabled = false;
-      }
-    }
+        async function submit() {
+            if (!state.item || !state.item.id) {
+                return;
+            }
+            try {
+                state.disabled = true;
+                state.error = null;
+                await store!.collections.helmTagFormats.deleteItem(
+                    state.item.id
+                );
+                modal.value!.close();
+            } catch (error) {
+                state.error = error;
+                state.disabled = false;
+            }
+        }
 
-    return {
-      modal,
-      open,
-      close,
-      submit,
-      ...toRefs(state),
-    };
-  },
+        return {
+            modal,
+            open,
+            close,
+            submit,
+            ...toRefs(state),
+        };
+    },
 });
 </script>

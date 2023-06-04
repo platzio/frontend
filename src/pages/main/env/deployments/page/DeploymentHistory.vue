@@ -22,9 +22,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType } from "vue";
+import { Deployment, DeploymentTaskStatus } from "@platzio/sdk";
 import { useStore } from "@/store";
-import { Deployment } from "@/store/models/deployment";
-import { DeploymentTaskStatus } from "@/store/models/deployment-task";
 import DeploymentTask from "../tasks/DeploymentTask.vue";
 
 export default defineComponent({

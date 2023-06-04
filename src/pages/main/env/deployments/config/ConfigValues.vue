@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { HelmChartUiSchema } from "@/store/chart-ext";
+import { UiSchema } from "@platzio/sdk";
 import YamlContent from "./YamlContent.vue";
 
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
             required: true,
         },
         uiSchema: {
-            type: Object as PropType<HelmChartUiSchema>,
+            type: Object as PropType<UiSchema>,
         },
         config: {
             type: Object,

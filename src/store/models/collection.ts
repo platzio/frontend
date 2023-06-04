@@ -6,41 +6,43 @@ export interface CollectionItem<ID = string> {
     id: ID;
 }
 
-type SortFunction<T> = (x: T, y: T) => number;
+type SortFunction<Item> = (x: Item, y: Item) => number;
 export type CollectionFilters = Record<string, string | number | boolean>;
 
-export interface CreateCollectionOptions<T> {
+export interface CreateCollectionOptions<Item> {
     url: string;
-    sortFunc: SortFunction<T>;
-    /* This type here should be `T`, but the compiler can't properly
+    sortFunc: SortFunction<Item>;
+    /* This type here should be `Item`, but the compiler can't properly
        infer types when returning a collection from tableNameToCollection */
-    formatItem: (item: any) => {
+    formatItem: (item: Item) => {
         inputLabel?: boolean;
         label?: string;
         icon?: string;
         text: string;
     };
-    envFilter?: (item: T, envId: string) => boolean;
+    envFilter?: (item: Item, envId: string) => boolean;
     initialFilters?: CollectionFilters;
 }
 
-interface Paginated<T> {
+interface Paginated<Item> {
     page: number;
     per_page: number;
     num_total: number;
-    items: T[];
+    items: Item[];
 }
 
 export function createCollection<
-    T extends CollectionItem<K>,
-    F = null,
+    Item extends CollectionItem<K>,
+    CreateItem,
+    CreatedItem,
+    UpdateItem,
     K = string
->(opts: CreateCollectionOptions<T>) {
+>(opts: CreateCollectionOptions<Item>) {
     const state = reactive({
         ready: false,
         loading: true,
         loadingProgress: 0.0,
-        items: new Map<K, T>(),
+        items: new Map<K, Item>(),
         error: undefined as any,
         appliedFilters: new Set<string>(),
     });
@@ -52,7 +54,7 @@ export function createCollection<
         Math.ceil(state.loadingProgress * 100)
     );
     const status = computed(() => (state.error ? `${state.error}` : null));
-    const getOne = computed(() => (id: K) => state.items.get(id) as T);
+    const getOne = computed(() => (id: K) => state.items.get(id) as Item);
 
     const all = computed(() => {
         const items = Array.from(state.items.values());
@@ -67,7 +69,7 @@ export function createCollection<
                 : all.value
     );
 
-    const setOne = (item: T) => {
+    const setOne = (item: Item) => {
         state.items.set(item.id, item);
     };
 
@@ -83,7 +85,7 @@ export function createCollection<
             let page = 1;
             let num_pages = 1;
             do {
-                const res: AxiosResponse<Paginated<T>> = await axios.get(
+                const res: AxiosResponse<Paginated<Item>> = await axios.get(
                     opts.url,
                     {
                         params: {
@@ -110,30 +112,30 @@ export function createCollection<
     const readItem = async ({ id }: { id: string }) => {
         try {
             const res = await axios.get(`${opts.url}/${id}`);
-            const item = res.data as T;
+            const item = res.data as Item;
             setOne(item);
         } catch (error) {
             state.error = error;
         }
     };
 
-    const createItem = async (item: Record<string, any>): Promise<T> => {
+    const createItem = async (item: CreateItem): Promise<CreatedItem> => {
         const res = await axios.post(opts.url, item);
-        return res.data as T;
+        return res.data as CreatedItem;
     };
 
     const updateItem = async ({
         id,
         data,
     }: {
-        id: string;
-        data: Record<string, any>;
-    }): Promise<T> => {
+        id: K;
+        data: UpdateItem;
+    }): Promise<Item> => {
         const res = await axios.put(`${opts.url}/${id}`, data);
-        return res.data as T;
+        return res.data as Item;
     };
 
-    const deleteItem = async (id: string): Promise<void> => {
+    const deleteItem = async (id: K): Promise<void> => {
         await axios.delete(`${opts.url}/${id}`);
     };
 

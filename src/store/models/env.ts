@@ -1,22 +1,15 @@
-import { CollectionItem, createCollection } from './collection'
+import { Env, NewEnv, UpdateEnv } from "@platzio/sdk";
+import { createCollection } from "./collection";
 
-export interface Env extends CollectionItem {
-    created_at: string;
-    name: string;
-    node_selector: Record<string, string>;
-    tolerations: Record<string, string>;
-    auto_add_new_users: boolean;
-}
-
-export const collection = createCollection<Env>({
-    url: '/api/v2/envs',
+export const collection = createCollection<Env, NewEnv, Env, UpdateEnv>({
+    url: "/api/v2/envs",
 
     sortFunc(x, y) {
-        return x.name.localeCompare(y.name)
+        return x.name.localeCompare(y.name);
     },
 
     formatItem: (item: Env) => ({
-        icon: 'city',
+        icon: "city",
         text: item.name,
-    })
-})
+    }),
+});

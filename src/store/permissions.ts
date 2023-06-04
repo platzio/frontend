@@ -1,7 +1,5 @@
-import { EnvUserRole } from "./models/env-user-permission";
-import { UserDeploymentRole } from "./models/deployment-permission";
+import { EnvUserRole, User, UserDeploymentRole } from "@platzio/sdk";
 import { useStore } from ".";
-import { User } from "./models/user";
 
 export function isEnvUser(envId: string, user: User) {
     const store = useStore();

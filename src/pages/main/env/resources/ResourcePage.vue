@@ -122,7 +122,6 @@ import { useStore } from "@/store";
 import { findCollectionDependencies } from "@/store/deployments";
 import EditResource from "./EditResource.vue";
 import DeleteResource from "./DeleteResource.vue";
-import { DeploymentResourceCollection } from "@/store/chart-ext";
 import ResourceReason from "./ResourceReason.vue";
 
 export default defineComponent({
@@ -165,11 +164,15 @@ export default defineComponent({
         );
 
         const canEdit = computed(
-            () => resourceType.value.spec.lifecycle.update
+            () =>
+                resourceType.value.spec.lifecycle &&
+                resourceType.value.spec.lifecycle.update
         );
 
         const canDelete = computed(
-            () => resourceType.value.spec.lifecycle.delete
+            () =>
+                resourceType.value.spec.lifecycle &&
+                resourceType.value.spec.lifecycle.delete
         );
 
         const formatted = computed(() =>
@@ -190,7 +193,7 @@ export default defineComponent({
                     {
                         deployment: resourceType.value.deployment_kind,
                         type: resourceType.value.key,
-                    } as DeploymentResourceCollection,
+                    },
                     props.id
                 )
             )
