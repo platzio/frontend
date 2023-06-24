@@ -51,8 +51,8 @@
             v-if="chart.parsed_commit"
             class="ms-2 text-secondary font-monospace opacity75"
         >
-            <FaIcon icon="code" /><span class="ms-1">{{
-                chart.parsed_commit
+            <FaIcon icon="code-commit" /><span class="ms-1">{{
+                chart.parsed_commit.slice(0, 7)
             }}</span>
         </span>
     </div>
