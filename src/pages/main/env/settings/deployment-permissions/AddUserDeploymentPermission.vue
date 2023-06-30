@@ -26,7 +26,10 @@
                     {{ user.display_name }}
                 </option>
             </select>
-            <div class="small text-muted" v-if="possibleUsers.length === 0">
+            <div
+                class="small text-body-secondary"
+                v-if="possibleUsers.length === 0"
+            >
                 It looks like all possible users already have permissions for
                 this deployment kind.
             </div>

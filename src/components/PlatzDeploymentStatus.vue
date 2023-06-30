@@ -70,7 +70,7 @@ export default defineComponent({
                 case "warning":
                     return "bg-warning border border-warning text-dark";
             }
-            return "bg-light bg-gradient text-dark border";
+            return "bg-light-subtle bg-gradient text-dark border";
         });
 
         return {

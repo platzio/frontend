@@ -56,7 +56,7 @@
             </template>
         </PlatzCollection>
     </div>
-    <div v-else class="my-3 h2 text-center text-muted">
+    <div v-else class="my-3 h2 text-center text-body-secondary">
         <FaIcon icon="circle-notch" spin fixed-width />
     </div>
     <NewUserToken ref="newUserToken" @submit="reload" @close="reload" />

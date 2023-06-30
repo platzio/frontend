@@ -8,7 +8,7 @@
                 {{ metric.unit }}
             </span>
         </div>
-        <div class="small text-uppercase text-muted">
+        <div class="small text-uppercase text-body-secondary">
             {{ metric.short_description }}
         </div>
     </div>

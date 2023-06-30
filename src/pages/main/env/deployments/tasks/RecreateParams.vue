@@ -1,5 +1,5 @@
 <template>
-    <div class="small text-muted">
+    <div class="small text-body-secondary">
         <div
             class="mt-1"
             v-if="operation.old_cluster_id !== operation.new_cluster_id"

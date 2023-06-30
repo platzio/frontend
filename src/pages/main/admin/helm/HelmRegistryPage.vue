@@ -5,7 +5,7 @@
                 <div class="h4">
                     <PlatzHelmRegistry :registry="registry" />
                 </div>
-                <div class="mt-3 mb-2 text-muted">
+                <div class="mt-3 mb-2 text-body-secondary">
                     <FaIcon icon="clock" fixed-width />
                     Created
                     <PlatzMoment :value="registry.created_at" />
@@ -41,7 +41,7 @@
 
     <div class="card my-3">
         <div class="card-header">Charts</div>
-        <div v-if="chartsLoading" class="my-3 text-center text-muted">
+        <div v-if="chartsLoading" class="my-3 text-center text-body-secondary">
             <FaIcon icon="circle-notch" spin fixed-width />
             Loading charts ({{ chartsLoadingPercent }}%)
         </div>

@@ -20,20 +20,22 @@
             &:first-child {
                 margin-top: 0;
             }
-                }
+        }
     }
 
     > .content {
         @extend .ps-4;
         flex: 1;
-        max-width: calc(calc(100% - var(--sidenav-nav-width) + $nav-link-padding-x));
+        max-width: calc(
+            calc(100% - var(--sidenav-nav-width) + $nav-link-padding-x)
+        );
     }
 }
 
 .nav-heading {
     @extend .px-3;
     @extend .text-uppercase;
-    @extend .text-muted;
-    font-size: .75rem;
+    @extend .text-body-secondary;
+    font-size: 0.75rem;
     font-weight: 600;
 }

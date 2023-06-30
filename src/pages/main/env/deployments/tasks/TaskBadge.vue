@@ -40,7 +40,7 @@ export default defineComponent({
         const klass = computed(() => {
             switch (props.task.status) {
                 case DeploymentTaskStatus.Pending:
-                    return "border text-dark bg-light bg-gradient";
+                    return "border text-dark bg-light-subtle bg-gradient";
                 case DeploymentTaskStatus.Started:
                     return "InvokeAction" in props.task.operation ||
                         "RestartK8sResource" in props.task.operation

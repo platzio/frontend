@@ -24,7 +24,7 @@
             autocapitalize="off"
             placeholder="Enter a description, or leave empty to remove it"
         />
-        <div class="my-2 small text-muted">
+        <div class="my-2 small text-body-secondary">
             <FaIcon :icon="['fab', 'markdown']" brand fixed-width />
             Markdown formatting is supported, emojis encouraged ⭐️
         </div>

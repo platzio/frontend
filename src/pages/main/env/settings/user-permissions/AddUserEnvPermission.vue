@@ -35,7 +35,7 @@
                 />
                 <label class="form-check-label" for="userRoleRegular">
                     <div class="">Regular User</div>
-                    <div class="mt-1 text-muted">
+                    <div class="mt-1 text-body-secondary">
                         Can see and access the env, perform actions based on the
                         permissions granted by other admins.
                     </div>
@@ -52,7 +52,7 @@
                 />
                 <label class="form-check-label" for="userRoleAdmin">
                     <div class="">Admin User</div>
-                    <div class="mt-1 text-muted">
+                    <div class="mt-1 text-body-secondary">
                         Can perform any operation for deployments and custom
                         resources, without specifically adding permissions for
                         each operation. Also, can change all env settings,

@@ -9,7 +9,7 @@
         :showSubmit="false"
         cancelText="Close"
     >
-        <div v-if="working" class="my-3 h2 text-center text-muted">
+        <div v-if="working" class="my-3 h2 text-center text-body-secondary">
             <FaIcon icon="circle-notch" spin fixed-width />
         </div>
         <div v-else-if="createdToken">
@@ -17,7 +17,7 @@
             <div class="mt-3 mb-2 user-token">
                 <samp>{{ createdToken.created_token }}</samp>
             </div>
-            <div class="mt-2 mb-3 small text-muted">
+            <div class="mt-2 mb-3 small text-body-secondary">
                 <FaIcon icon="exclamation-triangle" fixed-width />
                 Make sure to copy your user token, you may never retreive it
                 again through Platz.

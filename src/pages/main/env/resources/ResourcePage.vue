@@ -78,7 +78,10 @@
                 <li class="list-group-item" v-if="managingDeployment">
                     <PlatzDeployment :deployment="managingDeployment" />
                 </li>
-                <li class="list-group-item text-muted text-center" v-else>
+                <li
+                    class="list-group-item text-body-secondary text-center"
+                    v-else
+                >
                     This {{ resourceType.spec.name_singular }} is not managed by
                     any deployment
                 </li>
@@ -97,7 +100,7 @@
                 </div>
                 <div
                     v-if="deployments.length === 0"
-                    class="my-5 text-muted text-center"
+                    class="my-5 text-body-secondary text-center"
                 >
                     No deployments are using this
                     {{ resourceType.spec.name_singular }}

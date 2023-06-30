@@ -8,7 +8,7 @@
         <span>{{ chart.image_tag }}</span>
         <span
             v-if="!chart.available"
-            class="ms-2 badge bg-light text-dark border"
+            class="ms-2 badge bg-light-subtle text-dark border"
         >
             DELETED
         </span>
@@ -22,14 +22,14 @@
     >
         <span
             v-if="!chart.available"
-            class="me-2 badge bg-light text-dark border"
+            class="me-2 badge bg-light-subtle text-dark border"
         >
             DELETED
         </span>
 
         <span
             v-if="isMaster"
-            class="badge rounded-pill fw-normal border border-primary bg-light text-primary"
+            class="badge rounded-pill fw-normal border border-primary-subtle bg-body-tertiary text-primary"
             :style="pillStyle"
         >
             <FaIcon icon="star" fixed-width />
@@ -38,18 +38,20 @@
 
         <span
             v-if="!isMaster"
-            class="badge rounded-pill fw-normal border bg-light text-dark"
+            class="badge rounded-pill fw-normal border bg-body-tertiary text-body"
             :style="pillStyle"
         >
             <FaIcon icon="code-branch" fixed-width />
             {{ chart.parsed_branch || "master" }}
         </span>
 
-        <span class="ms-2 fw-bold">{{ chart.parsed_version }}</span>
+        <span class="ms-2 fw-bold text-body-seconadry">{{
+            chart.parsed_version
+        }}</span>
         <span v-if="chart.parsed_revision">-{{ chart.parsed_revision }}</span>
         <span
             v-if="chart.parsed_commit"
-            class="ms-2 text-secondary font-monospace opacity75"
+            class="ms-2 text-body-tertiary font-monospace"
         >
             <FaIcon icon="code-commit" /><span class="ms-1">{{
                 chart.parsed_commit.slice(0, 7)
@@ -61,15 +63,15 @@
         v-if="time"
         class="my-1 small"
         :class="{
-            'text-black-50': chart.available,
-            'text-muted': !chart.available,
+            'text-opacity-50': chart.available,
+            'text-body-secondary': !chart.available,
         }"
     >
         <FaIcon icon="clock" fixed-width />
         Uploaded <PlatzMoment :value="chart.created_at" />
     </div>
 
-    <div v-if="digest" class="small text-muted">
+    <div v-if="digest" class="small text-body-secondary">
         <FaIcon icon="barcode" fixed-width />
         {{ chart.image_digest }}
     </div>
@@ -125,7 +127,7 @@ export default defineComponent({
                               props.chart.available && !props.chart.error,
                           "text-danger":
                               props.chart.available && props.chart.error,
-                          "text-muted": !props.chart.available,
+                          "text-body-secondary": !props.chart.available,
                       }
                     : {},
                 {

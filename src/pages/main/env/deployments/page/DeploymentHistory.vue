@@ -1,11 +1,14 @@
 <template>
     <div>
-        <div v-if="tasksLoading" class="my-3 text-center text-muted">
+        <div v-if="tasksLoading" class="my-3 text-center text-body-secondary">
             <FaIcon icon="circle-notch" spin fixed-width />
             Loading tasks ({{ tasksLoadingPercent }}%)
         </div>
 
-        <div v-else-if="chartsLoading" class="my-3 text-center text-muted">
+        <div
+            v-else-if="chartsLoading"
+            class="my-3 text-center text-body-secondary"
+        >
             <FaIcon icon="circle-notch" spin fixed-width />
             Loading charts ({{ chartsLoadingPercent }}%)
         </div>

@@ -1,6 +1,5 @@
 .navbar-platz {
     @extend .navbar-light;
-    @extend .bg-white;
     @extend .my-4;
 
     .navbar-brand {
@@ -25,7 +24,7 @@
         &.active {
             @extend .fw-bold;
 
-            border-bottom: .2rem solid $red;
+            border-bottom: 0.2rem solid $red;
         }
     }
 }

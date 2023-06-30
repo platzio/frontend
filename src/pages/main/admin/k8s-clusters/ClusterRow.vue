@@ -10,14 +10,14 @@
     </div>
 
     <div
-        class="my-1 small text-muted d-flex flex-row"
+        class="my-1 small text-body-secondary d-flex flex-row"
         :class="{ opacity50: cluster.ignore }"
     >
         <div>
             <FaIcon icon="globe" class="me-1" />
             {{ cluster.region_name }}
         </div>
-        <div v-if="!cluster.ignore" class="mx-2 text-muted">/</div>
+        <div v-if="!cluster.ignore" class="mx-2 text-body-secondary">/</div>
         <div v-if="!cluster.ignore">
             Last seen <PlatzMoment :value="cluster.last_seen_at" />
         </div>

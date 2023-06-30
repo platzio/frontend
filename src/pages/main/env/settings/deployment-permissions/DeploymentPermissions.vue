@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="list-group">
-            <li class="list-group-item bg-light">
+            <li class="list-group-item bg-light-subtle">
                 <div class="row">
                     <div class="col-3 py-2 px-3" />
                     <div

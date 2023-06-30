@@ -25,7 +25,7 @@
                 />
                 <label class="form-check-label" for="userRoleRegular">
                     <div class="">Regular User</div>
-                    <div class="mt-1 text-muted">
+                    <div class="mt-1 text-body-secondary">
                         Can use the site like a normal person, can't access this
                         admin section.
                     </div>
@@ -42,7 +42,7 @@
                 />
                 <label class="form-check-label" for="userRoleAdmin">
                     <div class="">Global Admin User</div>
-                    <div class="mt-1 text-muted">
+                    <div class="mt-1 text-body-secondary">
                         Can access this admin section, create envs, assign
                         clusters to envs and set other users as global admins.
                     </div>

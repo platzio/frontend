@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-1 mb-2 small text-muted">
+    <div class="mt-1 mb-2 small text-body-secondary">
         Restart <strong>{{ operation.resource_name }}</strong>
     </div>
 </template>

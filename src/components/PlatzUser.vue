@@ -7,7 +7,7 @@
             </span>
         </div>
     </div>
-    <div class="mt-1 small text-muted" v-if="showEmail || showAdmin">
+    <div class="mt-1 small text-body-secondary" v-if="showEmail || showAdmin">
         <span v-if="showAdmin && user.is_admin" class="badge bg-primary me-2">
             ADMIN
         </span>

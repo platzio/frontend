@@ -15,7 +15,10 @@
             }}</span>
             permission for the following user:
         </div>
-        <div class="my-3 p-3 rounded border fw-bold bg-light" v-if="permission">
+        <div
+            class="my-3 p-3 rounded border fw-bold bg-light-subtle"
+            v-if="permission"
+        >
             <PlatzUser :id="permission.user_id" :show-name="true" />
         </div>
         <div class="mt-2">Are you sure you want to continue?</div>
