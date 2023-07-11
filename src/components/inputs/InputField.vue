@@ -73,6 +73,7 @@
 import { computed, defineComponent, ref, PropType, watch } from "vue";
 import { UiSchemaInput } from "@platzio/sdk";
 import { isEqual } from "lodash";
+import JsonLogic from "json-logic-js";
 
 export default defineComponent({
     props: {
@@ -124,12 +125,24 @@ export default defineComponent({
         );
 
         const visible = computed(
-            () =>
-                !props.input.showIfAll ||
-                props.input.showIfAll.every(
+            () => {
+                if (props.input.showIf != undefined) {
+                    // Keeping the behavior of the rust code in chart-ext/ui_schema.rs, in which only if the
+                    // json logic is valid and translates to true, the field is displayed
+                    try {
+                        return JsonLogic.apply(props.input.showIf, props.allValues) === true
+                    }
+                    catch {
+                        return false
+                    }
+                } else if (props.input.showIfAll != undefined) {
+                    return props.input.showIfAll.every(
                     (fv) => props.allValues[fv.field] === fv.value
                 )
-        );
+                } else {
+                    return true
+                }
+            });
 
         return {
             visible,
