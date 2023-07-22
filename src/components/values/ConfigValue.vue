@@ -100,7 +100,7 @@ export default defineComponent({
             () => {
                 if (!props.input) { return false }
 
-                if (props.input.showIf != undefined) {
+                if (props.input.showIf) {
                     // Keeping the behavior of the rust code in chart-ext/ui_schema.rs, in which only if the
                     // json logic is valid and translates to true, the field is displayed
                     try {
