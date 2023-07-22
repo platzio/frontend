@@ -67,6 +67,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { UiSchemaInput } from "@platzio/sdk";
+import JsonLogic from "json-logic-js";
 
 export default defineComponent({
     props: {
@@ -96,12 +97,26 @@ export default defineComponent({
 
     setup(props) {
         const shouldDisplay = computed(
-            () =>
-                props.input &&
-                (!props.input.showIfAll ||
-                    props.input.showIfAll.every(
-                        (fv) => props.allValues[fv.field] === fv.value
-                    ))
+            () => {
+                if (!props.input) { return false }
+
+                if (props.input.showIf) {
+                    // Keeping the behavior of the rust code in chart-ext/ui_schema.rs, in which only if the
+                    // json logic is valid and translates to true, the field is displayed
+                    try {
+                        return JsonLogic.apply(props.input.showIf, props.allValues) === true
+                    }
+                    catch {
+                        return false
+                    }
+                } else if (props.input.showIfAll != undefined) {
+                    return props.input.showIfAll.every(
+                    (fv) => props.allValues[fv.field] === fv.value
+                )
+                } else {
+                    return true
+                }
+            }
         );
         return {
             shouldDisplay,
