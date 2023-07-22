@@ -117,8 +117,7 @@ export default defineComponent({
                     return true
                 }
             }
-
-            );
+        );
         return {
             shouldDisplay,
         };
