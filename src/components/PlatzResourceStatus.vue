@@ -41,7 +41,7 @@ export default defineComponent({
                 return [];
             }
             return resource.value.status_color.map((color) => {
-                switch (color) {
+                switch (color.toLocaleLowerCase()) {
                     case DeploymentReportedStatusColor.Danger:
                         return "bg-danger";
                     case DeploymentReportedStatusColor.Primary:
