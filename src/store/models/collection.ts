@@ -13,7 +13,7 @@ export interface CreateCollectionOptions<Item> {
     url: string;
     sortFunc: SortFunction<Item>;
     /* This type here should be `Item`, but the compiler can't properly
-       infer types when returning a collection from tableNameToCollection */
+       infer types when returning a collection from dbTableToCollection */
     formatItem: (item: Item) => {
         inputLabel?: boolean;
         label?: string;

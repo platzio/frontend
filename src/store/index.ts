@@ -5,8 +5,8 @@ import { startWsUpdates } from "./ws";
 
 export function createStore() {
     const auth = createAuth();
-    const { collections, tableNameToCollection } = createCollections();
-    const wsUpdates = startWsUpdates({ collections, tableNameToCollection });
+    const { collections, dbTableToCollection } = createCollections();
+    const wsUpdates = startWsUpdates({ collections, dbTableToCollection });
 
     watch(
         () => auth.ready,
@@ -45,7 +45,7 @@ export function createStore() {
     return {
         auth,
         collections,
-        tableNameToCollection,
+        dbTableToCollection,
         wsUpdates,
         ready,
         loadingProgress,

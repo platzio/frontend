@@ -1,7 +1,6 @@
 import { computed, reactive } from "vue";
 import { useStore } from ".";
-import { TableName } from "./collections";
-import { DbTableOrDeploymentResource } from "@platzio/sdk";
+import { DbTable, DbTableOrDeploymentResource } from "@platzio/sdk";
 
 function toDeploymentResourceCollection(resourceTypeId: string) {
     const store = useStore();
@@ -56,8 +55,8 @@ export function getInputCollection(
         }
     }
 
-    // Otherwise, look for TableName first
-    const table = store!.tableNameToCollection(collection as TableName);
+    // Otherwise, look for DbTable first
+    const table = store!.dbTableToCollection(collection as DbTable);
     if (table) {
         return table;
     }
