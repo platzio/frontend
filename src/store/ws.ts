@@ -1,5 +1,6 @@
 import { computed, reactive } from "vue";
 import { createCollections } from "./collections";
+import { DbEvent } from "@platzio/sdk";
 
 export function startWsUpdates({
     dbTableToCollection,
@@ -43,7 +44,7 @@ export function startWsUpdates({
         };
 
         socket.onmessage = (message) => {
-            const event = JSON.parse(message.data);
+            const event = JSON.parse(message.data) as DbEvent;
             const collection = dbTableToCollection(event.table);
             if (collection) {
                 switch (event.operation) {
