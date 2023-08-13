@@ -1,37 +1,35 @@
 <template>
-  <PlatzProgressPage
-    :progress="100"
-    :animate-progress="true"
-    text="🚀 redirecting to google"
-    :error="error"
-  />
+    <PlatzProgressPage
+        :progress="100"
+        :animate-progress="true"
+        text="🚀 redirecting to google"
+        :error="error"
+    />
 </template>
 
 <script lang="ts">
-import axios from "axios";
 import { defineComponent, onMounted, ref } from "vue";
-
-interface GoogleLoginInfo {
-  redirect_url: string;
-}
+import { AuthenticationApi } from "@platzio/sdk";
+import { useStore } from "@/store";
 
 export default defineComponent({
-  setup() {
-    const error = ref<any>(null);
+    setup() {
+        const store = useStore();
+        const api = new AuthenticationApi(store!.auth.sdkConfig());
+        const error = ref<any>(null);
 
-    onMounted(async () => {
-      try {
-        const res = await axios.get("/api/v2/auth/google");
-        const login_info = res.data as GoogleLoginInfo;
-        window.location.assign(login_info.redirect_url);
-      } catch (err) {
-        error.value = err;
-      }
-    });
+        onMounted(async () => {
+            try {
+                const res = await api.startGoogleLogin();
+                window.location.assign(res.data.redirect_url);
+            } catch (err) {
+                error.value = err;
+            }
+        });
 
-    return {
-      error,
-    };
-  },
+        return {
+            error,
+        };
+    },
 });
 </script>

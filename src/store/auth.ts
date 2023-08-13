@@ -1,18 +1,22 @@
 import { ref, reactive, toRefs } from "vue";
 import axios from "axios";
 import { StatusCodes } from "http-status-codes";
-import { User } from "@platzio/sdk";
+import { AuthenticationApi, Configuration, User } from "@platzio/sdk";
 
 const ACCESS_TOKEN_ITEM = "access_token";
 
-interface AuthMeResponse {
-    User?: User;
-}
-
 export function createAuth() {
-    const access_token = ref<string | null>(
-        localStorage.getItem(ACCESS_TOKEN_ITEM)
+    const access_token = ref<string>(
+        localStorage.getItem(ACCESS_TOKEN_ITEM) || ""
     );
+
+    const sdkConfig = () =>
+        new Configuration({
+            basePath: `${window.location.protocol}//${window.location.host}`,
+            accessToken: () => access_token.value,
+        });
+
+    const api = new AuthenticationApi(sdkConfig());
 
     const state = reactive({
         ready: false,
@@ -28,9 +32,9 @@ export function createAuth() {
         state.curUser = null;
 
         try {
-            const res = await axios.get("/api/v2/auth/me");
-            const data = res.data as AuthMeResponse;
-            if (data.User) {
+            const res = await api.authMe();
+            const data = res.data;
+            if ("User" in data) {
                 state.curUser = data.User;
                 state.needsLogin = false;
                 state.ready = true;
@@ -61,7 +65,7 @@ export function createAuth() {
         state.ready = false;
         state.needsLogin = false;
         state.curUser = null;
-        access_token.value = null;
+        access_token.value = "";
         localStorage.removeItem(ACCESS_TOKEN_ITEM);
     };
 
@@ -77,6 +81,7 @@ export function createAuth() {
 
     return reactive({
         start,
+        sdkConfig,
         setAccessToken,
         logout,
         ...toRefs(state),
