@@ -41,8 +41,8 @@
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, onBeforeUnmount } from "vue";
 import { Deployment } from "@platzio/sdk";
-import { chartForUpgrade } from "@/store/models/helm-chart";
 import { useStore } from "@/store";
+import { chartForUpgrade } from "@/store/models/helm-chart";
 import { isDeploymentMaintainer } from "@/store/permissions";
 import EditDeployment from "../EditDeployment.vue";
 

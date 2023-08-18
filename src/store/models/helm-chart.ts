@@ -1,23 +1,30 @@
 import { HelmChart } from "@platzio/sdk";
 import { createCollection } from "./collection";
 import { chartFeatures } from "../chart-ext";
+import { useStore } from "..";
 
-export const collection = createCollection<HelmChart, void, HelmChart, void>({
-    url: "/api/v2/helm-charts",
+export type HelmChartsCollection = ReturnType<
+    typeof createCollection<HelmChart, void, HelmChart, void>
+>;
 
-    sortFunc(x, y) {
-        return y.created_at.localeCompare(x.created_at);
-    },
+export const createHelmChartsCollection = () => {
+    return createCollection<HelmChart, void, HelmChart, void>({
+        url: "/api/v2/helm-charts",
 
-    formatItem: (item: HelmChart) => ({
-        icon: "play",
-        text: item.image_tag,
-    }),
+        sortFunc(x, y) {
+            return y.created_at.localeCompare(x.created_at);
+        },
 
-    initialFilters: {
-        in_use: true,
-    },
-});
+        formatItem: (item: HelmChart) => ({
+            icon: "play",
+            text: item.image_tag,
+        }),
+
+        initialFilters: {
+            in_use: true,
+        },
+    });
+};
 
 export function chartIcon(chart?: HelmChart): string | undefined {
     const features = chartFeatures(chart);
@@ -27,7 +34,8 @@ export function chartIcon(chart?: HelmChart): string | undefined {
 }
 
 export function chartForUpgrade(current: HelmChart): HelmChart | undefined {
-    const newer = collection.all
+    const store = useStore();
+    const newer = store!.collections.helmCharts.all
         .filter((chart) => current.helm_registry_id == chart.helm_registry_id)
         .filter(
             (chart) => chart.created_at.localeCompare(current.created_at) == 1

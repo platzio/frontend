@@ -5,20 +5,30 @@ import {
 } from "@platzio/sdk";
 import { createCollection } from "./collection";
 
-export const collection = createCollection<
-    DeploymentResourceType,
-    NewDeploymentResource,
-    DeploymentResourceType,
-    UpdateDeploymentResource
->({
-    url: "/api/v2/deployment-resource-types",
+export type DeploymentResourceTypesCollection = ReturnType<
+    typeof createCollection<
+        DeploymentResourceType,
+        NewDeploymentResource,
+        DeploymentResourceType,
+        UpdateDeploymentResource
+    >
+>;
 
-    sortFunc(x, y) {
-        return x.spec.name_singular.localeCompare(y.spec.name_singular);
-    },
+export const createDeploymentResourceTypesCollection = () =>
+    createCollection<
+        DeploymentResourceType,
+        NewDeploymentResource,
+        DeploymentResourceType,
+        UpdateDeploymentResource
+    >({
+        url: "/api/v2/deployment-resource-types",
 
-    formatItem: (item: DeploymentResourceType) => ({
-        icon: "city",
-        text: item.spec.name_singular,
-    }),
-});
+        sortFunc(x, y) {
+            return x.spec.name_singular.localeCompare(y.spec.name_singular);
+        },
+
+        formatItem: (item: DeploymentResourceType) => ({
+            icon: "city",
+            text: item.spec.name_singular,
+        }),
+    });

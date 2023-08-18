@@ -2,26 +2,31 @@ import { HelmRegistry, UpdateHelmRegistry } from "@platzio/sdk";
 import { createCollection } from "./collection";
 import { useStore } from "..";
 
-export const collection = createCollection<
-    HelmRegistry,
-    void,
-    HelmRegistry,
-    UpdateHelmRegistry
->({
-    url: "/api/v2/helm-registries",
+export type HelmRegistriesCollection = ReturnType<
+    typeof createCollection<
+        HelmRegistry,
+        void,
+        HelmRegistry,
+        UpdateHelmRegistry
+    >
+>;
 
-    sortFunc(x, y) {
-        return (
-            x.domain_name.localeCompare(y.domain_name) ||
-            x.repo_name.localeCompare(y.repo_name)
-        );
-    },
+export const createHelmRegistriesCollection = () =>
+    createCollection<HelmRegistry, void, HelmRegistry, UpdateHelmRegistry>({
+        url: "/api/v2/helm-registries",
 
-    formatItem: (item: HelmRegistry) => ({
-        icon: "box",
-        text: `${item.domain_name}/${item.repo_name}`,
-    }),
-});
+        sortFunc(x, y) {
+            return (
+                x.domain_name.localeCompare(y.domain_name) ||
+                x.repo_name.localeCompare(y.repo_name)
+            );
+        },
+
+        formatItem: (item: HelmRegistry) => ({
+            icon: "box",
+            text: `${item.domain_name}/${item.repo_name}`,
+        }),
+    });
 
 export function allKinds(): string[] {
     const store = useStore();

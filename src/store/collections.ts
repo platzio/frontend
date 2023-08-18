@@ -1,20 +1,41 @@
 import { DbTable } from "@platzio/sdk";
-import { collection as deployments } from "./models/deployment";
-import { collection as deploymentTasks } from "./models/deployment-task";
-import { collection as deploymentPermissions } from "./models/deployment-permission";
-import { collection as deploymentResourceTypes } from "./models/deployment-resource-type";
-import { collection as deploymentResources } from "./models/deployment-resource";
-import { collection as helmRegistries } from "./models/helm-registry";
-import { collection as helmCharts } from "./models/helm-chart";
-import { collection as helmTagFormats } from "./models/helm-tag-format";
-import { collection as k8sClusters } from "./models/k8s-cluster";
-import { collection as k8sResources } from "./models/k8s-resource";
-import { collection as secrets } from "./models/secret";
-import { collection as envs } from "./models/env";
-import { collection as envUserPermissions } from "./models/env-user-permission";
-import { collection as users } from "./models/user";
+import { createDeploymentsCollection } from "./models/deployment";
+import { createDeploymentTasksCollection } from "./models/deployment-task";
+import { createDeploymentPermissionsCollection } from "./models/deployment-permission";
+import { createDeploymentResourceTypesCollection } from "./models/deployment-resource-type";
+import { createDeploymentResourcesCollection } from "./models/deployment-resource";
+import { createEnvsCollection } from "./models/env";
+import { createEnvUserPermissionsCollection } from "./models/env-user-permission";
+import { createHelmRegistriesCollection } from "./models/helm-registry";
+import { createHelmChartsCollection } from "./models/helm-chart";
+import { createHelmTagFormatsCollection } from "./models/helm-tag-format";
+import { createK8sClustersCollection } from "./models/k8s-cluster";
+import { createK8sResourcesCollection } from "./models/k8s-resource";
+import { createSecretsCollection } from "./models/secret";
+import { createUsersCollection } from "./models/user";
 
 export function createCollections() {
+    const users = createUsersCollection();
+    const envs = createEnvsCollection();
+    const envUserPermissions = createEnvUserPermissionsCollection();
+    const secrets = createSecretsCollection();
+    const helmRegistries = createHelmRegistriesCollection();
+    const helmCharts = createHelmChartsCollection();
+    const helmTagFormats = createHelmTagFormatsCollection();
+    const k8sClusters = createK8sClustersCollection();
+    const k8sResources = createK8sResourcesCollection();
+    const deploymentTasks = createDeploymentTasksCollection();
+    const deploymentPermissions = createDeploymentPermissionsCollection();
+    const deploymentResourceTypes = createDeploymentResourceTypesCollection();
+    const deploymentResources = createDeploymentResourcesCollection(
+        deploymentResourceTypes
+    );
+    const deployments = createDeploymentsCollection(
+        helmCharts,
+        helmRegistries,
+        k8sClusters
+    );
+
     const collections = {
         deployments,
         deploymentTasks,
