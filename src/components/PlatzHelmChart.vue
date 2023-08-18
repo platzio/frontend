@@ -45,7 +45,7 @@
             {{ chart.parsed_branch || "master" }}
         </span>
 
-        <span class="ms-2 fw-bold text-body-seconadry">{{
+        <span class="ms-2 fw-bold text-body-tertiary">{{
             chart.parsed_version
         }}</span>
         <span v-if="chart.parsed_revision">-{{ chart.parsed_revision }}</span>
@@ -80,9 +80,14 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { HelmChart } from "@platzio/sdk";
+import PlatzMoment from "./base/PlatzMoment.vue";
 import { useStore } from "@/store";
 
 export default defineComponent({
+    components: {
+        PlatzMoment,
+    },
+
     props: {
         chart: {
             type: Object as PropType<HelmChart>,

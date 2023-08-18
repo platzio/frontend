@@ -26,10 +26,18 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType } from "vue";
 import { Deployment, DeploymentTaskStatus } from "@platzio/sdk";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
 import { useStore } from "@/store";
 import DeploymentTask from "../tasks/DeploymentTask.vue";
 
 export default defineComponent({
+    components: {
+        PlatzCollection,
+        PlatzCollectionItem,
+        DeploymentTask,
+    },
+
     props: {
         envId: {
             type: String,
@@ -39,10 +47,6 @@ export default defineComponent({
             type: Object as PropType<Deployment>,
             required: true,
         },
-    },
-
-    components: {
-        DeploymentTask,
     },
 
     setup(props) {

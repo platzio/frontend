@@ -95,6 +95,7 @@ import { computed, defineComponent, ref, PropType, watch } from "vue";
 import { cloneDeep } from "lodash";
 import moment from "moment";
 import { Deployment, ChartExtCardinality } from "@platzio/sdk";
+import YamlInput from "@/components/inputs/YamlInput.vue";
 import { useStore } from "@/store";
 import { chartFeatures } from "@/store/chart-ext";
 import ConfigInputsForm from "./config/ConfigInputsForm.vue";
@@ -102,6 +103,7 @@ import { isDeploymentOwner } from "@/store/permissions";
 
 export default defineComponent({
     components: {
+        YamlInput,
         ConfigInputsForm,
     },
 
@@ -191,9 +193,12 @@ export default defineComponent({
             return features.cardinality == ChartExtCardinality.Many;
         });
 
-        const newUiSchema = computed(
-            () => newChart.value && newChart.value.values_ui
-        );
+        const newUiSchema = computed(() => {
+            if (!newChart.value) {
+                return null;
+            }
+            return newChart.value.values_ui;
+        });
 
         watch(
             () => props.currentData,

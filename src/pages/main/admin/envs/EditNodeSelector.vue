@@ -53,6 +53,7 @@
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { Env } from "@platzio/sdk";
 import PlatzModal from "@/components/base/PlatzModal.vue";
+import YamlInput from "@/components/inputs/YamlInput.vue";
 import { useStore } from "@/store";
 
 function initialData(): {
@@ -72,6 +73,7 @@ function initialData(): {
 export default defineComponent({
     components: {
         PlatzModal,
+        YamlInput,
     },
 
     props: {

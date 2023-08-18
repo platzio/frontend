@@ -5,7 +5,7 @@
         </div>
         <ul class="array-value-list" v-if="value">
             <li v-for="(item, idx) in value" :key="idx">
-                <ConfigValue
+                <SingleConfigValue
                     :input="innerInput"
                     :envId="envId"
                     :value="item"
@@ -32,8 +32,13 @@ ul.array-value-list {
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { UiSchemaInput } from "@platzio/sdk";
+import SingleConfigValue from "./SingleConfigValue.vue";
 
 export default defineComponent({
+    components: {
+        SingleConfigValue,
+    },
+
     props: {
         envId: {
             type: String,

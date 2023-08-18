@@ -67,20 +67,30 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
+import { useHead } from "@vueuse/head";
+import PlatzMoment from "@/components/base/PlatzMoment.vue";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
+import PlatzHelmRegistry from "@/components/PlatzHelmRegistry.vue";
+import PlatzHelmChart from "@/components/PlatzHelmChart.vue";
 import { useStore } from "@/store";
 import SetHelmRegistryIcon from "./SetHelmRegistryIcon.vue";
-import { useHead } from "@vueuse/head";
 
 export default defineComponent({
+    components: {
+        PlatzMoment,
+        PlatzCollection,
+        PlatzCollectionItem,
+        PlatzHelmRegistry,
+        PlatzHelmChart,
+        SetHelmRegistryIcon,
+    },
+
     props: {
         id: {
             type: String,
             required: true,
         },
-    },
-
-    components: {
-        SetHelmRegistryIcon,
     },
 
     setup(props) {

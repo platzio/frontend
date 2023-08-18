@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-row justify-content-between align-items-center">
-        <div>
+        <div class="w-100">
             <div class="my-1">
                 <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
                 <span v-if="formatted">
@@ -58,20 +58,32 @@
 import { computed, defineComponent, PropType } from "vue";
 import { Deployment, DeploymentStatus } from "@platzio/sdk";
 import { useStore } from "@/store";
+import PlatzReason from "./base/PlatzReason.vue";
+import PlatzDeploymentStatus from "./PlatzDeploymentStatus.vue";
+import PlatzDeploymentWarnings from "./PlatzDeploymentWarnings.vue";
+import PlatzResourceStatus from "./PlatzResourceStatus.vue";
+import PlatzClusterName from "./PlatzClusterName.vue";
+import PlatzHelmChart from "./PlatzHelmChart.vue";
 import { chartForUpgrade } from "@/store/models/helm-chart";
 import { isDeploymentMaintainer } from "@/store/permissions";
 import PlatzMetric from "./PlatzMetric.vue";
 
 export default defineComponent({
+    components: {
+        PlatzReason,
+        PlatzMetric,
+        PlatzDeploymentStatus,
+        PlatzDeploymentWarnings,
+        PlatzResourceStatus,
+        PlatzClusterName,
+        PlatzHelmChart,
+    },
+
     props: {
         deployment: {
             type: Object as PropType<Deployment>,
             required: true,
         },
-    },
-
-    components: {
-        PlatzMetric,
     },
 
     setup(props) {

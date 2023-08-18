@@ -32,10 +32,19 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useRoute } from "vue-router";
-import { useStore } from "@/store";
 import { useHead } from "@vueuse/head";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzLinkedItem from "@/components/collection/PlatzLinkedItem.vue";
+import PlatzHelmRegistry from "@/components/PlatzHelmRegistry.vue";
+import { useStore } from "@/store";
 
 export default defineComponent({
+    components: {
+        PlatzCollection,
+        PlatzLinkedItem,
+        PlatzHelmRegistry,
+    },
+
     setup(props) {
         const store = useStore();
         const route = useRoute();

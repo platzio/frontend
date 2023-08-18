@@ -30,10 +30,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PlatzLogo from "@/components/base/PlatzLogo.vue";
 import UserMenu from "../profile/UserMenu.vue";
 
 export default defineComponent({
     components: {
+        PlatzLogo,
         UserMenu,
     },
 });

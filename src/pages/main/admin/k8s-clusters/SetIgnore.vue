@@ -28,6 +28,7 @@
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
 import { K8sCluster } from "@platzio/sdk";
 import PlatzModal from "@/components/base/PlatzModal.vue";
+import PlatzClusterName from "@/components/PlatzClusterName.vue";
 import { useStore } from "@/store";
 
 function initialData(): {
@@ -47,6 +48,7 @@ function initialData(): {
 export default defineComponent({
     components: {
         PlatzModal,
+        PlatzClusterName,
     },
 
     setup() {

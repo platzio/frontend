@@ -17,15 +17,20 @@
 import { defineComponent, watch, reactive, PropType } from "vue";
 import { cloneDeep, isEqual } from "lodash";
 import { UiSchema } from "@platzio/sdk";
+import InputField from "@/components/inputs/InputField.vue";
 
 export default defineComponent({
+    components: {
+        InputField,
+    },
+
     props: {
         envId: {
             type: String,
             required: true,
         },
         uiSchema: {
-            type: Object as PropType<UiSchema>,
+            type: Object as PropType<UiSchema | null>,
             required: false,
         },
         disabled: {

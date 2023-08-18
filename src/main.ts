@@ -7,15 +7,14 @@ import { createStore, storeSymbol } from "./store";
 import "bootstrap";
 import "./style/main.scss";
 import { FontAwesomeIcon } from "./style/fontawesome";
-import { installComponents } from "./components";
 
 const app = createApp(PlatzApp);
 app.provide(storeSymbol, createStore());
 
 const router = createRouter({
-  history: createWebHistory(),
-  linkActiveClass: "active",
-  routes,
+    history: createWebHistory(),
+    linkActiveClass: "active",
+    routes,
 });
 app.use(router);
 
@@ -23,5 +22,4 @@ const head = createHead();
 app.use(head);
 
 app.component("FaIcon", FontAwesomeIcon);
-installComponents(app);
 app.mount("#app");

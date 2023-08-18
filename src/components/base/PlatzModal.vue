@@ -49,8 +49,13 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, ref } from "vue";
 import { Modal } from "bootstrap";
+import PlatzError from "./PlatzError.vue";
 
 export default defineComponent({
+    components: {
+        PlatzError,
+    },
+
     props: {
         title: {
             type: String,

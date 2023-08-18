@@ -27,9 +27,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { UiSchema } from "@platzio/sdk";
+import ConfigValue from "@/components/values/ConfigValue.vue";
 import YamlContent from "./YamlContent.vue";
 
 export default defineComponent({
+    components: {
+        ConfigValue,
+        YamlContent,
+    },
+
     props: {
         envId: {
             type: String,
@@ -44,10 +50,6 @@ export default defineComponent({
         valuesOverride: {
             type: Object,
         },
-    },
-
-    components: {
-        YamlContent,
     },
 });
 </script>

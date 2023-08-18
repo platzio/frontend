@@ -121,6 +121,8 @@
 import { computed, defineComponent, ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useHead } from "@vueuse/head";
+import ConfigValue from "@/components/values/ConfigValue.vue";
+import PlatzDeployment from "@/components/PlatzDeployment.vue";
 import { useStore } from "@/store";
 import { findCollectionDependencies } from "@/store/deployments";
 import EditResource from "./EditResource.vue";
@@ -128,6 +130,14 @@ import DeleteResource from "./DeleteResource.vue";
 import ResourceReason from "./ResourceReason.vue";
 
 export default defineComponent({
+    components: {
+        ConfigValue,
+        PlatzDeployment,
+        EditResource,
+        DeleteResource,
+        ResourceReason,
+    },
+
     props: {
         envId: {
             type: String,
@@ -141,12 +151,6 @@ export default defineComponent({
             type: String,
             required: true,
         },
-    },
-
-    components: {
-        EditResource,
-        DeleteResource,
-        ResourceReason,
     },
 
     setup(props) {

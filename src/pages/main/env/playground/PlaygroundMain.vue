@@ -91,6 +91,7 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
+import YamlInput from "@/components/inputs/YamlInput.vue";
 import ConfigValues from "../deployments/config/ConfigValues.vue";
 import ConfigInputsForm from "../deployments/config/ConfigInputsForm.vue";
 import {
@@ -102,6 +103,7 @@ import {
 
 export default defineComponent({
     components: {
+        YamlInput,
         ConfigValues,
         ConfigInputsForm,
     },

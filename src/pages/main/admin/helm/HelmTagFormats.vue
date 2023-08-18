@@ -83,13 +83,19 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/store";
 import { computed, defineComponent, ref } from "vue";
+import { useStore } from "@/store";
+import PlatzMoment from "@/components/base/PlatzMoment.vue";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzItemWithActions from "@/components/collection/PlatzItemWithActions.vue";
 import AddTagFormat from "./AddTagFormat.vue";
 import DeleteTagFormat from "./DeleteTagFormat.vue";
 
 export default defineComponent({
     components: {
+        PlatzMoment,
+        PlatzCollection,
+        PlatzItemWithActions,
         AddTagFormat,
         DeleteTagFormat,
     },

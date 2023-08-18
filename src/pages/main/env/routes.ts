@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import PlatzEnvs from "./PlatzEnvs.vue";
-import PlatzEnv from "./PlatzEnv.vue";
+import PlatzEnvPage from "./PlatzEnvPage.vue";
 import deploymentRoutes from "./deployments/routes";
 import deploymentResourceRoutes from "./resources/routes";
 import settingsRoutes from "./settings/routes";
@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
             {
                 name: "envs.env",
                 path: ":envId",
-                component: PlatzEnv,
+                component: PlatzEnvPage,
                 props: true,
                 redirect: { name: "env.deployments" },
                 children: [

@@ -27,8 +27,13 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { UiSchema } from "@platzio/sdk";
+import ConfigValue from "@/components/values/ConfigValue.vue";
 
 export default defineComponent({
+    components: {
+        ConfigValue,
+    },
+
     props: {
         envId: {
             type: String,

@@ -5,10 +5,15 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import PlatzProgressPage from "@/components/base/PlatzProgressPage.vue";
 import { AuthenticationApi } from "@platzio/sdk";
 import { useStore } from "@/store";
 
 export default defineComponent({
+    components: {
+        PlatzProgressPage,
+    },
+
     setup() {
         const store = useStore();
         const api = new AuthenticationApi(store!.auth.sdkConfig());

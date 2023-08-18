@@ -29,6 +29,7 @@ import { defineComponent, reactive, ref, toRefs } from "vue";
 import { Deployment } from "@platzio/sdk";
 import { useStore } from "@/store";
 import PlatzModal from "@/components/base/PlatzModal.vue";
+import PlatzDeployment from "@/components/PlatzDeployment.vue";
 
 function initialData(): {
     error: any;
@@ -45,6 +46,7 @@ function initialData(): {
 export default defineComponent({
     components: {
         PlatzModal,
+        PlatzDeployment,
     },
 
     setup(props, { emit }) {

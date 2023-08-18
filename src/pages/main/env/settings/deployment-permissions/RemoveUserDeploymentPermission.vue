@@ -26,8 +26,9 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { DeploymentPermission, UserDeploymentRole } from "@platzio/sdk";
-import { useStore } from "@/store";
 import PlatzModal from "@/components/base/PlatzModal.vue";
+import PlatzUser from "@/components/PlatzUser.vue";
+import { useStore } from "@/store";
 
 function initialData(): {
     error: any;
@@ -48,6 +49,7 @@ function initialData(): {
 export default defineComponent({
     components: {
         PlatzModal,
+        PlatzUser,
     },
 
     setup() {

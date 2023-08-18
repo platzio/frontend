@@ -4,7 +4,7 @@
         :key="idx"
         class="d-flex flex-row justify-content-between align-items-center mb-n2"
     >
-        <InputField
+        <SingleInputField
             class="flex-fill"
             :input="itemInput(idx)"
             v-model="inner[idx]"
@@ -31,8 +31,13 @@
 import { isEqual } from "lodash";
 import { computed, defineComponent, ref, watch, PropType } from "vue";
 import { UiSchemaInput } from "@platzio/sdk";
+import SingleInputField from "./SingleInputField.vue";
 
 export default defineComponent({
+    components: {
+        SingleInputField,
+    },
+
     props: {
         envId: {
             type: String,
@@ -102,7 +107,7 @@ export default defineComponent({
         const itemInput = computed(() => (idx: number) => ({
             ...props.input,
             id: `${props.input.id}-${idx}`,
-            type: props.input.itemType,
+            type: props.input.itemType!,
         }));
 
         return {

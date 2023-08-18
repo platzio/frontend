@@ -75,7 +75,7 @@ export default defineComponent({
             required: true,
         },
         currentData: {
-            type: Object as PropType<DeploymentResource>,
+            type: Object as PropType<Partial<DeploymentResource>>,
             required: true,
         },
         disabled: {
@@ -115,13 +115,13 @@ export default defineComponent({
             }
         );
 
-        const isNew = computed(() => !!props.currentData.id);
+        const isNew = computed(() => !props.currentData.id);
 
         async function save() {
-            if (isNew.value) {
+            if (!isNew.value) {
                 const updated =
                     await store!.collections.deploymentResources.updateItem({
-                        id: props.currentData.id,
+                        id: props.currentData.id!,
                         data: {
                             name: new_data.value.name,
                             props: new_data.value.props,

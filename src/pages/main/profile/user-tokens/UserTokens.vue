@@ -65,6 +65,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
+import PlatzMoment from "@/components/base/PlatzMoment.vue";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzItemWithActions from "@/components/collection/PlatzItemWithActions.vue";
 import { useStore } from "@/store";
 import { CollectionFilters } from "@/store/models/collection";
 import NewUserToken from "./NewUserToken.vue";
@@ -73,6 +76,9 @@ import { userTokens } from "./collection";
 
 export default defineComponent({
     components: {
+        PlatzMoment,
+        PlatzCollection,
+        PlatzItemWithActions,
         NewUserToken,
         RevokeUserToken,
     },

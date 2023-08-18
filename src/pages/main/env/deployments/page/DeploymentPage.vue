@@ -75,6 +75,7 @@
                         </div>
                         <div>
                             <ConfigValues
+                                v-if="chart.values_ui"
                                 :envId="envId"
                                 :uiSchema="chart.values_ui"
                                 :config="deployment.config"
@@ -102,7 +103,7 @@
                         </div>
 
                         <PlatzReason
-                            class="my-3 py-2 px-3 reason rounded border"
+                            class="my-3 py-2 px-3 bg-body-tertiary rounded border"
                             :text="deployment.reason"
                             :auto-expand="true"
                             :is-bad="hasError"
@@ -126,19 +127,18 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-.reason {
-    background: #f9f9f9;
-}
-</style>
-
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
 import { DeploymentStatus } from "@platzio/sdk";
+import PlatzReason from "@/components/base/PlatzReason.vue";
 import PlatzMetric from "@/components/PlatzMetric.vue";
+import PlatzMarkdown from "@/components/PlatzMarkdown.vue";
+import PlatzDeploymentStatus from "@/components/PlatzDeploymentStatus.vue";
+import PlatzDeploymentWarnings from "@/components/PlatzDeploymentWarnings.vue";
+import PlatzClusterName from "@/components/PlatzClusterName.vue";
 import ConfigValues from "../config/ConfigValues.vue";
 import DeploymentActions from "./DeploymentActions.vue";
 import HelmChartWithUpgrade from "./HelmChartWithUpgrade.vue";
@@ -148,7 +148,12 @@ import K8sResources from "./K8sResources.vue";
 
 export default defineComponent({
     components: {
+        PlatzReason,
         PlatzMetric,
+        PlatzMarkdown,
+        PlatzDeploymentStatus,
+        PlatzDeploymentWarnings,
+        PlatzClusterName,
         DeploymentActions,
         HelmChartWithUpgrade,
         DeploymentNotices,

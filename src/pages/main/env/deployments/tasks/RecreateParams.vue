@@ -52,8 +52,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { DeploymentRecreaseTask } from "@platzio/sdk";
+import PlatzClusterName from "@/components/PlatzClusterName.vue";
 
 export default defineComponent({
+    components: {
+        PlatzClusterName,
+    },
+
     props: {
         operation: {
             type: Object as PropType<DeploymentRecreaseTask>,

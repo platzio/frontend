@@ -29,8 +29,15 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
+import PlatzMoment from "@/components/base/PlatzMoment.vue";
+import PlatzUser from "@/components/PlatzUser.vue";
 
 export default defineComponent({
+    components: {
+        PlatzMoment,
+        PlatzUser,
+    },
+
     props: {
         userId: {
             type: String,

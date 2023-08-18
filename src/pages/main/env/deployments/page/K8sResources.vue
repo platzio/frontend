@@ -35,10 +35,19 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { Deployment, K8sResource } from "@platzio/sdk";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzItemWithActions from "@/components/collection/PlatzItemWithActions.vue";
+import PlatzResourceStatus from "@/components/PlatzResourceStatus.vue";
 import { useStore } from "@/store";
 import { isDeploymentMaintainer } from "@/store/permissions";
 
 export default defineComponent({
+    components: {
+        PlatzCollection,
+        PlatzItemWithActions,
+        PlatzResourceStatus,
+    },
+
     props: {
         envId: {
             type: String,
@@ -49,6 +58,7 @@ export default defineComponent({
             required: true,
         },
     },
+
     setup(props) {
         const store = useStore();
 

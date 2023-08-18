@@ -127,20 +127,22 @@ import { useHead } from "@vueuse/head";
 import yaml from "js-yaml";
 import { EnvUserRole } from "@platzio/sdk";
 import { useStore } from "@/store";
+import PlatzEnv from "@/components/PlatzEnv.vue";
 import EditNodeSelector from "./EditNodeSelector.vue";
 import EditAutoAddNewUsers from "./EditAutoAddNewUsers.vue";
 
 export default defineComponent({
+    components: {
+        PlatzEnv,
+        EditNodeSelector,
+        EditAutoAddNewUsers,
+    },
+
     props: {
         envId: {
             required: true,
             type: String,
         },
-    },
-
-    components: {
-        EditNodeSelector,
-        EditAutoAddNewUsers,
     },
 
     setup(props) {

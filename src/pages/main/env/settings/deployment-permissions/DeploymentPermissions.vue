@@ -65,25 +65,27 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
+import { useHead } from "@vueuse/head";
 import { UserDeploymentRole } from "@platzio/sdk";
+import PlatzUser from "@/components/PlatzUser.vue";
 import { useStore } from "@/store";
 import { isEnvAdmin } from "@/store/permissions";
 import { allKinds } from "@/store/models/helm-registry";
 import AddUserDeploymentPermission from "./AddUserDeploymentPermission.vue";
 import RemoveUserDeploymentPermission from "./RemoveUserDeploymentPermission.vue";
-import { useHead } from "@vueuse/head";
 
 export default defineComponent({
+    components: {
+        PlatzUser,
+        AddUserDeploymentPermission,
+        RemoveUserDeploymentPermission,
+    },
+
     props: {
         envId: {
             type: String,
             required: true,
         },
-    },
-
-    components: {
-        AddUserDeploymentPermission,
-        RemoveUserDeploymentPermission,
     },
 
     setup(props) {

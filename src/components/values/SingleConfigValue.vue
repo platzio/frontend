@@ -1,16 +1,7 @@
 <template>
     <div v-if="input && (shouldDisplay || showEmpty)">
-        <ArrayValue
-            v-if="input.type === 'array'"
-            :input="input"
-            :value="value"
-            :allValues="allValues"
-            :envId="envId"
-            :showLabel="showLabel"
-            :showEmpty="showEmpty"
-        />
         <PlainValue
-            v-else-if="input.type === 'text'"
+            v-if="input.type === 'text'"
             :input="input"
             :value="value"
             :showLabel="showLabel"
@@ -68,7 +59,6 @@
 import { computed, defineComponent, PropType } from "vue";
 import { UiSchemaInput } from "@platzio/sdk";
 import JsonLogic from "json-logic-js";
-import ArrayValue from "./ArrayValue.vue";
 import CheckboxValue from "./CheckboxValue.vue";
 import CollectionValue from "./CollectionValue.vue";
 import DaysHourValue from "./DaysHourValue.vue";
@@ -77,7 +67,6 @@ import PlainValue from "./PlainValue.vue";
 
 export default defineComponent({
     components: {
-        ArrayValue,
         CheckboxValue,
         CollectionValue,
         DaysHourValue,

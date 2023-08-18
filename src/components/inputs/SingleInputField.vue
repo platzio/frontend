@@ -1,7 +1,7 @@
 <template>
     <div v-if="visible" class="mb-3">
-        <ArrayInput
-            v-if="input.type === 'array'"
+        <CheckboxInput
+            v-if="input.type === 'Checkbox'"
             :input="input"
             v-model="inner"
             :envId="envId"
@@ -9,8 +9,8 @@
             :allValues="allValues"
             :isNew="isNew"
         />
-        <SingleInputField
-            v-else
+        <CollectionInput
+            v-else-if="input.type === 'CollectionSelect'"
             :input="input"
             v-model="inner"
             :envId="envId"
@@ -18,6 +18,45 @@
             :allValues="allValues"
             :isNew="isNew"
         />
+        <DaysHourInput
+            v-else-if="input.type === 'DaysAndHour'"
+            :input="input"
+            v-model="inner"
+            :envId="envId"
+            :disabled="disabled"
+            :allValues="allValues"
+            :isNew="isNew"
+        />
+        <NumberInput
+            v-else-if="input.type === 'number'"
+            :input="input"
+            v-model="inner"
+            :envId="envId"
+            :disabled="disabled"
+            :allValues="allValues"
+            :isNew="isNew"
+        />
+        <RadioInput
+            v-else-if="input.type === 'RadioSelect'"
+            :input="input"
+            v-model="inner"
+            :envId="envId"
+            :disabled="disabled"
+            :allValues="allValues"
+            :isNew="isNew"
+        />
+        <TextInput
+            v-else-if="input.type === 'text'"
+            :input="input"
+            v-model="inner"
+            :envId="envId"
+            :disabled="disabled"
+            :allValues="allValues"
+            :isNew="isNew"
+        />
+        <div class="alert alert-warning mb-3" v-else>
+            Oh no, I don't know how to render this: {{ input }}
+        </div>
     </div>
 </template>
 
@@ -26,13 +65,21 @@ import { computed, defineComponent, ref, PropType, watch } from "vue";
 import { isEqual } from "lodash";
 import JsonLogic from "json-logic-js";
 import { UiSchemaInput } from "@platzio/sdk";
-import ArrayInput from "./ArrayInput.vue";
-import SingleInputField from "./SingleInputField.vue";
+import CheckboxInput from "./CheckboxInput.vue";
+import CollectionInput from "./CollectionInput.vue";
+import DaysHourInput from "./DaysHourInput.vue";
+import NumberInput from "./NumberInput.vue";
+import RadioInput from "./RadioInput.vue";
+import TextInput from "./TextInput.vue";
 
 export default defineComponent({
     components: {
-        ArrayInput,
-        SingleInputField,
+        CheckboxInput,
+        CollectionInput,
+        DaysHourInput,
+        NumberInput,
+        RadioInput,
+        TextInput,
     },
 
     props: {

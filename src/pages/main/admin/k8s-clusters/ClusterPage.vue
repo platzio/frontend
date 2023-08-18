@@ -240,24 +240,34 @@
 <script lang="ts">
 import { useStore } from "@/store";
 import { computed, defineComponent, ref } from "vue";
+import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
+import PlatzEnv from "@/components/PlatzEnv.vue";
+import PlatzDeployment from "@/components/PlatzDeployment.vue";
+import PlatzClusterName from "@/components/PlatzClusterName.vue";
 import ChangeEnv from "./ChangeEnv.vue";
 import EditIngressSettings from "./EditIngressSettings.vue";
 import SetIgnore from "./SetIgnore.vue";
 import SetGrafana from "./SetGrafana.vue";
 
 export default defineComponent({
+    components: {
+        PlatzCollection,
+        PlatzCollectionItem,
+        PlatzEnv,
+        PlatzDeployment,
+        PlatzClusterName,
+        ChangeEnv,
+        EditIngressSettings,
+        SetIgnore,
+        SetGrafana,
+    },
+
     props: {
         id: {
             type: String,
             required: true,
         },
-    },
-
-    components: {
-        ChangeEnv,
-        EditIngressSettings,
-        SetIgnore,
-        SetGrafana,
     },
 
     setup(props) {

@@ -26,9 +26,14 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
+import PlatzMoment from "@/components/base/PlatzMoment.vue";
 import { K8sCluster } from "@platzio/sdk";
 
 export default defineComponent({
+    components: {
+        PlatzMoment,
+    },
+
     props: {
         cluster: {
             type: Object as PropType<K8sCluster>,

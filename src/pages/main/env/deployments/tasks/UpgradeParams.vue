@@ -27,7 +27,7 @@
         <div v-if="operation.config_delta && newChart.values_ui" class="mb-2">
             <ConfigDelta
                 :uiSchema="newChart.values_ui"
-                :delta="operation.config_delta"
+                :delta="configDelta"
                 :envId="envId"
                 :allValues="operation.config_inputs"
             />
@@ -39,9 +39,15 @@
 import { computed, defineComponent, PropType } from "vue";
 import { DeploymentUpgradeTask } from "@platzio/sdk";
 import { useStore } from "@/store";
+import PlatzHelmChart from "@/components/PlatzHelmChart.vue";
 import ConfigDelta from "./ConfigDelta.vue";
 
 export default defineComponent({
+    components: {
+        PlatzHelmChart,
+        ConfigDelta,
+    },
+
     props: {
         envId: {
             type: String,
@@ -51,10 +57,6 @@ export default defineComponent({
             type: Object as PropType<DeploymentUpgradeTask>,
             required: true,
         },
-    },
-
-    components: {
-        ConfigDelta,
     },
 
     setup(props) {
@@ -77,9 +79,15 @@ export default defineComponent({
             store!.collections.helmCharts.getOne(props.operation.helm_chart_id)
         );
 
+        // TODO: Set an exact type for config_delta type in DeploymentUpgradeTask
+        const configDelta = computed(
+            () => props.operation.config_delta as Record<string, any[]>
+        );
+
         return {
             oldChart,
             newChart,
+            configDelta,
         };
     },
 });

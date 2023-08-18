@@ -7,28 +7,28 @@
         </PlatzReason>
 
         <UpgradeParams
-            v-if="task.operation.Upgrade"
+            v-if="'Upgrade' in task.operation"
             :operation="task.operation.Upgrade"
             :envId="envId"
         />
 
         <ReinstallParams
-            v-if="task.operation.Reinstall"
+            v-if="'Reinstall' in task.operation"
             :operation="task.operation.Reinstall"
         />
 
         <RecreateParams
-            v-if="task.operation.Recreate"
+            v-if="'Recreate' in task.operation"
             :operation="task.operation.Recreate"
         />
 
         <InvokeActionParams
-            v-if="task.operation.InvokeAction"
+            v-if="'InvokeAction' in task.operation"
             :operation="task.operation.InvokeAction"
         />
 
         <RestartK8sResourceParams
-            v-if="task.operation.RestartK8sResource"
+            v-if="'RestartK8sResource' in task.operation"
             :operation="task.operation.RestartK8sResource"
         />
 
@@ -56,6 +56,9 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { DeploymentTaskStatus, DeploymentTask } from "@platzio/sdk";
+import PlatzReason from "@/components/base/PlatzReason.vue";
+import PlatzMoment from "@/components/base/PlatzMoment.vue";
+import PlatzUser from "@/components/PlatzUser.vue";
 import TaskBadge from "./TaskBadge.vue";
 import UpgradeParams from "./UpgradeParams.vue";
 import ReinstallParams from "./ReinstallParams.vue";
@@ -65,6 +68,18 @@ import RestartK8sResourceParams from "./RestartK8sResourceParams.vue";
 import { useStore } from "@/store";
 
 export default defineComponent({
+    components: {
+        PlatzReason,
+        PlatzMoment,
+        PlatzUser,
+        TaskBadge,
+        UpgradeParams,
+        ReinstallParams,
+        RecreateParams,
+        InvokeActionParams,
+        RestartK8sResourceParams,
+    },
+
     props: {
         envId: {
             type: String,
@@ -74,15 +89,6 @@ export default defineComponent({
             type: Object as PropType<DeploymentTask>,
             required: true,
         },
-    },
-
-    components: {
-        TaskBadge,
-        UpgradeParams,
-        ReinstallParams,
-        RecreateParams,
-        InvokeActionParams,
-        RestartK8sResourceParams,
     },
 
     setup(props) {

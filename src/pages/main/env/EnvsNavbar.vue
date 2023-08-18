@@ -124,12 +124,16 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
+import PlatzLogo from "@/components/base/PlatzLogo.vue";
+import PlatzEnv from "@/components/PlatzEnv.vue";
 import { useStore } from "@/store";
 import { isEnvUser } from "@/store/permissions";
 import UserMenu from "../profile/UserMenu.vue";
 
 export default defineComponent({
     components: {
+        PlatzLogo,
+        PlatzEnv,
         UserMenu,
     },
 

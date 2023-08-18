@@ -56,6 +56,7 @@
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { User } from "@platzio/sdk";
 import PlatzModal from "@/components/base/PlatzModal.vue";
+import PlatzUser from "@/components/PlatzUser.vue";
 import { useStore } from "@/store";
 
 function initialData(): {
@@ -75,6 +76,7 @@ function initialData(): {
 export default defineComponent({
     components: {
         PlatzModal,
+        PlatzUser,
     },
 
     setup() {

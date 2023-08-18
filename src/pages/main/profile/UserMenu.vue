@@ -46,8 +46,13 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
+import PlatzUser from "@/components/PlatzUser.vue";
 
 export default defineComponent({
+    components: {
+        PlatzUser,
+    },
+
     setup() {
         const store = useStore();
         const curUser = computed(() => store!.auth.curUser!);

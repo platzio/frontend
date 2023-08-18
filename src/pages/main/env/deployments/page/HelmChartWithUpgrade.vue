@@ -44,9 +44,15 @@ import { Deployment } from "@platzio/sdk";
 import { useStore } from "@/store";
 import { chartForUpgrade } from "@/store/models/helm-chart";
 import { isDeploymentMaintainer } from "@/store/permissions";
+import PlatzHelmChart from "@/components/PlatzHelmChart.vue";
 import EditDeployment from "../EditDeployment.vue";
 
 export default defineComponent({
+    components: {
+        PlatzHelmChart,
+        EditDeployment,
+    },
+
     props: {
         envId: {
             type: String,
@@ -56,10 +62,6 @@ export default defineComponent({
             type: Object as PropType<Deployment>,
             required: true,
         },
-    },
-
-    components: {
-        EditDeployment,
     },
 
     setup(props) {

@@ -15,8 +15,13 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { DeploymentResource, DeploymentResourceSyncStatus } from "@platzio/sdk";
+import PlatzReason from "@/components/base/PlatzReason.vue";
 
 export default defineComponent({
+    components: {
+        PlatzReason,
+    },
+
     props: {
         resource: {
             type: Object as PropType<DeploymentResource>,
