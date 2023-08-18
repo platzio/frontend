@@ -24,7 +24,7 @@ export interface CreateCollectionOptions<Item> {
     initialFilters?: CollectionFilters;
 }
 
-interface Paginated<Item> {
+export interface Paginated<Item> {
     page: number;
     per_page: number;
     num_total: number;
@@ -77,30 +77,35 @@ export function createCollection<
         state.items.delete(id);
     };
 
+    const fetchPage = async (
+        page: number,
+        filters?: CollectionFilters
+    ): Promise<Paginated<Item>> => {
+        const res: AxiosResponse<Paginated<Item>> = await axios.get(opts.url, {
+            params: {
+                page,
+                ...filters,
+            },
+        });
+        return res.data;
+    };
+
     const readAllItems = async (filters: CollectionFilters) => {
         state.loading = true;
         state.error = null;
         state.loadingProgress = 0;
         try {
-            let page = 1;
+            let page_num = 1;
             let num_pages = 1;
             do {
-                const res: AxiosResponse<Paginated<Item>> = await axios.get(
-                    opts.url,
-                    {
-                        params: {
-                            page,
-                            ...filters,
-                        },
-                    }
-                );
-                for (const item of res.data.items) {
+                const cur_page = await fetchPage(page_num, filters);
+                for (const item of cur_page.items) {
                     setOne(item);
                 }
-                page++;
-                num_pages = Math.ceil(res.data.num_total / res.data.per_page);
-                state.loadingProgress = page / (num_pages || 1);
-            } while (page <= num_pages);
+                page_num++;
+                num_pages = Math.ceil(cur_page.num_total / cur_page.per_page);
+                state.loadingProgress = page_num / (num_pages || 1);
+            } while (page_num <= num_pages);
             state.loadingProgress = 1;
             state.ready = true;
         } catch (error) {
@@ -171,6 +176,7 @@ export function createCollection<
         loadingPercent,
         status,
         getOne,
+        fetchPage,
         all,
         allForEnv,
         init,

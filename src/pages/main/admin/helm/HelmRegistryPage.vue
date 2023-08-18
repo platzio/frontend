@@ -40,12 +40,8 @@
     </div>
 
     <div class="card my-3">
-        <div class="card-header">Charts</div>
-        <div v-if="chartsLoading" class="my-3 text-center text-body-secondary">
-            <FaIcon icon="circle-notch" spin fixed-width />
-            Loading charts ({{ chartsLoadingPercent }}%)
-        </div>
-        <PlatzCollection v-else :items="charts" :flush="true">
+        <div class="pt-3 pb-0 h5 card-header border-bottom-0">Helm Charts</div>
+        <PlatzPaginatedCollection :getPage="getPage">
             <template #item="scope">
                 <PlatzCollectionItem>
                     <div class="my-1">
@@ -59,27 +55,28 @@
                 Helm charts are detected automatically when pushed to an ECR
                 repo
             </template>
-        </PlatzCollection>
+        </PlatzPaginatedCollection>
     </div>
 
     <SetHelmRegistryIcon ref="setIcon" />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useHead } from "@vueuse/head";
 import PlatzMoment from "@/components/base/PlatzMoment.vue";
-import PlatzCollection from "@/components/collection/PlatzCollection.vue";
+import PlatzPaginatedCollection from "@/components/collection/PlatzPaginatedCollection.vue";
 import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
 import PlatzHelmRegistry from "@/components/PlatzHelmRegistry.vue";
 import PlatzHelmChart from "@/components/PlatzHelmChart.vue";
 import { useStore } from "@/store";
 import SetHelmRegistryIcon from "./SetHelmRegistryIcon.vue";
+import { createHelmChartsCollection } from "@/store/models/helm-chart";
 
 export default defineComponent({
     components: {
         PlatzMoment,
-        PlatzCollection,
+        PlatzPaginatedCollection,
         PlatzCollectionItem,
         PlatzHelmRegistry,
         PlatzHelmChart,
@@ -96,29 +93,17 @@ export default defineComponent({
     setup(props) {
         const store = useStore();
         const setIcon = ref<typeof SetHelmRegistryIcon>();
-
-        onMounted(() => {
-            store!.collections.helmCharts.setFilters({
-                helm_registry_id: props.id,
-            });
-        });
-
-        const chartsLoading = computed(
-            () => store!.collections.helmCharts.loading
-        );
-        const chartsLoadingPercent = computed(
-            () => store!.collections.helmCharts.loadingPercent
-        );
+        const helmChartsCollection = createHelmChartsCollection();
 
         const registry = computed(() =>
             store!.collections.helmRegistries.getOne(props.id)
         );
 
-        const charts = computed(() =>
-            store!.collections.helmCharts.all.filter(
-                (chart) => chart.helm_registry_id == props.id
-            )
-        );
+        const getPage = async (page: number) => {
+            return await helmChartsCollection.fetchPage(page, {
+                helm_registry_id: registry.value.id,
+            });
+        };
 
         useHead({
             title: computed(
@@ -130,9 +115,7 @@ export default defineComponent({
         return {
             registry,
             setIcon,
-            chartsLoading,
-            chartsLoadingPercent,
-            charts,
+            getPage,
         };
     },
 });
