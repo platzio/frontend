@@ -1,5 +1,5 @@
 <template>
-    <PlatzCollection :items="resources" flush>
+    <PlatzCollection :items="resources">
         <template #item="scope">
             <PlatzItemWithActions>
                 <template #contents>
@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { Deployment, K8sResource } from "@platzio/sdk";
+import { computed, defineComponent } from "vue";
+import { K8sResource } from "@platzio/sdk";
 import PlatzCollection from "@/components/collection/PlatzCollection.vue";
 import PlatzItemWithActions from "@/components/collection/PlatzItemWithActions.vue";
 import PlatzResourceStatus from "@/components/PlatzResourceStatus.vue";
@@ -53,23 +53,30 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        deployment: {
-            type: Object as PropType<Deployment>,
+        id: {
+            type: String,
             required: true,
+        },
+        kind: {
+            type: String,
+            required: false,
         },
     },
 
     setup(props) {
         const store = useStore();
+        const deployment = computed(() =>
+            store!.collections.deployments.getOne(props.id)
+        );
 
         const isMaintainer = computed(() =>
-            isDeploymentMaintainer(props.envId, props.deployment.kind)
+            isDeploymentMaintainer(props.envId, deployment.value.kind)
         );
 
         const resources = computed(() =>
             store!.collections.k8sResources.all
                 .filter(
-                    (resource) => resource.deployment_id == props.deployment.id
+                    (resource) => resource.deployment_id == deployment.value.id
                 )
                 .filter((resource) => resource.kind != "Job")
         );

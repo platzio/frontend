@@ -12,154 +12,60 @@
             <DeploymentActions :envId="envId" :deployment="deployment" />
         </div>
 
-        <ul class="mt-2 nav nav-tabs">
+        <ul class="my-3 lh-sm nav nav-pills">
             <li class="nav-item">
-                <a
+                <router-link
                     class="nav-link"
-                    :class="{ active: curTab == 'overview' }"
-                    @click="curTab = 'overview'"
+                    :to="{ name: 'env.deployments.page' }"
+                    exact-active-class="active"
                 >
                     Overview
                     <PlatzDeploymentWarnings :deployment="deployment" />
-                </a>
+                </router-link>
             </li>
             <li class="nav-item">
-                <a
+                <router-link
                     class="nav-link"
-                    :class="{ active: curTab == 'resources' }"
-                    @click="curTab = 'resources'"
+                    :to="{ name: 'env.deployments.page.resources' }"
                 >
                     Resources
-                </a>
+                </router-link>
             </li>
             <li class="nav-item">
-                <a
+                <router-link
                     class="nav-link"
-                    :class="{ active: curTab == 'history' }"
-                    @click="curTab = 'history'"
+                    :to="{ name: 'env.deployments.page.history' }"
                 >
-                    <span class="me-1">History</span>
-                    <span v-if="history">
-                        <FaIcon
-                            v-if="history.tasksLoading"
-                            class="opacity-75"
-                            icon="circle-notch"
-                            fixed-width
-                            spin
-                        />
-                        <span v-else>({{ history.summary }})</span>
-                    </span>
-                </a>
+                    History
+                </router-link>
             </li>
         </ul>
 
-        <div class="card border-top-0 rounded-0 rounded-bottom">
-            <div class="card-body" v-show="curTab == 'overview'">
-                <div class="row">
-                    <!-- Overview left part -->
-                    <div class="col-7">
-                        <div v-if="deployment.description_md">
-                            <PlatzMarkdown
-                                :source="deployment.description_md"
-                            />
-                        </div>
-                        <div class="my-2 text-secondary">
-                            <HelmChartWithUpgrade
-                                :envId="envId"
-                                :deployment="deployment"
-                            />
-                        </div>
-
-                        <div class="my-2 text-secondary">
-                            <PlatzClusterName :id="deployment.cluster_id" />
-                        </div>
-                        <div>
-                            <ConfigValues
-                                v-if="chart.values_ui"
-                                :envId="envId"
-                                :uiSchema="chart.values_ui"
-                                :config="deployment.config"
-                                :valuesOverride="deployment.values_override"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Overview right part -->
-                    <div class="col-5">
-                        <DeploymentNotices :deployment="deployment" />
-
-                        <div class="row justify-content-end">
-                            <div
-                                class="col-6 mb-3"
-                                v-for="(metric, idx) in metrics"
-                                :key="idx"
-                            >
-                                <div class="card">
-                                    <div class="card-body px-4 py-3">
-                                        <PlatzMetric :metric="metric" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <PlatzReason
-                            class="my-3 py-2 px-3 bg-body-tertiary rounded border"
-                            :text="deployment.reason"
-                            :auto-expand="true"
-                            :is-bad="hasError"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body px-0 py-1" v-show="curTab == 'resources'">
-                <K8sResources :envId="envId" :deployment="deployment" />
-            </div>
-
-            <div class="card-body px-0 py-1" v-show="curTab == 'history'">
-                <DeploymentHistory
-                    :deployment="deployment"
-                    :envId="envId"
-                    ref="history"
-                />
-            </div>
-        </div>
+        <DeploymentOverview
+            v-if="parentRoute"
+            :envId="envId"
+            :deployment="deployment"
+        />
+        <router-view v-else />
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
-import { onBeforeRouteUpdate } from "vue-router";
+import { computed, defineComponent } from "vue";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
-import { DeploymentStatus } from "@platzio/sdk";
-import PlatzReason from "@/components/base/PlatzReason.vue";
-import PlatzMetric from "@/components/PlatzMetric.vue";
-import PlatzMarkdown from "@/components/PlatzMarkdown.vue";
 import PlatzDeploymentStatus from "@/components/PlatzDeploymentStatus.vue";
 import PlatzDeploymentWarnings from "@/components/PlatzDeploymentWarnings.vue";
-import PlatzClusterName from "@/components/PlatzClusterName.vue";
-import ConfigValues from "../config/ConfigValues.vue";
 import DeploymentActions from "./DeploymentActions.vue";
-import HelmChartWithUpgrade from "./HelmChartWithUpgrade.vue";
-import DeploymentNotices from "./DeploymentNotices.vue";
-import DeploymentHistory from "./DeploymentHistory.vue";
-import K8sResources from "./K8sResources.vue";
+import DeploymentOverview from "./DeploymentOverview.vue";
 
 export default defineComponent({
     components: {
-        PlatzReason,
-        PlatzMetric,
-        PlatzMarkdown,
         PlatzDeploymentStatus,
         PlatzDeploymentWarnings,
-        PlatzClusterName,
         DeploymentActions,
-        HelmChartWithUpgrade,
-        DeploymentNotices,
-        ConfigValues,
-        DeploymentHistory,
-        K8sResources,
+        DeploymentOverview,
     },
 
     props: {
@@ -179,8 +85,11 @@ export default defineComponent({
 
     setup(props) {
         const store = useStore();
-        const curTab = ref("overview");
-        const history = ref<typeof History>();
+
+        const route = useRoute();
+        const parentRoute = computed(
+            () => route.name == "env.deployments.page"
+        );
 
         const env = computed(() => store!.collections.envs.getOne(props.envId));
 
@@ -191,29 +100,6 @@ export default defineComponent({
         const formatted = computed(() =>
             store!.collections.deployments.formatItem(deployment.value)
         );
-
-        const hasError = computed(
-            () => deployment.value.status == DeploymentStatus.Error
-        );
-
-        const cluster = computed(() =>
-            store!.collections.k8sClusters.getOne(deployment.value.cluster_id)
-        );
-
-        const chart = computed(() =>
-            store!.collections.helmCharts.getOne(deployment.value.helm_chart_id)
-        );
-
-        const metrics = computed(() => {
-            const { reported_status } = deployment.value;
-            return reported_status && reported_status.content
-                ? (reported_status.content.metrics || []).concat(
-                      reported_status.content.primary_metric
-                          ? [reported_status.content.primary_metric]
-                          : []
-                  )
-                : [];
-        });
 
         onBeforeRouteUpdate((to) => {
             if (to.params.envId !== props.envId) {
@@ -236,14 +122,9 @@ export default defineComponent({
         });
 
         return {
+            parentRoute,
             deployment,
-            curTab,
-            history,
             formatted,
-            hasError,
-            cluster,
-            chart,
-            metrics,
         };
     },
 });

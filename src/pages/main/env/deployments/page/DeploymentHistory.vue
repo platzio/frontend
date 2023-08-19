@@ -13,7 +13,7 @@
             Loading charts ({{ chartsLoadingPercent }}%)
         </div>
 
-        <PlatzCollection v-else :items="tasks" flush>
+        <PlatzCollection v-else :items="tasks">
             <template #item="scope">
                 <PlatzCollectionItem>
                     <DeploymentTask :task="scope.item" :envId="envId" />
@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType } from "vue";
-import { Deployment, DeploymentTaskStatus } from "@platzio/sdk";
+import { computed, defineComponent, onMounted } from "vue";
+import { DeploymentTaskStatus } from "@platzio/sdk";
 import PlatzCollection from "@/components/collection/PlatzCollection.vue";
 import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
 import { useStore } from "@/store";
@@ -43,21 +43,28 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        deployment: {
-            type: Object as PropType<Deployment>,
+        id: {
+            type: String,
             required: true,
+        },
+        kind: {
+            type: String,
+            required: false,
         },
     },
 
     setup(props) {
         const store = useStore();
+        const deployment = computed(() =>
+            store!.collections.deployments.getOne(props.id)
+        );
 
         onMounted(() => {
             store!.collections.deploymentTasks.setFilters({
-                deployment_id: props.deployment.id,
+                deployment_id: deployment.value.id,
             });
             store!.collections.helmCharts.setFilters({
-                kind: props.deployment.kind,
+                kind: deployment.value.kind,
             });
         });
 
@@ -76,7 +83,7 @@ export default defineComponent({
 
         const tasks = computed(() =>
             store!.collections.deploymentTasks.all.filter(
-                (task) => task.deployment_id == props.deployment.id
+                (task) => task.deployment_id == deployment.value.id
             )
         );
 
@@ -117,6 +124,7 @@ export default defineComponent({
         });
 
         return {
+            deployment,
             tasksLoading,
             tasksLoadingPercent,
             chartsLoading,
