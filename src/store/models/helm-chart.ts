@@ -3,6 +3,10 @@ import { createCollection } from "./collection";
 import { chartFeatures } from "../chart-ext";
 import { useStore } from "..";
 
+export const InjectedHelmChartsCollection = Symbol(
+    "InjectedHelmChartsCollection"
+);
+
 export type HelmChartsCollection = ReturnType<
     typeof createCollection<HelmChart, void, HelmChart, void>
 >;

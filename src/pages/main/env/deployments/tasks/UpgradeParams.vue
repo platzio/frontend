@@ -36,11 +36,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import { DeploymentUpgradeTask } from "@platzio/sdk";
-import { useStore } from "@/store";
 import PlatzHelmChart from "@/components/PlatzHelmChart.vue";
 import ConfigDelta from "./ConfigDelta.vue";
+import {
+    HelmChartsCollection,
+    InjectedHelmChartsCollection,
+} from "@/store/models/helm-chart";
 
 export default defineComponent({
     components: {
@@ -60,7 +63,9 @@ export default defineComponent({
     },
 
     setup(props) {
-        const store = useStore();
+        const helmChartsCollection = inject<HelmChartsCollection>(
+            InjectedHelmChartsCollection
+        );
 
         const oldChartId = computed(() =>
             props.operation.prev_helm_chart_id &&
@@ -71,12 +76,12 @@ export default defineComponent({
 
         const oldChart = computed(() =>
             oldChartId.value
-                ? store!.collections.helmCharts.getOne(oldChartId.value)
+                ? helmChartsCollection!.getOne(oldChartId.value)
                 : null
         );
 
         const newChart = computed(() =>
-            store!.collections.helmCharts.getOne(props.operation.helm_chart_id)
+            helmChartsCollection!.getOne(props.operation.helm_chart_id)
         );
 
         // TODO: Set an exact type for config_delta type in DeploymentUpgradeTask

@@ -21,10 +21,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import { DeploymentTask, DeploymentTaskStatus } from "@platzio/sdk";
-import { useStore } from "@/store";
 import { chartActionsSchema } from "@/store/chart-ext";
+import {
+    HelmChartsCollection,
+    InjectedHelmChartsCollection,
+} from "@/store/models/helm-chart";
 
 export default defineComponent({
     props: {
@@ -35,7 +38,9 @@ export default defineComponent({
     },
 
     setup(props) {
-        const store = useStore();
+        const helmChartsCollection = inject<HelmChartsCollection>(
+            InjectedHelmChartsCollection
+        );
 
         const klass = computed(() => {
             switch (props.task.status) {
@@ -72,10 +77,10 @@ export default defineComponent({
                         : "Upgrade";
                 }
                 if (operation.prev_helm_chart_id !== operation.helm_chart_id) {
-                    const oldChart = store!.collections.helmCharts.getOne(
+                    const oldChart = helmChartsCollection!.getOne(
                         operation.prev_helm_chart_id
                     );
-                    const newChart = store!.collections.helmCharts.getOne(
+                    const newChart = helmChartsCollection!.getOne(
                         operation.helm_chart_id
                     );
                     const isUpgrade =
@@ -116,7 +121,7 @@ export default defineComponent({
             }
             if (props.task.operation.InvokeAction) {
                 const operation = props.task.operation.InvokeAction;
-                const chart = store!.collections.helmCharts.getOne(
+                const chart = helmChartsCollection!.getOne(
                     operation.helm_chart_id
                 );
                 const action_schema = chartActionsSchema(chart).find(
