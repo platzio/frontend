@@ -2,15 +2,16 @@
     <div
         class="my-1 d-flex flex-row align-items-baseline justify-content-between"
     >
-        <div class="d-inline-flex flex-row placeholder-glow">
+        <div
+            v-if="totalItems !== undefined"
+            class="d-inline-flex flex-row placeholder-glow"
+        >
             <div>Total&nbsp;</div>
-            <div v-if="totalItems !== undefined" class="fw-bolder">
-                {{ totalItems }}
-            </div>
-            <div v-else class="rounded placeholder my-1 col-12" />
+            <div class="fw-bolder">{{ totalItems }}</div>
         </div>
+        <div v-else class="my-2 rounded placeholder placeholder-glow col-1" />
 
-        <nav>
+        <nav v-if="totalItems !== undefined && pageSize !== undefined">
             <ul class="pagination pagination-sm m-0">
                 <li class="page-item" :class="{ disabled: cur_page <= FIRST }">
                     <a class="page-link px-3" @click="setPrevPage()">
@@ -49,6 +50,7 @@
                 </li>
             </ul>
         </nav>
+        <div v-else class="my-2 rounded placeholder placeholder-glow col-2" />
     </div>
 </template>
 
