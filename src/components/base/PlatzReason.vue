@@ -27,7 +27,7 @@
                         }"
                         @click="expand"
                     >
-                        {{ text }}
+                        {{ text?.slice(0, 500) }}
                     </component>
                     <div>&nbsp;</div>
                 </div>
