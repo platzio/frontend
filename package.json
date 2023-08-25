@@ -15,7 +15,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@openfonts/inconsolata_all": "^1.44.2",
     "@openfonts/open-sans_all": "^1.44.2",
-    "@platzio/sdk": "^0.5.2",
+    "@platzio/sdk": "^0.5.3-beta.0",
     "@popperjs/core": "^2.8.2",
     "@types/js-yaml": "^4.0.0",
     "@vueuse/head": "^0.7.9",

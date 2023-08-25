@@ -84,10 +84,7 @@ export default defineComponent({
             helmChartsCollection!.getOne(props.operation.helm_chart_id)
         );
 
-        // TODO: Set an exact type for config_delta type in DeploymentUpgradeTask
-        const configDelta = computed(
-            () => props.operation.config_delta as Record<string, any[]>
-        );
+        const configDelta = computed(() => props.operation.config_delta);
 
         return {
             oldChart,

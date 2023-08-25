@@ -45,7 +45,7 @@ export default defineComponent({
         },
         delta: {
             type: Object as PropType<Record<string, any[]>>,
-            required: true,
+            required: false,
         },
         allValues: {
             type: Object as PropType<Record<string, any>>,
@@ -55,12 +55,8 @@ export default defineComponent({
 
     setup(props) {
         const inputFor = computed(() => (id: string) => {
-            for (const input of props.uiSchema.inputs || []) {
-                if (input.id === id) {
-                    return input;
-                }
-            }
-            return null;
+            const inputs = props.uiSchema.inputs || [];
+            return inputs.find((input) => input.id === id);
         });
 
         return {
