@@ -12,6 +12,8 @@
             <DeploymentActions :envId="envId" :deployment="deployment" />
         </div>
 
+        <PlatzReason :text="deployment.reason" :is-bad="hasError" />
+
         <ul class="my-3 lh-sm nav nav-pills">
             <li class="nav-item">
                 <router-link
@@ -55,13 +57,16 @@ import { computed, defineComponent } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import { useHead } from "@vueuse/head";
 import { useStore } from "@/store";
+import PlatzReason from "@/components/base/PlatzReason.vue";
 import PlatzDeploymentStatus from "@/components/PlatzDeploymentStatus.vue";
 import PlatzDeploymentWarnings from "@/components/PlatzDeploymentWarnings.vue";
 import DeploymentActions from "./DeploymentActions.vue";
 import DeploymentOverview from "./DeploymentOverview.vue";
+import { DeploymentStatus } from "@platzio/sdk";
 
 export default defineComponent({
     components: {
+        PlatzReason,
         PlatzDeploymentStatus,
         PlatzDeploymentWarnings,
         DeploymentActions,
@@ -97,6 +102,10 @@ export default defineComponent({
             store!.collections.deployments.getOne(props.id)
         );
 
+        const hasError = computed(
+            () => deployment.value.status == DeploymentStatus.Error
+        );
+
         const formatted = computed(() =>
             store!.collections.deployments.formatItem(deployment.value)
         );
@@ -124,6 +133,7 @@ export default defineComponent({
         return {
             parentRoute,
             deployment,
+            hasError,
             formatted,
         };
     },

@@ -27,25 +27,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { Deployment, DeploymentReportedNoticeLevel } from "@platzio/sdk";
-import { deploymentStatusNotices } from "@/store/models/deployment-status";
+import { defineComponent, PropType } from "vue";
+import {
+    DeploymentReportedNotice,
+    DeploymentReportedNoticeLevel,
+} from "@platzio/sdk";
 
 export default defineComponent({
     props: {
-        deployment: {
-            type: Object as PropType<Deployment>,
+        notices: {
+            type: Array as PropType<DeploymentReportedNotice[]>,
             required: true,
         },
     },
 
-    setup(props) {
-        const notices = computed(() =>
-            deploymentStatusNotices(props.deployment)
-        );
-
+    setup() {
         return {
-            notices,
             DeploymentReportedNoticeLevel,
         };
     },
