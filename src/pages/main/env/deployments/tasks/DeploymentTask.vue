@@ -1,10 +1,14 @@
 <template>
     <div>
-        <PlatzReason class="flex-fill" :text="task.reason" :is-bad="isBad">
-            <template #before>
-                <TaskBadge class="me-2" :task="task" />
-            </template>
-        </PlatzReason>
+        <div class="mt-1 mb-2 d-flex flex-row align-items-baseline">
+            <TaskBadge class="me-2" :task="task" />
+            <PlatzReason
+                :title="`Task ${task.id} Log`"
+                :text="task.reason"
+                :allow-expand="true"
+                :is-bad="isBad"
+            />
+        </div>
 
         <UpgradeParams
             v-if="'Upgrade' in task.operation"

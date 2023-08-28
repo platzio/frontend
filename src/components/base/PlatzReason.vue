@@ -1,60 +1,78 @@
 <template>
-    <div v-if="text || hasBefore">
-        <div v-if="expanded">
-            <div class="mb-1">
-                <slot name="before" />
+    <div v-if="text" class="reason">
+        <a
+            v-if="allowExpand"
+            :class="previewClass"
+            data-bs-toggle="offcanvas"
+            :aria-controls="id"
+            :href="`#${id}`"
+        >
+            {{ preview }}
+        </a>
+        <div v-else :class="previewClass">
+            {{ preview }}
+        </div>
+        <div
+            v-if="allowExpand"
+            :id="id"
+            class="offcanvas offcanvas-end"
+            tabindex="-1"
+            :aria-labelledby="`header-${id}`"
+        >
+            <div class="offcanvas-header" :class="headerClass">
+                <div class="offcanvas-title" :id="`header-${id}`">
+                    <div class="h5">{{ title || "Details" }}</div>
+                    <span v-if="copied" class="small text-body-secondary">
+                        <FaIcon icon="copy" fixed-width />
+                        Copied
+                    </span>
+                    <a v-else class="small text-body-tertiary" @click="copy">
+                        <FaIcon icon="copy" fixed-width />
+                        Copy
+                    </a>
+                </div>
+                <div class="m-2 d-flex flex-column align-items-center">
+                    <button
+                        type="button"
+                        class="btn-close m-0 p-0"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    />
+                    <span class="m-0 p-0 text-body-tertiary">esc</span>
+                </div>
             </div>
-            <div
-                class="my-0 font-monospace reason reason-expanded"
-                :class="{ 'text-danger-emphasis': 'isBad' }"
-            >
+            <div class="offcanvas-body font-monospace reason-expanded">
                 {{ text }}
             </div>
         </div>
-
-        <template v-else>
-            <div class="d-flex flex-row align-items-center">
-                <div class="mb-1">
-                    <slot name="before" />
-                </div>
-                <div class="reason flex-fill">
-                    <component
-                        :is="allowExpand ? 'a' : 'div'"
-                        class="reason-collapsed font-monospace"
-                        :class="{
-                            'text-danger-emphasis': 'isBad',
-                            expandable: allowExpand,
-                        }"
-                        @click="expand"
-                    >
-                        {{ text?.slice(0, 500) }}
-                    </component>
-                    <div>&nbsp;</div>
-                </div>
-            </div>
-        </template>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .reason {
     position: relative;
-}
+    width: 100%;
 
-.reason-collapsed {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--bs-secondary);
+    .reason-preview {
+        position: absolute;
+        top: 0.1em;
+        left: 0;
+        right: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--bs-secondary);
 
-    &.expandable {
-        &:hover {
-            opacity: 0.6;
+        &.expandable {
+            &:hover {
+                opacity: 0.6;
+            }
         }
+    }
+
+    &::after {
+        content: ".";
+        visibility: hidden;
     }
 }
 
@@ -62,18 +80,18 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow-wrap: break-word;
-
-    &.bad {
-        color: var(--bs-danger);
-    }
 }
 </style>
 
 <script lang="ts">
-import { PropType, computed, defineComponent, ref } from "vue";
+import { PropType, computed, defineComponent, onUnmounted, ref } from "vue";
 
 export default defineComponent({
     props: {
+        title: {
+            type: String,
+            required: false,
+        },
         text: {
             type: String as PropType<string | null>,
             required: false,
@@ -82,35 +100,54 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
-        autoExpand: {
+        allowExpand: {
             type: Boolean,
             default: false,
         },
-        allowExpand: {
-            type: Boolean,
-            default: true,
-        },
     },
 
-    setup(props, { slots }) {
-        const user_expanded = ref(false);
-        const expanded = computed(
-            () => user_expanded.value || props.autoExpand
+    setup(props) {
+        const id = ref(
+            `reason${Math.round(Math.random() * 10000000000000000)}`
         );
 
-        function expand() {
-            if (props.allowExpand) {
-                user_expanded.value = true;
-            }
-        }
+        const preview = computed(() => props.text?.slice(0, 500));
+        const previewClass = computed(() => [
+            "reason-preview",
+            "font-monospace",
+            props.isBad ? "text-danger-emphasis" : "text-secondary",
+            props.allowExpand ? "expandable" : "",
+        ]);
 
-        const hasBefore = computed(() => !!slots["before"]);
+        const headerClass = computed(() => [
+            props.isBad ? "text-danger-emphasis" : "text-success-emphasis",
+            props.isBad ? "bg-danger-subtle" : "bg-success-subtle",
+        ]);
+
+        let copiedTimeout: number | undefined = undefined;
+        const copied = ref(false);
+        const copy = () => {
+            if (props.text) {
+                navigator.clipboard.writeText(props.text);
+                copied.value = true;
+                copiedTimeout = setTimeout(() => {
+                    copied.value = false;
+                    copiedTimeout = undefined;
+                }, 1250);
+            }
+        };
+
+        onUnmounted(() => {
+            clearTimeout(copiedTimeout);
+        });
 
         return {
-            user_expanded,
-            expanded,
-            expand,
-            hasBefore,
+            id,
+            preview,
+            previewClass,
+            headerClass,
+            copy,
+            copied,
         };
     },
 });

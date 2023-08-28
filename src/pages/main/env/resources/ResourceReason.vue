@@ -1,15 +1,13 @@
 <template>
-    <PlatzReason
-        :text="resource.sync_reason"
-        :isBad="resource.sync_status === DeploymentResourceSyncStatus.Error"
-        :allowExpand="false"
-    >
-        <template #before>
-            <div class="me-2 badge" :class="syncStatusClass">
-                {{ resource.sync_status.toUpperCase() }}
-            </div>
-        </template>
-    </PlatzReason>
+    <div class="d-flex flex-row align-items-baseline">
+        <div class="me-2 badge" :class="syncStatusClass">
+            {{ resource.sync_status.toUpperCase() }}
+        </div>
+        <PlatzReason
+            :text="resource.sync_reason"
+            :isBad="resource.sync_status === DeploymentResourceSyncStatus.Error"
+        />
+    </div>
 </template>
 
 <script lang="ts">

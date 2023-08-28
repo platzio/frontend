@@ -12,7 +12,12 @@
             <DeploymentActions :envId="envId" :deployment="deployment" />
         </div>
 
-        <PlatzReason :text="deployment.reason" :is-bad="hasError" />
+        <PlatzReason
+            title="Last Deployment Error Log"
+            :text="deployment.reason"
+            :allow-expand="true"
+            :is-bad="hasError"
+        />
 
         <ul class="my-3 lh-sm nav nav-pills">
             <li class="nav-item">

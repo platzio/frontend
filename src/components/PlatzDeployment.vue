@@ -1,21 +1,21 @@
 <template>
     <div class="d-flex flex-row justify-content-between align-items-center">
-        <div class="w-100">
-            <div class="my-1">
+        <div class="flex-fill">
+            <div class="my-1 d-flex flex-row align-items-baseline">
                 <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
-                <span v-if="formatted">
-                    <FaIcon :icon="formatted.icon" />
-                    {{ formatted.text }}
-                </span>
+                <template v-if="formatted">
+                    <span class="ms-1" style="white-space: nowrap">
+                        <FaIcon :icon="formatted.icon" />
+                        {{ formatted.text }}
+                    </span>
+                </template>
                 <PlatzDeploymentWarnings :deployment="deployment" />
+                <PlatzReason
+                    class="ms-3"
+                    :text="deployment.reason"
+                    :is-bad="hasError"
+                />
             </div>
-
-            <PlatzReason
-                class="mt-1"
-                :text="deployment.reason"
-                :allow-expand="false"
-                :is-bad="hasError"
-            />
 
             <div
                 class="my-2 small opacity-75 d-flex flex-row align-items-center"
@@ -50,7 +50,11 @@
             </div>
         </div>
 
-        <PlatzMetric v-if="primaryMetric" :metric="primaryMetric" />
+        <PlatzMetric
+            v-if="primaryMetric"
+            class="ms-2"
+            :metric="primaryMetric"
+        />
     </div>
 </template>
 

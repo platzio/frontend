@@ -20,6 +20,7 @@ $yellow: #eaa510;
 $green: #198754;
 $teal: #20c997;
 $cyan: #0dcaf0;
+$danger-text-emphasis: #dc3545;
 
 $color-mode-type: media-query;
 
@@ -38,6 +39,7 @@ $form-floating-height: 4rem;
 $form-floating-input-padding-b: 0.35rem;
 $form-floating-label-opacity: 0.5;
 $enable-negative-margins: true;
+$offcanvas-horizontal-width: calc(min(40rem, 100%));
 
 // No variable for that
 .form-floating {

@@ -2,7 +2,7 @@
     <PlatzCollectionItem
         class="d-flex flex-row align-items-center justify-content-between"
     >
-        <div class="w-100">
+        <div class="flex-fill">
             <slot name="contents" />
         </div>
         <div class="dropdown">
