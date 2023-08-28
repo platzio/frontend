@@ -110,6 +110,8 @@ export default defineComponent({
 
             if (head > AROUND) {
                 result.push({ type: "page", page: 1 });
+            }
+            if (head > AROUND + 1) {
                 result.push({ type: "separator" });
             }
 
@@ -131,8 +133,10 @@ export default defineComponent({
                 result.push({ type: "page", page: cur_page.value + i });
             }
 
-            if (tail > AROUND) {
+            if (tail > AROUND + 1) {
                 result.push({ type: "separator" });
+            }
+            if (tail > AROUND) {
                 result.push({ type: "page", page: last_page.value });
             }
 
