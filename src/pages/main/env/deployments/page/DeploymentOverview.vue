@@ -18,7 +18,6 @@
                 </div>
                 <div>
                     <ConfigValues
-                        v-if="chart.values_ui"
                         :envId="envId"
                         :uiSchema="chart.values_ui"
                         :config="deployment.config"

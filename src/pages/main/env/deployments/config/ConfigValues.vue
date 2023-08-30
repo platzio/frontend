@@ -42,7 +42,7 @@ export default defineComponent({
             required: true,
         },
         uiSchema: {
-            type: Object as PropType<UiSchema>,
+            type: Object as PropType<UiSchema | null>,
         },
         config: {
             type: Object,

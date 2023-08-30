@@ -12,7 +12,7 @@
                         Updated <PlatzMoment :value="timestamp" />
                     </div>
                 </div>
-                <span class="ms-1 badge border text-dark">YAML</span>
+                <span class="ms-1 badge border text-dark-emphasis">YAML</span>
             </div>
         </div>
         <div class="card-body">
