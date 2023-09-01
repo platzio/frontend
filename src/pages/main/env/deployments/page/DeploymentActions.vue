@@ -200,9 +200,10 @@ export default defineComponent({
             currentStatus.value
                 ? actions.value.filter((action) =>
                       action.allowed_on_statuses
-                          ? action.allowed_on_statuses.indexOf(
+                          ? (action.allowed_on_statuses.length == 0 ||
+                            action.allowed_on_statuses.indexOf(
                                 currentStatus.value!
-                            ) !== -1
+                            ) !== -1)
                           : true
                   )
                 : actions.value
