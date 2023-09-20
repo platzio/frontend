@@ -11,7 +11,7 @@
                 spellcheck="false"
                 v-model="new_data.name"
                 required
-                pattern="^[-A-Za-z0-9_]+$"
+                pattern="^[\-A-Za-z0-9_]+$"
                 :disabled="disabled"
             />
             <label for="name" class="form-label">
