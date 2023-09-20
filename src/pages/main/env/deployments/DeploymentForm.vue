@@ -7,7 +7,7 @@
             aria-describedby="nameHelp"
             v-model="new_data.name"
             required
-            pattern="^[-a-z0-9]+$"
+            pattern="^[\-a-z0-9]+$"
             :maxlength="maxNameLength"
             :disabled="working"
         />
