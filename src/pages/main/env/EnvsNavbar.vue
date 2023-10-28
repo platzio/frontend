@@ -124,7 +124,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import PlatzLogo from "@/components/base/PlatzLogo.vue";
+import PlatzLogo from "@platzio/design/components/PlatzLogo.vue";
 import PlatzEnv from "@/components/PlatzEnv.vue";
 import { useStore } from "@/store";
 import { isEnvUser } from "@/store/permissions";

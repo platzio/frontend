@@ -3,7 +3,7 @@
         <div class="d-flex flex-column align-items-center">
             <div>
                 <img
-                    src="@/assets/AntStacking.svg"
+                    src="@platzio/design/assets/AntStacking.svg"
                     style="width: 20rem; height: 20rem"
                 />
             </div>

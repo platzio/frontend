@@ -5,8 +5,8 @@ import PlatzApp from "./PlatzApp.vue";
 import routes from "./routes";
 import { createStore, storeSymbol } from "./store";
 import "bootstrap";
-import "./style/main.scss";
-import { FontAwesomeIcon } from "./style/fontawesome";
+import "@platzio/design/styles/main.scss";
+import { FontAwesomeIcon } from "@platzio/design/components/fontawesome";
 
 const app = createApp(PlatzApp);
 app.provide(storeSymbol, createStore());
