@@ -228,14 +228,14 @@ export default defineComponent({
             params.append("orgId", "1");
             params.append(
                 "left",
-                JSON.stringify([
-                    "now-1h",
-                    "now",
-                    cluster.value.grafana_datasource_name || "Loki",
-                    {
-                        expr: `{namespace="${namespace.value}"}`,
-                    },
-                ])
+                JSON.stringify({
+                    "datasource": cluster.value.grafana_datasource_name || "Loki",
+                    "queries": [{
+                        "expr": `{namespace="${namespace.value}"}`,
+                        "refId": "A"
+                    }],
+                    "range": { "from": "now-1h", "to": "now" }
+                })
             );
             return `${cluster.value.grafana_url}?${params.toString()}`;
         });
