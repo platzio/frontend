@@ -1,7 +1,18 @@
 <template>
   <div class="sidenav">
     <ul class="nav nav-pills flex-column">
-      <li class="nav-item" v-for="kind in deploymentKinds" :key="kind">
+      <div class="form-check form-switch">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="showAll"
+            v-model="showAll"
+        />
+        <label class="form-check-label" for="showAll">
+            Show All
+        </label>
+      </div>      
+      <li class="nav-item" v-for="kind in filteredDeploymentsKinds" :key="kind">
         <router-link
           class="nav-link"
           :to="{
@@ -20,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useStore } from "@/store";
 import { allKinds } from "@/store/models/helm-registry";
 import { useHead } from "@vueuse/head";
@@ -35,15 +46,29 @@ export default defineComponent({
 
   setup(props) {
     const store = useStore();
-    const deploymentKinds = computed(allKinds);
+    const showAll = ref(false);
     const env = computed(() => store!.collections.envs.getOne(props.envId));
+
+    const filteredDeploymentsKinds = computed(() => {
+        if (showAll.value) {
+          return allKinds()
+        }
+        else {
+          return allKinds().filter(
+            (deploymentKind) =>
+              store!.collections.deployments.allForEnv(props.envId).find(((deployment) => deployment.kind == deploymentKind && deployment.enabled))
+          )
+        }
+      }
+    );
 
     useHead({
       title: computed(() => `Deployments - ${env.value.name} - Platz`),
     });
 
     return {
-      deploymentKinds,
+      showAll,
+      filteredDeploymentsKinds
     };
   },
 });
