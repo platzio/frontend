@@ -55,6 +55,7 @@
                 :disabled="!chart.available"
             >
                 {{ chart.available ? "" : "[DELETED]" }}
+                {{ chart.error ? "[BROKEN]" : "" }}
                 {{ chart.image_tag }} (from {{ fromNow(chart.created_at) }})
             </option>
         </select>
