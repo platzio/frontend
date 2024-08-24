@@ -1,28 +1,18 @@
 <template>
-    <PlatzProgressPage :progress="100" :animate-progress="true" />
+  <PlatzProgressPage :progress="100" :animate-progress="true" />
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from "vue";
+<script setup lang="ts">
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import PlatzProgressPage from "@/components/base/PlatzProgressPage.vue";
 import { useStore } from "@/store";
 
-export default defineComponent({
-    components: {
-        PlatzProgressPage,
-    },
+const store = useStore();
+const router = useRouter();
 
-    setup() {
-        const store = useStore();
-        const router = useRouter();
-
-        onMounted(() => {
-            store!.auth.logout();
-            setTimeout(() => router.push({ name: "main" }), 1500);
-        });
-
-        return {};
-    },
+onMounted(() => {
+  store!.auth.logout();
+  setTimeout(() => router.push({ name: "main" }), 1500);
 });
 </script>

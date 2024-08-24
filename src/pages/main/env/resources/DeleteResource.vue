@@ -3,8 +3,8 @@
     ref="modal"
     :title="`Delete ${resourceType && resourceType.spec.name_singular}`"
     btn-class="btn-danger"
-    :error="error"
-    :working="disabled"
+    :error="state.error"
+    :working="state.disabled"
     @submit="submit"
   >
     <div class="alert alert-danger">
@@ -26,8 +26,8 @@
   </PlatzModal>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs } from "vue";
+<script setup lang="ts">
+import { computed, reactive, ref } from "vue";
 import PlatzModal from "@/components/base/PlatzModal.vue";
 import { useStore } from "@/store";
 import ResourceRow from "./ResourceRow.vue";
@@ -40,60 +40,44 @@ function initialData(): { error: any; disabled: boolean; id?: string } {
   };
 }
 
-export default defineComponent({
-  components: {
-    PlatzModal,
-    ResourceRow,
-  },
+const store = useStore();
+const state = reactive({ ...initialData() });
+const modal = ref<typeof PlatzModal>();
 
-  setup() {
-    const store = useStore();
-    const state = reactive({ ...initialData() });
-    const modal = ref<typeof PlatzModal>();
+const resource = computed(() =>
+  state.id ? store!.collections.deploymentResources.getOne(state.id) : null
+);
 
-    const resource = computed(() =>
-      state.id ? store!.collections.deploymentResources.getOne(state.id) : null
-    );
+const resourceType = computed(
+  () =>
+    resource.value &&
+    store!.collections.deploymentResourceTypes.getOne(resource.value.type_id)
+);
 
-    const resourceType = computed(
-      () =>
-        resource.value && store!.collections.deploymentResourceTypes.getOne(resource.value.type_id)
-    );
+function open(id: string) {
+  Object.assign(state, initialData());
+  state.id = id;
+  modal.value!.open();
+}
 
-    function open(id: string) {
-      Object.assign(state, initialData());
-      state.id = id;
-      modal.value!.open();
-    }
+function close() {
+  modal.value!.close();
+}
 
-    function close() {
-      modal.value!.close();
-    }
+async function submit() {
+  if (!state.id) {
+    return;
+  }
+  try {
+    state.disabled = true;
+    state.error = null;
+    await store!.collections.deploymentResources.deleteItem(state.id);
+    modal.value!.close();
+  } catch (error) {
+    state.error = error;
+    state.disabled = false;
+  }
+}
 
-    async function submit() {
-      if (!state.id) {
-        return;
-      }
-      try {
-        state.disabled = true;
-        state.error = null;
-        await store!.collections.deploymentResources.deleteItem(state.id);
-        modal.value!.close();
-      } catch (error) {
-        state.error = error;
-        state.disabled = false;
-      }
-    }
-
-    return {
-      modal,
-      resource,
-      resourceType,
-      open,
-      close,
-      submit,
-      ...toRefs(state),
-    };
-  },
-});
+defineExpose({ open, close });
 </script>

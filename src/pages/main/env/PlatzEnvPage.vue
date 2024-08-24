@@ -5,20 +5,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import EnvsNavbar from "./EnvsNavbar.vue";
 
-export default defineComponent({
-  props: {
-    envId: {
-      type: String,
-      required: true,
-    },
-  },
-
-  components: {
-    EnvsNavbar,
-  },
-});
+defineProps<{
+  envId: string;
+}>();
 </script>

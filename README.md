@@ -11,7 +11,7 @@ This repo contains Platz's frontend. In a nutshell:
 
 The frontend, both in development and in production, serves a SPA (single page app) and forwards API calls to the backend under the same domain in all `/api` prefixes.
 
-This means that when running locally all API calls go through the frontend development server ([webpack-dev-server](https://webpack.js.org/configuration/dev-server/)). This is defined in `vue.config.js`.
+This means that when running locally all API calls go through the frontend development server. This is defined in `vite.config.js`.
 
 In production the frontend is deployed as a separate Helm chart using the same domain as the backend. Kubernetes handles this because the frontend uses the `pathPrefix` of `/` while the backend is served under `/api`. This allows one Ingress controller to route the traffic to each Ingress individually.
 
@@ -21,17 +21,17 @@ So, while users see one domain in production, any downtime of the frontend can't
 
 The easiest and most common way to develop the frontend is against the production backend. To do that, run the following command:
 
-```
+```bash
 PLATZ_BACKEND=https://platz.example.com npm run serve
 ```
 
-The frontend is then served from http://localhost:8080, and as mentioned above acts as a reverse-proxy to all backend traffic.
+The frontend is then served from <http://localhost:5173>, and as mentioned above acts as a reverse-proxy to all backend traffic.
 
 ### Developing With a Local Backend
 
 When running a backend locally, run the same command without defining the `PLATZ_BACKEND` environment variable:
 
-```
+```bash
 npm run serve
 ```
 

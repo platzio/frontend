@@ -1,50 +1,49 @@
-import { HelmChart } from "@platzio/sdk";
+import { type HelmChart } from "@platzio/sdk";
 import { createCollection } from "./collection";
 import { chartFeatures } from "../chart-ext";
 import { useStore } from "..";
 
 export const InjectedHelmChartsCollection = Symbol(
-    "InjectedHelmChartsCollection"
+  "InjectedHelmChartsCollection"
 );
 
 export type HelmChartsCollection = ReturnType<
-    typeof createCollection<HelmChart, void, HelmChart, void>
+  typeof createCollection<HelmChart, void, HelmChart, void>
 >;
 
 export const createHelmChartsCollection = () => {
-    return createCollection<HelmChart, void, HelmChart, void>({
-        url: "/api/v2/helm-charts",
+  return createCollection<HelmChart, void, HelmChart, void>({
+    url: "/api/v2/helm-charts",
 
-        sortFunc(x, y) {
-            return y.created_at.localeCompare(x.created_at);
-        },
+    sortFunc(x, y) {
+      return y.created_at.localeCompare(x.created_at);
+    },
 
-        formatItem: (item: HelmChart) => ({
-            icon: "play",
-            text: item.image_tag,
-        }),
+    formatItem: (item: HelmChart) => ({
+      inputLabel: false,
+      icon: "play",
+      text: item.image_tag,
+    }),
 
-        initialFilters: {
-            in_use: true,
-        },
-    });
+    initialFilters: {
+      in_use: true,
+    },
+  });
 };
 
 export function chartIcon(chart?: HelmChart): string | undefined {
-    const features = chartFeatures(chart);
-    if (features) {
-        return features.display?.icon?.font_awesome;
-    }
+  const features = chartFeatures(chart);
+  if (features) {
+    return features.display?.icon?.font_awesome;
+  }
 }
 
 export function chartForUpgrade(current: HelmChart): HelmChart | undefined {
-    const store = useStore();
-    const newer = store!.collections.helmCharts.all
-        .filter((chart) => current.helm_registry_id == chart.helm_registry_id)
-        .filter(
-            (chart) => chart.created_at.localeCompare(current.created_at) == 1
-        )
-        .filter((chart) => current.parsed_branch === chart.parsed_branch)
-        .filter((chart) => chart.available);
-    return newer[0];
+  const store = useStore();
+  const newer = store!.collections.helmCharts.all
+    .filter((chart) => current.helm_registry_id == chart.helm_registry_id)
+    .filter((chart) => chart.created_at.localeCompare(current.created_at) == 1)
+    .filter((chart) => current.parsed_branch === chart.parsed_branch)
+    .filter((chart) => chart.available);
+  return newer[0];
 }

@@ -1,60 +1,46 @@
 <template>
-    <span
-        v-if="warnings.length > 0"
-        ref="warningsTriangle"
-        class="ms-2 text-warning"
-        data-bs-toggle="tooltip"
-        data-bs-placement="right"
-        :title="
-            warnings
-                .map(
-                    (warning) => `<div class='my-1 mx-2'>${warning.text}</div>`
-                )
-                .join('')
-        "
-        data-bs-html="true"
-    >
-        <FaIcon icon="exclamation-triangle" fixed-width />
-    </span>
+  <span
+    v-if="warnings.length > 0"
+    ref="warningsTriangle"
+    class="ms-2 text-warning"
+    data-bs-toggle="tooltip"
+    data-bs-placement="right"
+    :title="
+      warnings
+        .map((warning) => `<div class='my-1 mx-2'>${warning.text}</div>`)
+        .join('')
+    "
+    data-bs-html="true"
+  >
+    <FaIcon icon="exclamation-triangle" fixed-width />
+  </span>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Tooltip } from "bootstrap";
-import { computed, defineComponent, ref, PropType, watchEffect } from "vue";
-import { Deployment, DeploymentReportedNoticeLevel } from "@platzio/sdk";
+import { computed, ref, watchEffect } from "vue";
+import { type Deployment, DeploymentReportedNoticeLevel } from "@platzio/sdk";
 import { deploymentStatusNotices } from "@/store/models/deployment-status";
 
-export default defineComponent({
-    props: {
-        deployment: {
-            type: Object as PropType<Deployment>,
-            required: true,
-        },
-    },
+const props = defineProps<{
+  deployment: Deployment;
+}>();
 
-    setup(props) {
-        const warningsTriangle = ref();
+const warningsTriangle = ref();
 
-        const warnings = computed(() =>
-            deploymentStatusNotices(props.deployment).filter(
-                (notice) => notice.level != DeploymentReportedNoticeLevel.Info
-            )
-        );
+const warnings = computed(() =>
+  deploymentStatusNotices(props.deployment).filter(
+    (notice) => notice.level != DeploymentReportedNoticeLevel.Info
+  )
+);
 
-        watchEffect(
-            () => {
-                if (!warningsTriangle.value) {
-                    return;
-                }
-                new Tooltip(warningsTriangle.value);
-            },
-            { flush: "post" }
-        );
-
-        return {
-            warningsTriangle,
-            warnings,
-        };
-    },
-});
+watchEffect(
+  () => {
+    if (!warningsTriangle.value) {
+      return;
+    }
+    new Tooltip(warningsTriangle.value);
+  },
+  { flush: "post" }
+);
 </script>

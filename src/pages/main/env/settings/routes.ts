@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from "vue-router";
 import EnvSettings from "./EnvSettings.vue";
 import DeploymentPermissions from "./deployment-permissions/DeploymentPermissions.vue";
 import EnvUserPermissions from "./user-permissions/EnvUserPermissions.vue";

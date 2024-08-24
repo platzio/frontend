@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from "vue-router";
 import PlatzResources from "./PlatzResources.vue";
 import ResourceList from "./ResourceList.vue";
 import ResourcePage from "./ResourcePage.vue";
@@ -11,13 +11,16 @@ const routes: RouteRecordRaw[] = [
     props: true,
     children: [
       {
-        name: `env.resources.list`,
         path: ":resourceTypeId",
-        component: ResourceList,
-        props: true,
         children: [
           {
-            name: `env.resources.page`,
+            name: "env.resources.list",
+            path: "",
+            component: ResourceList,
+            props: true,
+          },
+          {
+            name: "env.resources.page",
             path: ":id",
             component: ResourcePage,
             props: true,

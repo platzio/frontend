@@ -1,66 +1,60 @@
 <template>
-    <div class="d-flex flex-row justify-content-between align-items-center">
-        <div class="flex-fill">
-            <div class="my-1 d-flex flex-row align-items-baseline">
-                <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
-                <template v-if="formatted">
-                    <span class="ms-1" style="white-space: nowrap">
-                        <FaIcon :icon="formatted.icon" />
-                        {{ formatted.text }}
-                    </span>
-                </template>
-                <PlatzDeploymentWarnings :deployment="deployment" />
-                <PlatzReason
-                    class="ms-3"
-                    :text="deployment.reason"
-                    :is-bad="hasError"
-                />
-            </div>
-
-            <div
-                class="my-2 small opacity-75 d-flex flex-row align-items-center"
-            >
-                <PlatzClusterName :id="deployment.cluster_id" />
-                <FaIcon icon="angle-right" class="ms-2 me-1 opacity-75" />
-                <PlatzResourceStatus
-                    :id="resource.id"
-                    v-for="resource in k8sResources"
-                    :key="resource.id"
-                    class="ms-1"
-                />
-            </div>
-
-            <div class="my-1 small d-flex flex-row align-items-center">
-                <div
-                    class="me-2 badge rounded-pill bg-primary fw-normal"
-                    style="font-size: 0.8rem"
-                    v-if="isMaintainer && hasUpgrade"
-                >
-                    <FaIcon icon="arrow-circle-up" fixed-width />
-                </div>
-                <div class="text-secondary">
-                    <PlatzHelmChart
-                        :chart="chart"
-                        :color="false"
-                        format="git"
-                        :time="false"
-                        :digest="false"
-                    />
-                </div>
-            </div>
-        </div>
-
-        <PlatzMetric
-            v-if="primaryMetric"
-            class="ms-2"
-            :metric="primaryMetric"
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div class="flex-fill">
+      <div class="my-1 d-flex flex-row align-items-baseline">
+        <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
+        <template v-if="formatted">
+          <span class="ms-1" style="white-space: nowrap">
+            <FaIcon :icon="formatted.icon" />
+            {{ formatted.text }}
+          </span>
+        </template>
+        <PlatzDeploymentWarnings :deployment="deployment" />
+        <PlatzReason
+          class="ms-3"
+          :text="deployment.reason"
+          :is-bad="hasError"
         />
+      </div>
+
+      <div class="my-2 small opacity-75 d-flex flex-row align-items-center">
+        <PlatzClusterName :id="deployment.cluster_id" />
+        <FaIcon icon="angle-right" class="ms-2 me-1 opacity-75" />
+        <PlatzResourceStatus
+          :id="resource.id"
+          v-for="resource in k8sResources"
+          :key="resource.id"
+          class="ms-1"
+        />
+      </div>
+
+      <div class="my-1 small d-flex flex-row align-items-center">
+        <div
+          class="me-2 badge rounded-pill bg-primary fw-normal"
+          style="font-size: 0.8rem"
+          v-if="isMaintainer && hasUpgrade"
+        >
+          <FaIcon icon="arrow-circle-up" fixed-width />
+        </div>
+        <div class="text-secondary" v-if="chart">
+          <PlatzHelmChart
+            :chart="chart"
+            :color="false"
+            format="git"
+            :time="false"
+            :digest="false"
+          />
+        </div>
+      </div>
     </div>
+
+    <PlatzMetric v-if="primaryMetric" class="ms-2" :metric="primaryMetric" />
+  </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { Deployment, DeploymentStatus } from "@platzio/sdk";
+<script setup lang="ts">
+import { computed } from "vue";
+import { type Deployment, DeploymentStatus } from "@platzio/sdk";
 import { useStore } from "@/store";
 import PlatzReason from "./base/PlatzReason.vue";
 import PlatzDeploymentStatus from "./PlatzDeploymentStatus.vue";
@@ -72,79 +66,46 @@ import { chartForUpgrade } from "@/store/models/helm-chart";
 import { isDeploymentMaintainer } from "@/store/permissions";
 import PlatzMetric from "./PlatzMetric.vue";
 
-export default defineComponent({
-    components: {
-        PlatzReason,
-        PlatzMetric,
-        PlatzDeploymentStatus,
-        PlatzDeploymentWarnings,
-        PlatzResourceStatus,
-        PlatzClusterName,
-        PlatzHelmChart,
-    },
+const props = defineProps<{
+  deployment: Deployment;
+}>();
 
-    props: {
-        deployment: {
-            type: Object as PropType<Deployment>,
-            required: true,
-        },
-    },
+const store = useStore();
 
-    setup(props) {
-        const store = useStore();
+const hasError = computed(
+  () => props.deployment.status == DeploymentStatus.Error
+);
 
-        const hasError = computed(
-            () => props.deployment.status == DeploymentStatus.Error
-        );
+const formatted = computed(() =>
+  store!.collections.deployments.formatItem(props.deployment)
+);
 
-        const formatted = computed(() =>
-            store!.collections.deployments.formatItem(props.deployment)
-        );
+const chart = computed(() =>
+  store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
+);
 
-        const chart = computed(() =>
-            store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
-        );
+const hasUpgrade = computed(
+  () =>
+    props.deployment.enabled &&
+    (chart.value ? chartForUpgrade(chart.value) : null)
+);
 
-        const hasUpgrade = computed(
-            () =>
-                props.deployment.enabled &&
-                (chart.value ? chartForUpgrade(chart.value) : null)
-        );
-
-        const isMaintainer = computed(() => {
-            const envId = store!.collections.k8sClusters.getOne(
-                props.deployment.cluster_id
-            ).env_id;
-            return (
-                envId && isDeploymentMaintainer(envId, props.deployment.kind)
-            );
-        });
-
-        const primaryMetric = computed(
-            () =>
-                props.deployment.reported_status &&
-                props.deployment.reported_status.content &&
-                props.deployment.reported_status.content.status &&
-                props.deployment.reported_status.content.primary_metric
-        );
-
-        const k8sResources = computed(() =>
-            store!.collections.k8sResources.all
-                .filter(
-                    (resource) => resource.deployment_id == props.deployment.id
-                )
-                .filter((resource) => resource.kind != "Job")
-        );
-
-        return {
-            hasError,
-            formatted,
-            chart,
-            hasUpgrade,
-            isMaintainer,
-            primaryMetric,
-            k8sResources,
-        };
-    },
+const isMaintainer = computed(() => {
+  const envId = store!.collections.k8sClusters.getOne(
+    props.deployment.cluster_id
+  )?.env_id;
+  return envId && isDeploymentMaintainer(envId, props.deployment.kind_id);
 });
+
+const primaryMetric = computed(
+  () =>
+    props.deployment.reported_status?.content?.status &&
+    props.deployment.reported_status.content.primary_metric
+);
+
+const k8sResources = computed(() =>
+  store!.collections.k8sResources.all
+    .filter((resource) => resource.deployment_id == props.deployment.id)
+    .filter((resource) => resource.kind != "Job")
+);
 </script>

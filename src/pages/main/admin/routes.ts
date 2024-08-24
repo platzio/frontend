@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from "vue-router";
 import PlatzAdmin from "./PlatzAdmin.vue";
 import UsersAdmin from "./UsersAdmin.vue";
 import EnvsAdmin from "./envs/EnvsAdmin.vue";
@@ -16,10 +16,13 @@ const children: RouteRecordRaw[] = [
     component: UsersAdmin,
   },
   {
-    name: "admin.envs",
     path: "envs",
-    component: EnvsAdmin,
     children: [
+      {
+        name: "admin.envs",
+        path: "",
+        component: EnvsAdmin,
+      },
       {
         name: "admin.envs.page",
         path: ":envId",
@@ -29,10 +32,13 @@ const children: RouteRecordRaw[] = [
     ],
   },
   {
-    name: "admin.helm-registries",
     path: "helm-registries",
-    component: HelmRegistries,
     children: [
+      {
+        name: "admin.helm-registries",
+        path: "",
+        component: HelmRegistries,
+      },
       {
         name: "admin.helm-registry-page",
         path: ":id",
@@ -42,10 +48,13 @@ const children: RouteRecordRaw[] = [
     ],
   },
   {
-    name: "admin.k8s-clusters",
     path: "k8s",
-    component: K8sClusters,
     children: [
+      {
+        name: "admin.k8s-clusters",
+        path: "",
+        component: K8sClusters,
+      },
       {
         name: "admin.k8s-cluster-page",
         path: ":id",

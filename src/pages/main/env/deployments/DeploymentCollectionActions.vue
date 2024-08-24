@@ -14,9 +14,12 @@
 
     <ul class="dropdown-menu" aria-labelledby="collectionActionsDropdown">
       <li>
-        <a class="dropdown-item" @click="editDeployment && editDeployment.openForCreate(kind)">
+        <a
+          class="dropdown-item"
+          @click="editDeployment && editDeployment.openForCreate(kindId)"
+        >
           <FaIcon icon="plus" fixed-width />
-          New {{ kind }} Deployment
+          New {{ kind?.name }} Deployment
         </a>
       </li>
     </ul>
@@ -25,36 +28,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { useStore } from "@/store";
 import { isDeploymentOwner } from "@/store/permissions";
 import EditDeployment from "./EditDeployment.vue";
 
-export default defineComponent({
-  props: {
-    envId: {
-      type: String,
-      required: true,
-    },
-    kind: {
-      type: String,
-      required: true,
-    },
-  },
+const props = defineProps<{
+  envId: string;
+  kindId: string;
+}>();
 
-  components: {
-    EditDeployment,
-  },
+const editDeployment = ref<typeof EditDeployment>();
 
-  setup(props) {
-    const editDeployment = ref<typeof EditDeployment>();
+const store = useStore();
 
-    const isOwner = computed(() => isDeploymentOwner(props.envId, props.kind));
+const kind = computed(() =>
+  props.kindId
+    ? store!.collections.deploymentKinds.getOne(props.kindId)
+    : undefined
+);
 
-    return {
-      editDeployment,
-      isOwner,
-    };
-  },
-});
+const isOwner = computed(() => isDeploymentOwner(props.envId, props.kindId));
 </script>

@@ -1,19 +1,13 @@
 <template>
-    <div class="mt-1 mb-2 small text-body-secondary">
-        Restart <strong>{{ operation.resource_name }}</strong>
-    </div>
+  <div class="mt-1 mb-2 small text-body-secondary">
+    Restart <strong>{{ operation.resource_name }}</strong>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { DeploymentRestartK8sResourceTask } from "@platzio/sdk";
+<script setup lang="ts">
+import { type DeploymentRestartK8sResourceTask } from "@platzio/sdk";
 
-export default defineComponent({
-    props: {
-        operation: {
-            type: Object as PropType<DeploymentRestartK8sResourceTask>,
-            required: true,
-        },
-    },
-});
+defineProps<{
+  operation: DeploymentRestartK8sResourceTask;
+}>();
 </script>

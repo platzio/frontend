@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="cluster">
     <span v-if="showRegion">
       <FaIcon icon="globe" fixed-width />
       {{ cluster.region_name }}
@@ -14,29 +14,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { useStore } from "@/store";
 
-export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-    showRegion: {
-      type: Boolean,
-      default: true,
-    },
-  },
+const props = withDefaults(
+  defineProps<{
+    id: string;
+    showRegion: boolean;
+  }>(),
+  {
+    showRegion: true,
+  }
+);
 
-  setup(props) {
-    const store = useStore();
-    const cluster = computed(() => store!.collections.k8sClusters.getOne(props.id));
-
-    return {
-      cluster,
-    };
-  },
-});
+const store = useStore();
+const cluster = computed(() => store!.collections.k8sClusters.getOne(props.id));
 </script>

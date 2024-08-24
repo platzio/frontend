@@ -1,24 +1,13 @@
 <template>
-    <PlatzProgressPage :progress="loadingProgress" :text="loadingStatus" />
+  <PlatzProgressPage :progress="loadingProgress" :text="loadingStatus" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import PlatzProgressPage from "@/components/base/PlatzProgressPage.vue";
 import { useStore } from "@/store";
 
-export default defineComponent({
-    components: {
-        PlatzProgressPage,
-    },
+const store = useStore();
 
-    setup() {
-        const store = useStore();
-
-        return {
-            loadingProgress: store!.loadingProgress,
-            loadingStatus: store!.loadingStatus,
-        };
-    },
-});
+const loadingProgress = store!.loadingProgress;
+const loadingStatus = store!.loadingStatus;
 </script>

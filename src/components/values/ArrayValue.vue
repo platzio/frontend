@@ -1,80 +1,60 @@
 <template>
-    <div v-if="(value && value.length) || showEmpty">
-        <div class="text-secondary" v-if="showLabel && input.label">
-            {{ input.label }}
-        </div>
-        <ul class="array-value-list" v-if="value">
-            <li v-for="(item, idx) in value" :key="idx">
-                <SingleConfigValue
-                    :input="innerInput"
-                    :envId="envId"
-                    :value="item"
-                    :allValues="allValues"
-                />
-            </li>
-        </ul>
-        <span class="text-secondary fst-italic" v-else>(empty)</span>
+  <div v-if="(value && value.length) || showEmpty">
+    <div class="text-secondary" v-if="showLabel && input.label">
+      {{ input.label }}
     </div>
+    <ul class="array-value-list" v-if="value">
+      <li v-for="(item, idx) in value" :key="idx">
+        <SingleConfigValue
+          v-if="innerInput"
+          :input="innerInput"
+          :envId="envId"
+          :value="item"
+          :allValues="allValues"
+        />
+        <div v-else class="text-danger">Array has no item type</div>
+      </li>
+    </ul>
+    <span class="text-secondary fst-italic" v-else>(empty)</span>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 ul.array-value-list {
-    margin: 0;
-    padding-left: 1.25rem;
+  margin: 0;
+  padding-left: 1.25rem;
 
-    li {
-        margin: 0;
-        padding: 0;
-    }
+  li {
+    margin: 0;
+    padding: 0;
+  }
 }
 </style>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { UiSchemaInput } from "@platzio/sdk";
+<script setup lang="ts">
+import { computed } from "vue";
+import { type UiSchemaInput } from "@platzio/sdk";
 import SingleConfigValue from "./SingleConfigValue.vue";
 
-export default defineComponent({
-    components: {
-        SingleConfigValue,
-    },
+const props = withDefaults(
+  defineProps<{
+    envId: string;
+    input: UiSchemaInput;
+    value: Array<any>;
+    allValues: Record<string, any>;
+    showLabel: boolean;
+    showEmpty: boolean;
+  }>(),
+  { withLabel: true, showEmpty: false }
+);
 
-    props: {
-        envId: {
-            type: String,
-            required: true,
-        },
-        input: {
-            type: Object as PropType<UiSchemaInput>,
-            required: true,
-        },
-        value: {
-            type: Array,
-        },
-        allValues: {
-            type: Object as PropType<Record<string, any>>,
-            required: true,
-        },
-        showLabel: {
-            type: Boolean,
-            default: true,
-        },
-        showEmpty: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
-    setup(props) {
-        const innerInput = computed(() => ({
-            ...props.input,
-            type: props.input.itemType,
-            label: undefined,
-        }));
-
-        return {
-            innerInput,
-        };
-    },
-});
+const innerInput = computed<UiSchemaInput | undefined>(() =>
+  props.input.itemType
+    ? {
+        ...props.input,
+        type: props.input.itemType,
+        label: "",
+      }
+    : undefined
+);
 </script>

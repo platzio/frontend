@@ -1,73 +1,56 @@
 <template>
-    <div class="form-check form-switch">
-        <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            :id="input.id"
-            v-model.number="inner"
-            :disabled="disabled"
-            :required="input.required"
-        />
-        <label class="form-check-label" :for="input.id">
-            {{ input.label }}
-        </label>
-    </div>
+  <div class="form-check form-switch">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      :id="input.id"
+      v-model.number="inner"
+      :disabled="disabled"
+      :required="input.required"
+    />
+    <label class="form-check-label" :for="input.id">
+      {{ input.label }}
+    </label>
+  </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { isEqual } from "lodash";
-import { defineComponent, ref, watch, PropType, watchEffect } from "vue";
-import { UiSchemaInput } from "@platzio/sdk";
+import { ref, watch, watchEffect } from "vue";
+import { type UiSchemaInput } from "@platzio/sdk";
 
-export default defineComponent({
-    props: {
-        envId: {
-            type: String,
-            required: true,
-        },
-        input: {
-            type: Object as PropType<UiSchemaInput>,
-            required: true,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        modelValue: {},
-        allValues: {
-            type: Object as PropType<Record<string, any>>,
-            required: true,
-        },
-        isNew: {
-            type: Boolean,
-            default: true,
-        },
-    },
+const props = withDefaults(
+  defineProps<{
+    envId: string;
+    input: UiSchemaInput;
+    disabled: boolean;
+    modelValue: {};
+    allValues: Record<string, any>;
+    isNew?: boolean;
+  }>(),
+  {
+    disabled: false,
+    isNew: true,
+  }
+);
 
-    emits: ["update:modelValue"],
+const emit = defineEmits(["update:modelValue"]);
 
-    setup(props, { emit }) {
-        const inner = ref();
+const inner = ref();
 
-        watch(
-            () => props.modelValue,
-            (newValue) => {
-                if (isEqual(newValue, inner.value)) {
-                    return;
-                }
-                inner.value = newValue;
-            },
-            { immediate: true, deep: true }
-        );
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (isEqual(newValue, inner.value)) {
+      return;
+    }
+    inner.value = newValue;
+  },
+  { immediate: true, deep: true }
+);
 
-        watchEffect(() => {
-            emit("update:modelValue", inner.value);
-        });
-
-        return {
-            inner,
-        };
-    },
+watchEffect(() => {
+  emit("update:modelValue", inner.value);
 });
 </script>

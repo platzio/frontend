@@ -5,20 +5,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { useHead } from "@vueuse/head";
 import VersionCheck from "./VersionCheck.vue";
 
-export default defineComponent({
-  components: {
-    VersionCheck,
-  },
-
-  setup() {
-    useHead({
-      title: "Platz",
-    });
-  },
+useHead({
+  title: "Platz",
 });
 </script>

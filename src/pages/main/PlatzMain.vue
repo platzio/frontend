@@ -10,42 +10,31 @@
   <PlatzFontPreloader />
 </template>
 
-<script lang="ts">
-import { defineComponent, watch } from "vue";
+<script setup lang="ts">
+import { watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "@/store";
 import PlatzLoader from "./PlatzLoader.vue";
 import PlatzFontPreloader from "./PlatzFontPreloader.vue";
 
-export default defineComponent({
-  components: {
-    PlatzLoader,
-    PlatzFontPreloader,
+const router = useRouter();
+const route = useRoute();
+const store = useStore();
+
+watch(
+  () => store!.auth.needsLogin,
+  (needsLogin) => {
+    if (needsLogin) {
+      router.replace({
+        name: "auth.login",
+        query: {
+          next: route.fullPath,
+        },
+      });
+    }
   },
+  { immediate: true }
+);
 
-  setup() {
-    const router = useRouter();
-    const route = useRoute();
-    const store = useStore();
-
-    watch(
-      () => store!.auth.needsLogin,
-      (needsLogin) => {
-        if (needsLogin) {
-          router.replace({
-            name: "auth.login",
-            query: {
-              next: route.fullPath,
-            },
-          });
-        }
-      },
-      { immediate: true }
-    );
-
-    return {
-      ready: store!.ready,
-    };
-  },
-});
+const ready = store!.ready;
 </script>

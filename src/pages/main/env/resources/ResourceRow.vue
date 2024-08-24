@@ -1,41 +1,26 @@
 <template>
-    <div>
-        <div class="my-2" v-if="formatted">
-            <FaIcon :icon="formatted.icon" fixed-width />
-            {{ formatted.text }}
-        </div>
-        <ResourceReason class="my-2" :resource="resource" />
+  <div>
+    <div class="my-2" v-if="formatted">
+      <FaIcon :icon="formatted.icon" fixed-width />
+      {{ formatted.text }}
     </div>
+    <ResourceReason class="my-2" :resource="resource" />
+  </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { DeploymentResource } from "@platzio/sdk";
+<script setup lang="ts">
+import { computed } from "vue";
+import { type DeploymentResource } from "@platzio/sdk";
 import { useStore } from "@/store";
 import ResourceReason from "./ResourceReason.vue";
 
-export default defineComponent({
-    copmponents: {
-        ResourceReason,
-    },
+const props = defineProps<{
+  resource: DeploymentResource;
+}>();
 
-    props: {
-        resource: {
-            type: Object as PropType<DeploymentResource>,
-            required: true,
-        },
-    },
+const store = useStore();
 
-    setup(props) {
-        const store = useStore();
-
-        const formatted = computed(() =>
-            store!.collections.deploymentResources.formatItem(props.resource)
-        );
-
-        return {
-            formatted,
-        };
-    },
-});
+const formatted = computed(() =>
+  store!.collections.deploymentResources.formatItem(props.resource)
+);
 </script>

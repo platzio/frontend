@@ -1,94 +1,73 @@
 <template>
-    <div v-if="uiSchema">
-        <InputField
-            :input="input"
-            v-for="input in uiSchema.inputs"
-            :key="input.id"
-            v-model="allValues[input.id]"
-            :envId="envId"
-            :disabled="disabled"
-            :allValues="allValues"
-            :isNew="isNew"
-        />
-    </div>
+  <div v-if="uiSchema">
+    <InputField
+      :input="input"
+      v-for="input in uiSchema.inputs"
+      :key="input.id"
+      v-model="allValues[input.id]"
+      :envId="envId"
+      :disabled="disabled"
+      :allValues="allValues"
+      :isNew="isNew"
+    />
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, watch, reactive, PropType } from "vue";
+<script setup lang="ts">
+import { watch, reactive } from "vue";
 import { cloneDeep, isEqual } from "lodash";
-import { UiSchema } from "@platzio/sdk";
+import { type UiSchema } from "@platzio/sdk";
 import InputField from "@/components/inputs/InputField.vue";
 
-export default defineComponent({
-    components: {
-        InputField,
-    },
+const props = withDefaults(
+  defineProps<{
+    envId: string;
+    uiSchema?: UiSchema | null;
+    disabled: boolean;
+    modelValue: Object;
+    isNew?: boolean;
+  }>(),
+  {
+    modelValue: () => ({}),
+    isNew: true,
+  }
+);
 
-    props: {
-        envId: {
-            type: String,
-            required: true,
-        },
-        uiSchema: {
-            type: Object as PropType<UiSchema | null>,
-            required: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        modelValue: {
-            type: Object,
-            default: () => ({}),
-        },
-        isNew: {
-            type: Boolean,
-            default: true,
-        },
-    },
+const emit = defineEmits(["update:modelValue"]);
 
-    emits: ["update:modelValue"],
+const allValues = reactive<Record<string, any>>({});
 
-    setup(props, { emit }) {
-        const allValues = reactive<Record<string, any>>({});
+watch(
+  () => props.modelValue,
+  (oldvalue, newvalue) => {
+    if (isEqual(oldvalue, newvalue)) {
+      return;
+    }
+    Object.assign(allValues, cloneDeep(props.modelValue));
+  },
+  { immediate: true, deep: true }
+);
 
-        watch(
-            () => props.modelValue,
-            (oldvalue, newvalue) => {
-                if (isEqual(oldvalue, newvalue)) {
-                    return;
-                }
-                Object.assign(allValues, cloneDeep(props.modelValue));
-            },
-            { immediate: true, deep: true }
-        );
+watch(
+  () => props.uiSchema,
+  () => {
+    if (!props.uiSchema) {
+      return;
+    }
+    for (const input of props.uiSchema.inputs) {
+      if (input.initialValue && !allValues[input.id]) {
+        allValues[input.id] = input.initialValue;
+      }
+    }
+  },
+  { immediate: true }
+);
 
-        watch(
-            () => props.uiSchema,
-            () => {
-                if (!props.uiSchema) {
-                    return;
-                }
-                for (const input of props.uiSchema.inputs) {
-                    if (input.initialValue && !allValues[input.id]) {
-                        allValues[input.id] = input.initialValue;
-                    }
-                }
-            },
-            { immediate: true }
-        );
-
-        watch(
-            allValues,
-            () => {
-                emit("update:modelValue", allValues);
-            },
-            { deep: true }
-        );
-
-        return {
-            allValues,
-        };
-    },
-});
+watch(
+  allValues,
+  () => {
+    emit("update:modelValue", allValues);
+  },
+  { deep: true }
+);
 </script>

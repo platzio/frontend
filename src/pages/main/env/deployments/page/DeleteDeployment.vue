@@ -1,94 +1,77 @@
 <template>
-    <PlatzModal
-        ref="modal"
-        title="Delete Deployment"
-        size="lg"
-        btn-class="btn-danger"
-        :error="error"
-        :working="working"
-        @submit="submit"
-    >
-        <div class="alert alert-danger">
-            <div class="mb-1 fw-bold">
-                <FaIcon icon="exclamation-circle" />
-                Careful
-            </div>
-            <div>You are about to delete this deployment</div>
-        </div>
+  <PlatzModal
+    ref="modal"
+    title="Delete Deployment"
+    size="lg"
+    btn-class="btn-danger"
+    :error="state.error"
+    :working="state.working"
+    @submit="submit"
+  >
+    <div class="alert alert-danger">
+      <div class="mb-1 fw-bold">
+        <FaIcon icon="exclamation-circle" />
+        Careful
+      </div>
+      <div>You are about to delete this deployment</div>
+    </div>
 
-        <div class="border p-2" v-if="deployment">
-            <PlatzDeployment :deployment="deployment" />
-        </div>
+    <div class="border p-2" v-if="deployment">
+      <PlatzDeployment :deployment="deployment" />
+    </div>
 
-        <div class="mt-3">Are you sure you want to continue?</div>
-    </PlatzModal>
+    <div class="mt-3">Are you sure you want to continue?</div>
+  </PlatzModal>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs } from "vue";
+<script setup lang="ts">
+import { computed, reactive, ref } from "vue";
 import PlatzModal from "@/components/base/PlatzModal.vue";
 import PlatzDeployment from "@/components/PlatzDeployment.vue";
 import { useStore } from "@/store";
 
 function initialData(): { error: any; working: boolean; id?: string } {
-    return {
-        error: undefined,
-        working: false,
-        id: undefined,
-    };
+  return {
+    error: undefined,
+    working: false,
+    id: undefined,
+  };
 }
 
-export default defineComponent({
-    components: {
-        PlatzModal,
-        PlatzDeployment,
-    },
+const modal = ref<typeof PlatzModal>();
+const state = reactive({ ...initialData() });
+const emit = defineEmits(["done"]);
 
-    setup(props, { emit }) {
-        const modal = ref<typeof PlatzModal>();
-        const state = reactive({ ...initialData() });
+const store = useStore();
+const deployment = computed(() =>
+  state.id ? store!.collections.deployments.getOne(state.id) : undefined
+);
 
-        const store = useStore();
-        const deployment = computed(() =>
-            state.id
-                ? store!.collections.deployments.getOne(state.id)
-                : undefined
-        );
+function open(id: string) {
+  Object.assign(state, initialData());
+  state.id = id;
+  modal.value!.open();
+}
 
-        function open(id: string) {
-            Object.assign(state, initialData());
-            state.id = id;
-            modal.value!.open();
-        }
+function close() {
+  modal.value!.close();
+}
 
-        function close() {
-            modal.value!.close();
-        }
+async function submit() {
+  if (!state.id) {
+    return;
+  }
+  try {
+    state.working = true;
+    state.error = null;
+    await store!.collections.deployments.deleteItem(state.id);
+    modal.value!.close();
+    emit("done");
+  } catch (error) {
+    state.error = error;
+    state.working = false;
+  }
+}
 
-        async function submit() {
-            if (!state.id) {
-                return;
-            }
-            try {
-                state.working = true;
-                state.error = null;
-                await store!.collections.deployments.deleteItem(state.id);
-                modal.value!.close();
-                emit("done");
-            } catch (error) {
-                state.error = error;
-                state.working = false;
-            }
-        }
-
-        return {
-            modal,
-            open,
-            close,
-            submit,
-            deployment,
-            ...toRefs(state),
-        };
-    },
-});
+defineExpose({ open, close });
 </script>

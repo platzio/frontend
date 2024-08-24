@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from "vue-router";
 import PlatzLogin from "./PlatzLogin.vue";
 import PlatzOAuthCallback from "./PlatzOAuthCallback.vue";
 import PlatzLogout from "./PlatzLogout.vue";

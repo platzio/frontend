@@ -1,134 +1,114 @@
 <template>
-    <PlatzModal
-        ref="modal"
-        :title="`Add ${kind} ${role}`"
-        btn-class="btn-primary"
-        :error="error"
-        :working="working"
-        @submit="submit"
-    >
-        <div class="mb-2">
-            Select a user to be added as {{ article }}
-            {{ role && role.toLowerCase() }} for
-            {{ kind && kind.toLowerCase() }}
-        </div>
-        <div class="my-3">
-            <select
-                class="form-select"
-                v-model="user_id"
-                :disabled="possibleUsers.length === 0"
-            >
-                <option
-                    v-for="user in possibleUsers"
-                    :value="user.id"
-                    :key="user.id"
-                >
-                    {{ user.display_name }}
-                </option>
-            </select>
-            <div
-                class="small text-body-secondary"
-                v-if="possibleUsers.length === 0"
-            >
-                It looks like all possible users already have permissions for
-                this deployment kind.
-            </div>
-        </div>
-    </PlatzModal>
+  <PlatzModal
+    ref="modal"
+    :title="`Add ${kind?.name} ${state.role}`"
+    btn-class="btn-primary"
+    :error="state.error"
+    :working="state.working"
+    @submit="submit"
+  >
+    <div class="mb-2">
+      Select a user to be added as {{ article }}
+      {{ state.role?.toLowerCase() }} for
+      {{ kind?.name.toLowerCase() }}
+    </div>
+    <div class="my-3">
+      <select
+        class="form-select"
+        v-model="state.user_id"
+        :disabled="possibleUsers.length === 0"
+      >
+        <option v-for="user in possibleUsers" :value="user.id" :key="user.id">
+          {{ user.display_name }}
+        </option>
+      </select>
+      <div class="small text-body-secondary" v-if="possibleUsers.length === 0">
+        It looks like all possible users already have permissions for this
+        deployment kind.
+      </div>
+    </div>
+  </PlatzModal>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs } from "vue";
+<script setup lang="ts">
+import { computed, reactive, ref } from "vue";
 import { UserDeploymentRole } from "@platzio/sdk";
 import { useStore } from "@/store";
 import PlatzModal from "@/components/base/PlatzModal.vue";
 
 function initialData(): {
-    error: any;
-    working: boolean;
-    kind?: string;
-    role?: UserDeploymentRole;
-    user_id?: string;
+  error: any;
+  working: boolean;
+  kind_id?: string;
+  role?: UserDeploymentRole;
+  user_id?: string;
 } {
-    return {
-        error: undefined,
-        working: false,
-        kind: undefined,
-        role: undefined,
-        user_id: undefined,
-    };
+  return {
+    error: undefined,
+    working: false,
+    kind_id: undefined,
+    role: undefined,
+    user_id: undefined,
+  };
 }
 
-export default defineComponent({
-    props: {
-        envId: {
-            type: String,
-            required: true,
-        },
-    },
+const props = defineProps<{
+  envId: string;
+}>();
 
-    components: {
-        PlatzModal,
-    },
+const store = useStore();
+const state = reactive({ ...initialData() });
+const modal = ref<typeof PlatzModal>();
 
-    setup(props) {
-        const store = useStore();
-        const state = reactive({ ...initialData() });
-        const modal = ref<typeof PlatzModal>();
+const kind = computed(() =>
+  state.kind_id
+    ? store!.collections.deploymentKinds.getOne(state.kind_id)
+    : undefined
+);
 
-        const article = computed(() =>
-            state.role && state.role.match(/^([aeiou])/i) ? "an" : "a"
-        );
+const article = computed(() =>
+  state.role && state.role.match(/^([aeiou])/i) ? "an" : "a"
+);
 
-        const possibleUsers = computed(() =>
-            store!.collections.users.all.filter((user) =>
-                store!.collections.deploymentPermissions.all
-                    .filter((permission) => permission.env_id == props.envId)
-                    .filter((permission) => permission.kind == state.kind)
-                    .every((permission) => permission.user_id != user.id)
-            )
-        );
+const possibleUsers = computed(() =>
+  store!.collections.users.all.filter((user) =>
+    store!.collections.deploymentPermissions.all
+      .filter((permission) => permission.env_id == props.envId)
+      .filter((permission) => permission.kind_id == state.kind_id)
+      .every((permission) => permission.user_id != user.id)
+  )
+);
 
-        function open(kind: string, role: UserDeploymentRole) {
-            Object.assign(state, initialData());
-            state.kind = kind;
-            state.role = role;
-            modal.value!.open();
-        }
+function open(kind_id: string, role: UserDeploymentRole) {
+  Object.assign(state, initialData());
+  state.kind_id = kind_id;
+  state.role = role;
+  modal.value!.open();
+}
 
-        function close() {
-            modal.value!.close();
-        }
+function close() {
+  modal.value!.close();
+}
 
-        async function submit() {
-            if (!state.user_id || !state.kind || !state.role) {
-                return;
-            }
-            try {
-                state.working = true;
-                state.error = null;
-                await store!.collections.deploymentPermissions.createItem({
-                    env_id: props.envId,
-                    user_id: state.user_id,
-                    kind: state.kind,
-                    role: state.role,
-                });
-                modal.value!.close();
-            } catch (error) {
-                state.error = error;
-                state.working = false;
-            }
-        }
+async function submit() {
+  if (!state.user_id || !state.kind_id || !state.role) {
+    return;
+  }
+  try {
+    state.working = true;
+    state.error = null;
+    await store!.collections.deploymentPermissions.createItem({
+      env_id: props.envId,
+      user_id: state.user_id,
+      kind_id: state.kind_id,
+      role: state.role,
+    });
+    modal.value!.close();
+  } catch (error) {
+    state.error = error;
+    state.working = false;
+  }
+}
 
-        return {
-            modal,
-            article,
-            possibleUsers,
-            open,
-            close,
-            submit,
-            ...toRefs(state),
-        };
-    },
-});
+defineExpose({ open, close });
 </script>
