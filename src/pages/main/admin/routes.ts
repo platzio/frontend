@@ -1,6 +1,6 @@
 import { type RouteRecordRaw } from "vue-router";
 import PlatzAdmin from "./PlatzAdmin.vue";
-import UsersAdmin from "./UsersAdmin.vue";
+import UsersAdmin from "./users/UsersAdmin.vue";
 import EnvsAdmin from "./envs/EnvsAdmin.vue";
 import EnvPage from "./envs/EnvPage.vue";
 import HelmRegistries from "./helm/HelmRegistries.vue";
