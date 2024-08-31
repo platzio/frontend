@@ -8,12 +8,30 @@ import HelmRegistryPage from "./helm/HelmRegistryPage.vue";
 import HelmTagFormats from "./helm/HelmTagFormats.vue";
 import K8sClusters from "./k8s-clusters/K8sClusters.vue";
 import ClusterPage from "./k8s-clusters/ClusterPage.vue";
+import BotsAdmin from "./bots/BotsAdmin.vue";
+import BotPage from "./bots/BotPage.vue";
 
 const children: RouteRecordRaw[] = [
   {
     name: "admin.users",
     path: "users",
     component: UsersAdmin,
+  },
+  {
+    path: "bots",
+    children: [
+      {
+        name: "admin.bots",
+        path: "",
+        component: BotsAdmin,
+      },
+      {
+        name: "admin.bot.page",
+        path: ":id",
+        component: BotPage,
+        props: true,
+      },
+    ],
   },
   {
     path: "envs",

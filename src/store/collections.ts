@@ -14,9 +14,11 @@ import { createK8sClustersCollection } from "./models/k8s-cluster";
 import { createK8sResourcesCollection } from "./models/k8s-resource";
 import { createSecretsCollection } from "./models/secret";
 import { createUsersCollection } from "./models/user";
+import { createBotsCollection } from "./models/bot";
 
 export function createCollections() {
   const users = createUsersCollection();
+  const bots = createBotsCollection();
   const envs = createEnvsCollection();
   const envUserPermissions = createEnvUserPermissionsCollection();
   const secrets = createSecretsCollection();
@@ -55,10 +57,13 @@ export function createCollections() {
     k8sResources,
     secrets,
     users,
+    bots,
   };
 
   function dbTableToCollection(table_name: DbTable) {
     switch (table_name) {
+      case DbTable.Bots:
+        return collections.bots;
       case DbTable.Deployments:
         return collections.deployments;
       case DbTable.DeploymentKinds:

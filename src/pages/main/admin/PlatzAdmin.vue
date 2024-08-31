@@ -9,6 +9,11 @@
         </router-link>
       </li>
       <li class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'admin.bots' }">
+          Bots
+        </router-link>
+      </li>
+      <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'admin.envs' }">
           Envs
         </router-link>
