@@ -7,7 +7,16 @@
       </span>
     </div>
   </div>
-  <div class="mt-1 small text-body-secondary" v-if="showEmail || showAdmin">
+  <div
+    class="mt-1 small text-body-secondary"
+    v-if="showEmail || showAdmin || showActive"
+  >
+    <span
+      v-if="showActive && user?.is_active === false"
+      class="badge bg-secondary me-2"
+    >
+      INACTIVE
+    </span>
     <span v-if="showAdmin && user?.is_admin" class="badge bg-primary me-2">
       ADMIN
     </span>
@@ -47,6 +56,7 @@ const props = withDefaults(
     showName?: boolean;
     showEmail?: boolean;
     showAdmin?: boolean;
+    showActive?: boolean;
     downloadImgSize?: number;
   }>(),
   {
@@ -55,6 +65,7 @@ const props = withDefaults(
     showName: false,
     showEmail: false,
     showAdmin: false,
+    showActive: false,
     downloadImgSize: 32,
   }
 );

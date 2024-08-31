@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PlatzCollection :items="allUsers">
+    <PlatzCollection :items="activeUsers">
       <template #item="{ item }">
         <PlatzItemWithActions>
           <template #contents>
@@ -28,6 +28,23 @@
       <template #emptyText>Nobody's here</template>
     </PlatzCollection>
 
+    <div v-if="inactiveUsers.length">
+      <div class="mt-4 mb- h5">Inactive Users</div>
+      <PlatzCollection :items="inactiveUsers">
+        <template #item="{ item }">
+          <PlatzCollectionItem>
+            <PlatzUser
+              :id="item.id"
+              :showName="true"
+              :showEmail="true"
+              :showAdmin="false"
+              :showActive="true"
+            />
+          </PlatzCollectionItem>
+        </template>
+      </PlatzCollection>
+    </div>
+
     <ChangeUserGlobalRole ref="changeGlobalRole" />
   </div>
 </template>
@@ -40,9 +57,17 @@ import PlatzItemWithActions from "@/components/collection/PlatzItemWithActions.v
 import PlatzUser from "@/components/PlatzUser.vue";
 import ChangeUserGlobalRole from "./ChangeUserGlobalRole.vue";
 import { useHead } from "@vueuse/head";
+import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
 
 const store = useStore();
-const allUsers = computed(() => store!.collections.users.all);
+
+const activeUsers = computed(() =>
+  store!.collections.users.all.filter((user) => user.is_active)
+);
+const inactiveUsers = computed(() =>
+  store!.collections.users.all.filter((user) => !user.is_active)
+);
+
 const changeGlobalRole = ref<typeof ChangeUserGlobalRole>();
 
 useHead({
