@@ -5,10 +5,13 @@
         <div class="h4">
           <PlatzHelmRegistry :registry="registry" />
         </div>
-        <div class="mt-3 mb-2 text-body-secondary">
+        <div class="my-2 text-body-secondary">
           <FaIcon icon="clock" fixed-width />
           Created
           <PlatzMoment :value="registry.created_at" />
+        </div>
+        <div class="my-2 text-body-secondary">
+          <PlatzDeploymentKind :id="registry.kind_id" />
         </div>
       </div>
 
@@ -71,6 +74,7 @@ import PlatzHelmChart from "@/components/PlatzHelmChart.vue";
 import { useStore } from "@/store";
 import SetHelmRegistryIcon from "./SetHelmRegistryIcon.vue";
 import { createHelmChartsCollection } from "@/store/models/helm-chart";
+import PlatzDeploymentKind from "@/components/PlatzDeploymentKind.vue";
 
 const props = defineProps<{
   id: string;
