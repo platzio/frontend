@@ -59,7 +59,7 @@ type NavLink = { type: "separator" } | { type: "page"; page: number };
 
 const props = withDefaults(
   defineProps<{
-    pageQueryParam: string;
+    pageQueryParam?: string;
     totalItems?: number;
     pageSize?: number;
   }>(),

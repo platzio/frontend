@@ -48,7 +48,7 @@ import PlatzError from "./PlatzError.vue";
 
 withDefaults(
   defineProps<{
-    progress: number;
+    progress?: number;
     animateProgress?: boolean;
     text?: string;
     error?: Error;

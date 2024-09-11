@@ -42,8 +42,8 @@ const props = withDefaults(
     input: UiSchemaInput;
     value: Array<any>;
     allValues: Record<string, any>;
-    showLabel: boolean;
-    showEmpty: boolean;
+    showLabel?: boolean;
+    showEmpty?: boolean;
   }>(),
   { withLabel: true, showEmpty: false }
 );

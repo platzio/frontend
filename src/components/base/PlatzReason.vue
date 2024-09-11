@@ -90,8 +90,8 @@ const props = withDefaults(
   defineProps<{
     title?: string;
     text?: string | null;
-    isBad: boolean;
-    allowExpand: boolean;
+    isBad?: boolean;
+    allowExpand?: boolean;
   }>(),
   {
     isBad: false,

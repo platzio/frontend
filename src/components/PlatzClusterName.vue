@@ -21,7 +21,7 @@ import { useStore } from "@/store";
 const props = withDefaults(
   defineProps<{
     id: string;
-    showRegion: boolean;
+    showRegion?: boolean;
   }>(),
   {
     showRegion: true,

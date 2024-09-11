@@ -86,11 +86,11 @@ import PlatzMoment from "./base/PlatzMoment.vue";
 const props = withDefaults(
   defineProps<{
     chart: HelmChart;
-    color: boolean;
-    format: "helm" | "git";
-    time: boolean;
-    digest: boolean;
-    size: "regular" | "sm";
+    color?: boolean;
+    format?: "helm" | "git";
+    time?: boolean;
+    digest?: boolean;
+    size?: "regular" | "sm";
   }>(),
   { color: true, format: "helm", time: true, digest: true, size: "regular" }
 );

@@ -33,8 +33,8 @@ import * as jsYaml from "js-yaml";
 const props = withDefaults(
   defineProps<{
     id?: string;
-    disabled: boolean;
-    modelValue: {};
+    disabled?: boolean;
+    modelValue?: {};
     isNew?: boolean;
   }>(),
   {
