@@ -2,7 +2,7 @@
   <PlatzModal
     ref="modal"
     size="lg"
-    title="New User Token"
+    title="New Bot Token"
     :error="state.error"
     :working="state.working"
     btn-class="btn-success"
@@ -24,7 +24,7 @@
       </div>
       <div class="mt-4 mb-2 h5 fw-bold">Using in CLI</div>
       <div class="my-2">
-        Store your API token in
+        Store the new API token in
         <code>~/.config/platz/config.toml</code>:
       </div>
       <pre
@@ -64,13 +64,13 @@ default_profile = true</code></pre>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import PlatzModal from "@/components/base/PlatzModal.vue";
-import { userTokens } from "./collection";
-import { type CreatedUserToken } from "@platzio/sdk";
+import { botTokens } from "./collection";
+import { type CreatedBotToken } from "@platzio/sdk";
 
 function initialData(): {
   error: any;
   working: boolean;
-  createdToken?: CreatedUserToken;
+  createdToken?: CreatedBotToken;
 } {
   return {
     error: undefined,
@@ -83,11 +83,11 @@ const state = reactive({ ...initialData() });
 const modal = ref<typeof PlatzModal>();
 const server_url = ref(`${location.protocol}//${location.host}`);
 
-async function open() {
+async function open(bot_id: string) {
   Object.assign(state, initialData());
   modal.value!.open();
   try {
-    state.createdToken = await userTokens.createItem({ user_id: null });
+    state.createdToken = await botTokens.createItem({ bot_id });
   } catch (err) {
     state.error = err;
   }
