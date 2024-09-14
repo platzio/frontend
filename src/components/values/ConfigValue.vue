@@ -9,14 +9,14 @@
       :showLabel="showLabel"
       :showEmpty="showEmpty"
     />
-    <PlainValue
+    <TextValue
       v-else-if="input.type === 'text'"
       :input="input"
       :value="value"
       :showLabel="showLabel"
       :showEmpty="showEmpty"
     />
-    <PlainValue
+    <NumberValue
       v-else-if="input.type === 'number'"
       :input="input"
       :value="value"
@@ -68,11 +68,12 @@ import { computed } from "vue";
 import { type UiSchemaInput } from "@platzio/sdk";
 import JsonLogic from "json-logic-js";
 import ArrayValue from "./ArrayValue.vue";
+import TextValue from "./TextValue.vue";
+import NumberValue from "./NumberValue.vue";
 import CheckboxValue from "./CheckboxValue.vue";
 import CollectionValue from "./CollectionValue.vue";
 import DaysHourValue from "./DaysHourValue.vue";
 import RadioValue from "./RadioValue.vue";
-import PlainValue from "./PlainValue.vue";
 
 const props = withDefaults(
   defineProps<{

@@ -34,7 +34,7 @@ const props = withDefaults(
   defineProps<{
     envId: string;
     input: UiSchemaInput;
-    value: string | Object;
+    value?: string | Object;
     showLabel: boolean;
     showEmpty: boolean;
   }>(),
@@ -48,12 +48,12 @@ const collection = computed(
 );
 
 const item = computed(() =>
-  collection.value && props.value ? collection.value.getOne(props.value) : null
+  props.value ? collection.value?.getOne(props.value) : undefined
 );
 
 const formattedItem = computed(() =>
-  collection.value && item.value
-    ? collection.value.formatItem(item.value)
-    : null
+  item.value
+    ? collection.value?.formatItem(item.value)
+    : undefined
 );
 </script>

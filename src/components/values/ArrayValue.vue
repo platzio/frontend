@@ -5,7 +5,7 @@
     </div>
     <ul class="array-value-list" v-if="value">
       <li v-for="(item, idx) in value" :key="idx">
-        <SingleConfigValue
+        <ArraySingleValue
           v-if="innerInput"
           :input="innerInput"
           :envId="envId"
@@ -34,13 +34,13 @@ ul.array-value-list {
 <script setup lang="ts">
 import { computed } from "vue";
 import { type UiSchemaInput } from "@platzio/sdk";
-import SingleConfigValue from "./SingleConfigValue.vue";
+import ArraySingleValue from "./ArraySingleValue.vue";
 
 const props = withDefaults(
   defineProps<{
     envId: string;
     input: UiSchemaInput;
-    value: Array<any>;
+    value?: Array<any>;
     allValues: Record<string, any>;
     showLabel?: boolean;
     showEmpty?: boolean;

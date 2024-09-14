@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { isEqual } from "lodash";
-import { computed, ref, watch, watchEffect } from "vue";
+import { computed, ref, watch } from "vue";
 import { type UiSchemaInput } from "@platzio/sdk";
 
 const props = withDefaults(
@@ -31,7 +31,7 @@ const props = withDefaults(
     envId: string;
     input: UiSchemaInput;
     disabled: boolean;
-    modelValue: {};
+    modelValue?: number | string;
     allValues: Record<string, any>;
     isNew?: boolean;
   }>(),
@@ -51,14 +51,18 @@ watch(
     if (isEqual(newValue, inner.value)) {
       return;
     }
-    inner.value = newValue;
+    inner.value = newValue === "" ? undefined : newValue;
   },
   { immediate: true, deep: true }
 );
 
-watchEffect(() => {
-  emit("update:modelValue", inner.value);
-});
+watch(
+  () => inner,
+  () => {
+    emit("update:modelValue", inner.value === "" ? undefined : inner.value);
+  },
+  { deep: true }
+);
 
 const minimum = computed(() =>
   props.input.minimum ? parseInt(props.input.minimum) : undefined
