@@ -1,9 +1,9 @@
 <template>
-  <div v-if="value || showEmpty">
+  <div v-if="value !== undefined || showEmpty">
     <span class="text-secondary" v-if="showLabel && input.label">
       {{ input.label }}:
     </span>
-    <template v-if="value">
+    <template v-if="days && hour">
       <span class="fw-bold">{{ days }}</span>
       <span> at </span>
       <span class="fw-bold">{{ hour }}</span>
@@ -41,8 +41,8 @@ const props = withDefaults(
   defineProps<{
     input: UiSchemaInput;
     value?: ExternalFormat;
-    showLabel: boolean;
-    showEmpty: boolean;
+    showLabel?: boolean;
+    showEmpty?: boolean;
   }>(),
   {
     showLabel: true,
@@ -50,13 +50,10 @@ const props = withDefaults(
   }
 );
 
-const days = computed(() =>
-  props.value && props.value.run_days
-    ? props.value.run_days.split(",").map(toDayName).join(", ")
-    : null
-);
+const days = computed(() => {
+  const run_days = props.value?.run_days;
+  return run_days ? run_days.split(",").map(toDayName).join(", ") : undefined;
+});
 
-const hour = computed(() =>
-  props.value && props.value.schedule ? props.value.schedule : null
-);
+const hour = computed(() => props.value?.schedule);
 </script>

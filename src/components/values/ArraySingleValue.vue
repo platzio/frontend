@@ -1,13 +1,13 @@
 <template>
   <div v-if="input && (shouldDisplay || showEmpty)">
-    <PlainValue
+    <TextValue
       v-if="input.type === 'text'"
       :input="input"
       :value="value"
       :showLabel="showLabel"
       :showEmpty="showEmpty"
     />
-    <PlainValue
+    <NumberValue
       v-else-if="input.type === 'number'"
       :input="input"
       :value="value"
@@ -58,11 +58,12 @@
 import { computed } from "vue";
 import { type UiSchemaInput } from "@platzio/sdk";
 import JsonLogic from "json-logic-js";
+import TextValue from "./TextValue.vue";
+import NumberValue from "./NumberValue.vue";
 import CheckboxValue from "./CheckboxValue.vue";
 import CollectionValue from "./CollectionValue.vue";
 import DaysHourValue from "./DaysHourValue.vue";
 import RadioValue from "./RadioValue.vue";
-import PlainValue from "./PlainValue.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -73,7 +74,7 @@ const props = withDefaults(
     showLabel?: boolean;
     showEmpty?: boolean;
   }>(),
-  { showLabel: true, showEmpty: false }
+  { showLabel: false, showEmpty: true }
 );
 
 const shouldDisplay = computed(() => {

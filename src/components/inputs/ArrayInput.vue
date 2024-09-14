@@ -38,7 +38,7 @@ const props = withDefaults(
     envId: string;
     input: UiSchemaInput;
     disabled: boolean;
-    modelValue: {};
+    modelValue?: Array<any>;
     allValues: Record<string, any>;
     isNew?: boolean;
   }>(),
@@ -65,7 +65,7 @@ watch(
     if (typeof newValue === "string" || typeof newValue === "number") {
       newValue = [newValue];
     }
-    inner.value = newValue as any[];
+    inner.value = newValue;
   },
   { immediate: true, deep: true }
 );
@@ -79,7 +79,28 @@ watch(
 );
 
 const addToArray = () => {
-  inner.value.push({});
+  switch (props.input.itemType) {
+    case "text":
+      inner.value.push(props.input.initialValue || "");
+      break;
+    case "number":
+      inner.value.push(props.input.initialValue || props.input.minimum || 0);
+      break;
+    case "CollectionSelect":
+      inner.value.push({});
+      break;
+    case "RadioSelect":
+      inner.value.push(
+        props.input.initialValue || (props.input.options || [])[0].value
+      );
+      break;
+    case "DaysAndHour":
+      inner.value.push(props.input.initialValue || {});
+      break;
+    case "Checkbox":
+      inner.value.push(props.input.initialValue || false);
+      break;
+  }
 };
 
 const removeFromArray = (idx: number) => {

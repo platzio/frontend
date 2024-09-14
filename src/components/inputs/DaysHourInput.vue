@@ -22,13 +22,13 @@
           </label>
         </div>
         <div class="flex-fill mx-2"></div>
-        <select class="form-select" v-model="inner.hour">
+        <select class="no-caret" v-model="inner.hour">
           <option v-for="i in 24" :key="i - 1" :value="padNum(i - 1)">
             {{ padNum(i - 1) }}
           </option>
         </select>
         <div class="flex-fill mx-1">:</div>
-        <select class="form-select" v-model="inner.minute">
+        <select class="no-caret" v-model="inner.minute">
           <option v-for="i in 60" :key="i - 1" :value="padNum(i - 1)">
             {{ padNum(i - 1) }}
           </option>
@@ -41,6 +41,17 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.no-caret {
+  appearance: none;
+  padding: 0 0.4rem 0 0.4rem;
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-body-bg);
+  border-width: 1px;
+  border-color: var(--bs-border-color);
+}
+</style>
 
 <script setup lang="ts">
 import { isEqual } from "lodash";
@@ -82,8 +93,8 @@ const props = withDefaults(
   defineProps<{
     envId: string;
     input: UiSchemaInput;
-    disabled: boolean;
-    modelValue: ExternalFormat;
+    disabled?: boolean;
+    modelValue?: ExternalFormat;
     allValues: Record<string, any>;
     isNew?: boolean;
   }>(),

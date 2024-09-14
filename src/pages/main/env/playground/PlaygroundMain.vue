@@ -143,6 +143,45 @@ const ui_schema = ref<UiSchema>({
       label: "Array of text",
     },
     {
+      id: "array_of_numbers",
+      type: "array",
+      itemType: "number",
+      label: "Array of numbers",
+    },
+    {
+      id: "array_of_checkbox",
+      type: "array",
+      itemType: "Checkbox",
+      label: "Array of checkbox",
+    },
+    {
+      id: "array_of_dayhour",
+      type: "array",
+      itemType: "DaysAndHour",
+      label: "Array of days and hour",
+    },
+    {
+      id: "array_of_radio",
+      type: "array",
+      itemType: "RadioSelect",
+      label: "Array of radios",
+      options: [
+        {
+          value: 1,
+          label: "One",
+        },
+        {
+          value: 2,
+          label: "Two",
+          helpText: "Option with help text",
+        },
+        {
+          value: 3,
+          label: "Three",
+        },
+      ],
+    },
+    {
       id: "optional_text",
       type: "text",
       label: "Optional text",
@@ -277,7 +316,10 @@ const features = ref<ChartExtFeaturesV1Beta2>({
   },
 });
 
-const rendered_inputs_new = ref({});
+const rendered_inputs_new = ref({
+  array_of_text: ["", ""],
+  array_of_numbers: [0, 0, 0],
+});
 const rendered_inputs_edit = ref({});
 
 watch(

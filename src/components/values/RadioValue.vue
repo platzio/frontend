@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value || showEmpty">
+  <div v-if="value !== undefined || showEmpty">
     <span class="text-secondary" v-if="showLabel"> {{ input.label }}: </span>
     <span class="text-monospace fw-bold" v-if="value">
       {{ display }}
@@ -15,9 +15,9 @@ import { type UiSchemaInput } from "@platzio/sdk";
 const props = withDefaults(
   defineProps<{
     input: UiSchemaInput;
-    value: any;
-    showLabel: boolean;
-    showEmpty: boolean;
+    value?: any;
+    showLabel?: boolean;
+    showEmpty?: boolean;
   }>(),
   {
     showLabel: true,
@@ -27,7 +27,7 @@ const props = withDefaults(
 
 const display = computed(() => {
   for (const option of props.input.options || []) {
-    if (option.value == props.value) {
+    if (option.value === props.value) {
       return option.label || option.value;
     }
   }

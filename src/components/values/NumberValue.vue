@@ -4,7 +4,7 @@
       {{ input.label }}:
     </span>
     <span class="text-monospace fw-bold" v-if="value !== undefined">
-      {{ value ? "On" : "Off" }}
+      {{ value }}
     </span>
     <span class="text-secondary fst-italic" v-else>(empty)</span>
   </div>
@@ -16,10 +16,13 @@ import { type UiSchemaInput } from "@platzio/sdk";
 withDefaults(
   defineProps<{
     input: UiSchemaInput;
-    value?: boolean;
-    showLabel: boolean;
-    showEmpty: boolean;
+    value?: number;
+    showLabel?: boolean;
+    showEmpty?: boolean;
   }>(),
-  { withLabel: true, showEmpty: false }
+  {
+    showLabel: true,
+    showEmpty: false,
+  }
 );
 </script>

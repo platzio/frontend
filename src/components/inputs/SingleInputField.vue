@@ -77,7 +77,7 @@ const props = withDefaults(
     envId: string;
     input: UiSchemaInput;
     disabled: boolean;
-    modelValue: {};
+    modelValue?: any;
     allValues: Record<string, any>;
     isNew?: boolean;
   }>(),
@@ -119,12 +119,12 @@ const visible = computed(() => {
     } catch {
       return false;
     }
-  } else if (props.input.showIfAll != undefined) {
+  }
+  if (props.input.showIfAll) {
     return props.input.showIfAll.every(
       (fv) => props.allValues[fv.field] === fv.value
     );
-  } else {
-    return true;
   }
+  return true;
 });
 </script>

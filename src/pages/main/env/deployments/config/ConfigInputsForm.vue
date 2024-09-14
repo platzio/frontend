@@ -55,7 +55,7 @@ watch(
       return;
     }
     for (const input of props.uiSchema.inputs) {
-      if (input.initialValue && !allValues[input.id]) {
+      if (input.initialValue !== undefined && !allValues[input.id]) {
         allValues[input.id] = input.initialValue;
       }
     }
