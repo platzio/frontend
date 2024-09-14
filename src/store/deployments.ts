@@ -17,10 +17,6 @@ export function findCollectionDependencies(
     );
 
     if (!chart) {
-      console.log(
-        "Could not find chart for deployment",
-        deployment.helm_chart_id
-      );
       continue;
     }
 
