@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="allPermissions">
     <PlatzCollection :items="allPermissions">
       <template #item="{ item }">
         <PlatzItemWithActions>
@@ -95,18 +95,20 @@ const store = useStore();
 const addUserPermission = ref<typeof AddUserPermission>();
 const removeUserPermission = ref<typeof RemoveUserPermission>();
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const allPermissions = computed(() =>
-  store!.collections.envUserPermissions.all.filter(
+  store?.collections.envUserPermissions.all.filter(
     (permission) => permission.env_id == props.envId
   )
 );
 
-const curUser = computed(() => store!.auth.curUser!);
+const curUser = computed(() => store?.auth.curUser);
 
 const canEdit = computed(
-  () => curUser.value.is_admin || isEnvAdmin(props.envId, curUser.value)
+  () =>
+    curUser.value &&
+    (curUser.value.is_admin || isEnvAdmin(props.envId, curUser.value))
 );
 
 useHead({

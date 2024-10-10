@@ -49,11 +49,11 @@ function open(secret: Secret) {
   Object.assign(state, initialData());
   state.id = secret.id;
   state.name = secret.name;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -63,8 +63,8 @@ async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.secrets.deleteItem(state.id);
-    modal.value!.close();
+    await store?.collections.secrets.deleteItem(state.id);
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

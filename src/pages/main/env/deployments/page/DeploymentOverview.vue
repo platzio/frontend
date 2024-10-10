@@ -60,12 +60,12 @@ const props = defineProps<{
 const store = useStore();
 
 const deployment = computed(() =>
-  store!.collections.deployments.getOne(props.id)
+  store?.collections.deployments.getOne(props.id)
 );
 
 const chart = computed(() =>
   deployment.value
-    ? store!.collections.helmCharts.getOne(deployment.value.helm_chart_id)
+    ? store?.collections.helmCharts.getOne(deployment.value.helm_chart_id)
     : undefined
 );
 

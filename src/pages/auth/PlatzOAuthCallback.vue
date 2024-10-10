@@ -10,7 +10,7 @@ import { AuthenticationApi } from "@platzio/sdk";
 import { useStore } from "@/store";
 
 const store = useStore();
-const api = new AuthenticationApi(store!.auth.sdkConfig());
+const api = new AuthenticationApi(store?.auth.sdkConfig());
 const error = ref<any>(null);
 const router = useRouter();
 const route = useRoute();
@@ -26,8 +26,8 @@ onMounted(async () => {
         auth_code: code.toString(),
       },
     });
-    store!.auth.setAccessToken(res.data.access_token);
-    await store!.auth.start();
+    store?.auth.setAccessToken(res.data.access_token);
+    await store?.auth.start();
     router.replace({ name: "main" });
   } catch (err) {
     error.value = err;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="tagFormats">
     <div class="d-flex flex-row align-items-start">
       <div class="mt-0 flex-fill h4 fw-bold">Helm Tag Formats</div>
       <div>
@@ -89,5 +89,5 @@ const addTagFormat = ref<typeof AddTagFormat>();
 const deleteTagFormat = ref<typeof DeleteTagFormat>();
 const store = useStore();
 
-const tagFormats = computed(() => store!.collections.helmTagFormats.all);
+const tagFormats = computed(() => store?.collections.helmTagFormats.all);
 </script>

@@ -21,6 +21,6 @@ const props = defineProps<{
 const store = useStore();
 
 const formatted = computed(() =>
-  store!.collections.deploymentResources.formatItem(props.resource)
+  store?.collections.deploymentResources.formatItem(props.resource)
 );
 </script>

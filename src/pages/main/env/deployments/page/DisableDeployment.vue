@@ -57,11 +57,11 @@ const emit = defineEmits(["done"]);
 function open(deployment: Deployment) {
   Object.assign(state, initialData());
   state.deployment = deployment;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -71,13 +71,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.deployments.updateItem({
+    await store?.collections.deployments.updateItem({
       id: state.deployment.id,
       data: {
         enabled: false,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
     emit("done");
   } catch (error) {
     state.error = error;

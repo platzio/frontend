@@ -1,5 +1,5 @@
 <template>
-  <div v-if="resourceType">
+  <div v-if="resourceType && allResources">
     <PlatzCollection :items="allResources">
       <template #item="{ item }">
         <PlatzLinkedItem
@@ -59,10 +59,10 @@ const props = defineProps<{
 const store = useStore();
 const editResource = ref<typeof EditResource>();
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const resourceType = computed(() =>
-  store!.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
+  store?.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
 );
 
 // TODO: Check allowed_role
@@ -73,7 +73,7 @@ const canEdit = computed(
 );
 
 const allResources = computed(() =>
-  store!.collections.deploymentResources.all.filter(
+  store?.collections.deploymentResources.all.filter(
     (resource) => resource.type_id === props.resourceTypeId
   )
 );

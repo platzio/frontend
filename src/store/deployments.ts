@@ -9,10 +9,14 @@ export function findCollectionDependencies(
   id: string
 ): Deployment[] {
   const store = useStore();
+  if (!store) {
+    return [];
+  }
+
   const result = [];
 
-  for (const deployment of store!.collections.deployments.all) {
-    const chart = store!.collections.helmCharts.getOne(
+  for (const deployment of store.collections.deployments.all) {
+    const chart = store?.collections.helmCharts.getOne(
       deployment.helm_chart_id
     );
 

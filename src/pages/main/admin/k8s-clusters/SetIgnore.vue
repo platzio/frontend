@@ -56,11 +56,11 @@ function open(cluster: K8sCluster) {
   Object.assign(state, initialData());
   state.cluster = cluster;
   state.ignore = !cluster.ignore;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -70,13 +70,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.k8sClusters.updateItem({
+    await store?.collections.k8sClusters.updateItem({
       id: state.cluster.id,
       data: {
         ignore: state.ignore,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

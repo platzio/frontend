@@ -110,11 +110,11 @@ function open(cluster: K8sCluster) {
   state.ingress_domain = cluster.ingress_domain;
   state.ingress_class = cluster.ingress_class;
   state.ingress_tls_secret_name = cluster.ingress_tls_secret_name;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -124,7 +124,7 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.k8sClusters.updateItem({
+    await store?.collections.k8sClusters.updateItem({
       id: state.cluster.id,
       data: {
         ingress_domain: state.ingress_domain,
@@ -132,7 +132,7 @@ async function submit() {
         ingress_tls_secret_name: state.ingress_tls_secret_name,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

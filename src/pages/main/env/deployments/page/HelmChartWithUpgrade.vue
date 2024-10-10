@@ -81,7 +81,7 @@ const isMaintainer = computed(() =>
 );
 
 const chart = computed(() =>
-  store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
+  store?.collections.helmCharts.getOne(props.deployment.helm_chart_id)
 );
 
 const newerChart = computed(() =>

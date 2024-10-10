@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="activeUsers">
     <PlatzCollection :items="activeUsers">
       <template #item="{ item }">
         <PlatzItemWithActions>
@@ -28,7 +28,7 @@
       <template #emptyText>Nobody's here</template>
     </PlatzCollection>
 
-    <div v-if="inactiveUsers.length">
+    <div v-if="inactiveUsers?.length">
       <div class="mt-4 mb- h5">Inactive Users</div>
       <PlatzCollection :items="inactiveUsers">
         <template #item="{ item }">
@@ -62,10 +62,10 @@ import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue
 const store = useStore();
 
 const activeUsers = computed(() =>
-  store!.collections.users.all.filter((user) => user.is_active)
+  store?.collections.users.all.filter((user) => user.is_active)
 );
 const inactiveUsers = computed(() =>
-  store!.collections.users.all.filter((user) => !user.is_active)
+  store?.collections.users.all.filter((user) => !user.is_active)
 );
 
 const changeGlobalRole = ref<typeof ChangeUserGlobalRole>();

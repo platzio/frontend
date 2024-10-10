@@ -59,11 +59,11 @@ const oldChartId = computed(() =>
 );
 
 const oldChart = computed(() =>
-  oldChartId.value ? helmChartsCollection!.getOne(oldChartId.value) : null
+  oldChartId.value ? helmChartsCollection?.getOne(oldChartId.value) : null
 );
 
 const newChart = computed(() =>
-  helmChartsCollection!.getOne(props.operation.helm_chart_id)
+  helmChartsCollection?.getOne(props.operation.helm_chart_id)
 );
 
 const configDelta = computed(() => props.operation.config_delta);

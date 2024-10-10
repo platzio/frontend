@@ -13,7 +13,7 @@ import { AuthenticationApi } from "@platzio/sdk";
 import { useStore } from "@/store";
 
 const store = useStore();
-const api = new AuthenticationApi(store!.auth.sdkConfig());
+const api = new AuthenticationApi(store?.auth.sdkConfig());
 const error = ref<any>(null);
 
 onMounted(async () => {

@@ -119,7 +119,7 @@ const isOwner = computed(
 
 const new_kind = computed(() =>
   new_data.value.kind_id
-    ? store!.collections.deploymentKinds.getOne(new_data.value.kind_id)
+    ? store?.collections.deploymentKinds.getOne(new_data.value.kind_id)
     : undefined
 );
 
@@ -127,7 +127,7 @@ const new_kind = computed(() =>
 const maxNameLength = computed(() => 62 - (new_kind.value?.name || "").length);
 
 const possibleClusters = computed(() =>
-  store!.collections.k8sClusters.all
+  store?.collections.k8sClusters.all
     .filter((cluster) => !cluster.ignore)
     .filter((cluster) => cluster.env_id == props.envId)
 );
@@ -136,21 +136,21 @@ watch(
   () => new_data.value.kind_id,
   () => {
     if (new_data.value.kind_id) {
-      store!.collections.helmCharts.setFilters({
+      store?.collections.helmCharts.setFilters({
         kind_id: new_data.value.kind_id,
       });
     }
   }
 );
 
-const chartsLoading = computed(() => store!.collections.helmCharts.loading);
+const chartsLoading = computed(() => store?.collections.helmCharts.loading);
 const chartsLoadingPercent = computed(
-  () => store!.collections.helmCharts.loadingPercent
+  () => store?.collections.helmCharts.loadingPercent
 );
 
 const filteredCharts = computed(() =>
-  store!.collections.helmCharts.all.filter((chart) => {
-    const registry = store!.collections.helmRegistries.getOne(
+  store?.collections.helmCharts.all.filter((chart) => {
+    const registry = store?.collections.helmRegistries.getOne(
       chart.helm_registry_id
     );
     return new_data.value.kind_id === registry?.kind_id;
@@ -161,7 +161,7 @@ const newChart = computed(
   () =>
     new_data.value &&
     new_data.value.helm_chart_id &&
-    store!.collections.helmCharts.getOne(new_data.value.helm_chart_id)
+    store?.collections.helmCharts.getOne(new_data.value.helm_chart_id)
 );
 
 const canHaveName = computed(() => {
@@ -195,11 +195,11 @@ watch(
 
 async function save() {
   if (props.currentData.id) {
-    const updated = await store!.collections.deployments.updateItem({
+    const updated = await store?.collections.deployments.updateItem({
       id: props.currentData.id,
       data: new_data.value,
     });
-    return updated.id;
+    return updated?.id;
   }
   if (
     !new_data.value.kind_id ||
@@ -208,7 +208,7 @@ async function save() {
   ) {
     return;
   }
-  const deployment = await store!.collections.deployments.createItem({
+  const deployment = await store?.collections.deployments.createItem({
     name: new_data.value.name,
     kind_id: new_data.value.kind_id,
     cluster_id: new_data.value.cluster_id,
@@ -216,7 +216,7 @@ async function save() {
     config: new_data.value.config,
     values_override: new_data.value.values_override,
   });
-  return deployment.id;
+  return deployment?.id;
 }
 
 function fromNow(ts: string) {

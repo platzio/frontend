@@ -11,11 +11,11 @@
         <div class="my-1">
           It looks like you have no permissions to see any env.
         </div>
-        <div class="my-1 fw-bold" v-if="!curUser.is_admin">
+        <div class="my-1 fw-bold" v-if="!curUser?.is_admin">
           Please ask an admin to grant you permissions to one of the envs.
         </div>
       </div>
-      <div class="alert alert-primary" v-if="curUser.is_admin">
+      <div class="alert alert-primary" v-if="curUser?.is_admin">
         <div class="mt-2 mb-3 h5 fw-bold">
           <FaIcon icon="shield-alt" fixed-width />
           But Fear Not, You're an Admin!
@@ -44,12 +44,12 @@ const route = useRoute();
 const router = useRouter();
 
 const ok = ref(true);
-const curUser = computed(() => store!.auth.curUser!);
+const curUser = computed(() => store?.auth.curUser);
 
 const check = () => {
-  if (route.name == "envs" && store!.collections.envs.ready) {
-    const possibleEnvs = store!.collections.envs.all.filter((env) =>
-      isEnvUser(env.id, curUser.value)
+  if (route.name == "envs" && store?.collections.envs.ready) {
+    const possibleEnvs = store?.collections.envs.all.filter(
+      (env) => curUser.value && isEnvUser(env.id, curUser.value)
     );
     if (possibleEnvs.length > 0) {
       ok.value = true;
@@ -62,5 +62,5 @@ const check = () => {
 };
 
 watch(() => route.name, check, { immediate: true });
-watch(() => store!.collections.envs.ready, check, { immediate: true });
+watch(() => store?.collections.envs.ready, check, { immediate: true });
 </script>

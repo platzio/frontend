@@ -77,11 +77,11 @@ const hasError = computed(
 );
 
 const formatted = computed(() =>
-  store!.collections.deployments.formatItem(props.deployment)
+  store?.collections.deployments.formatItem(props.deployment)
 );
 
 const chart = computed(() =>
-  store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
+  store?.collections.helmCharts.getOne(props.deployment.helm_chart_id)
 );
 
 const hasUpgrade = computed(
@@ -91,7 +91,7 @@ const hasUpgrade = computed(
 );
 
 const isMaintainer = computed(() => {
-  const envId = store!.collections.k8sClusters.getOne(
+  const envId = store?.collections.k8sClusters.getOne(
     props.deployment.cluster_id
   )?.env_id;
   return envId && isDeploymentMaintainer(envId, props.deployment.kind_id);
@@ -104,7 +104,7 @@ const primaryMetric = computed(
 );
 
 const k8sResources = computed(() =>
-  store!.collections.k8sResources.all
+  store?.collections.k8sResources.all
     .filter((resource) => resource.deployment_id == props.deployment.id)
     .filter((resource) => resource.kind != "Job")
 );

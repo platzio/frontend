@@ -79,25 +79,25 @@ function open(env: Env) {
   Object.assign(state, initialData());
   state.node_selector = env.node_selector;
   state.tolerations = env.tolerations;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.envs.updateItem({
+    await store?.collections.envs.updateItem({
       id: props.envId,
       data: {
         node_selector: state.node_selector,
         tolerations: state.tolerations,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

@@ -43,11 +43,11 @@ const modal = ref<typeof PlatzModal>();
 
 function open() {
   Object.assign(state, initialData());
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -57,10 +57,10 @@ async function submit() {
   try {
     state.working = true;
     state.error = undefined;
-    await store!.collections.bots.createItem({
+    await store?.collections.bots.createItem({
       display_name: state.display_name,
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

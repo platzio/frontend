@@ -22,7 +22,7 @@ const route = useRoute();
 const store = useStore();
 
 watch(
-  () => store!.auth.needsLogin,
+  () => store?.auth.needsLogin,
   (needsLogin) => {
     if (needsLogin) {
       router.replace({
@@ -36,5 +36,5 @@ watch(
   { immediate: true }
 );
 
-const ready = store!.ready;
+const ready = store?.ready;
 </script>

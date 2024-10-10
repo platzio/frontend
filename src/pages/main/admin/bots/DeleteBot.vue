@@ -52,11 +52,11 @@ function open(bot: Bot) {
   Object.assign(state, initialData());
   state.id = bot.id;
   state.display_name = bot.display_name;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -66,8 +66,8 @@ async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.bots.deleteItem(state.id);
-    modal.value!.close();
+    await store?.collections.bots.deleteItem(state.id);
+    modal.value?.close();
     emit("done");
   } catch (error) {
     state.error = error;

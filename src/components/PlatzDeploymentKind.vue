@@ -16,12 +16,12 @@ const props = defineProps<{
 const store = useStore();
 
 const kind = computed(() =>
-  store!.collections.deploymentKinds.getOne(props.id)
+  store?.collections.deploymentKinds.getOne(props.id)
 );
 
 const formatted = computed(() =>
   kind.value
-    ? store!.collections.deploymentKinds.formatItem(kind.value)
+    ? store?.collections.deploymentKinds.formatItem(kind.value)
     : undefined
 );
 </script>

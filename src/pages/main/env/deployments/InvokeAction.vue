@@ -82,11 +82,11 @@ function open(deployment: Deployment, action: ChartExtActionV0) {
   Object.assign(state, initialData());
   state.deployment = deployment;
   state.action = action;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -96,7 +96,7 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.deploymentTasks.createItem({
+    await store?.collections.deploymentTasks.createItem({
       deployment_id: state.deployment.id,
       operation: {
         InvokeAction: {
@@ -106,7 +106,7 @@ async function submit() {
         },
       },
     });
-    modal.value!.close();
+    modal.value?.close();
     emit("done");
   } catch (error) {
     state.error = error;

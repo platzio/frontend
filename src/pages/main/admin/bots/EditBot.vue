@@ -49,11 +49,11 @@ function open(bot: Bot) {
   Object.assign(state, initialData());
   state.id = bot.id;
   state.display_name = bot.display_name;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -63,13 +63,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.bots.updateItem({
+    await store?.collections.bots.updateItem({
       id: state.id,
       data: {
         display_name: state.display_name,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

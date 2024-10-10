@@ -12,7 +12,7 @@ const store = useStore();
 const router = useRouter();
 
 onMounted(() => {
-  store!.auth.logout();
+  store?.auth.logout();
   setTimeout(() => router.push({ name: "main" }), 1500);
 });
 </script>

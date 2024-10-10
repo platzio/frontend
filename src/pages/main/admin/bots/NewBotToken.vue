@@ -85,7 +85,7 @@ const server_url = ref(`${location.protocol}//${location.host}`);
 
 async function open(bot_id: string) {
   Object.assign(state, initialData());
-  modal.value!.open();
+  modal.value?.open();
   try {
     state.createdToken = await botTokens.createItem({ bot_id });
   } catch (err) {
@@ -95,7 +95,7 @@ async function open(bot_id: string) {
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 defineExpose({ open, close });

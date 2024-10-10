@@ -56,11 +56,11 @@ function open(secret: Secret) {
   state.id = secret.id;
   state.oldName = secret.name;
   state.name = secret.name;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -70,13 +70,13 @@ async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.secrets.updateItem({
+    await store?.collections.secrets.updateItem({
       id: state.id,
       data: {
         name: state.name,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

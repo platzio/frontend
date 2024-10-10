@@ -40,10 +40,10 @@ export function chartIcon(chart?: HelmChart): string | undefined {
 
 export function chartForUpgrade(current: HelmChart): HelmChart | undefined {
   const store = useStore();
-  const newer = store!.collections.helmCharts.all
+  const newer = store?.collections.helmCharts.all
     .filter((chart) => current.helm_registry_id == chart.helm_registry_id)
     .filter((chart) => chart.created_at.localeCompare(current.created_at) == 1)
     .filter((chart) => current.parsed_branch === chart.parsed_branch)
     .filter((chart) => chart.available);
-  return newer[0];
+  return (newer || [])[0];
 }

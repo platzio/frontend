@@ -140,7 +140,7 @@ const isMaintainer = computed(() =>
 );
 
 const chart = computed(() =>
-  store!.collections.helmCharts.getOne(props.deployment.helm_chart_id)
+  store?.collections.helmCharts.getOne(props.deployment.helm_chart_id)
 );
 
 const actions = computed(() =>
@@ -160,7 +160,8 @@ const filteredActions = computed(() =>
       ? actions.value.filter((action) =>
           action.allowed_on_statuses
             ? action.allowed_on_statuses.length == 0 ||
-              action.allowed_on_statuses.indexOf(currentStatus.value!) !== -1
+              (currentStatus.value &&
+                action.allowed_on_statuses.indexOf(currentStatus.value) !== -1)
             : true
         )
       : actions.value
@@ -168,7 +169,7 @@ const filteredActions = computed(() =>
 );
 
 const deploymentKind = computed(() =>
-  store!.collections.deploymentKinds.getOne(props.deployment.kind_id)
+  store?.collections.deploymentKinds.getOne(props.deployment.kind_id)
 );
 
 const namespace = computed(() => {
@@ -180,7 +181,7 @@ const namespace = computed(() => {
 });
 
 const cluster = computed(() =>
-  store!.collections.k8sClusters.getOne(props.deployment.cluster_id)
+  store?.collections.k8sClusters.getOne(props.deployment.cluster_id)
 );
 
 const logsUrl = computed(() => {

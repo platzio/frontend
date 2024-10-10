@@ -81,11 +81,11 @@ function open(user: User) {
   Object.assign(state, initialData());
   state.user = user;
   state.is_admin = user.is_admin;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -95,13 +95,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.users.updateItem({
+    await store?.collections.users.updateItem({
       id: state.user.id,
       data: {
         is_admin: state.is_admin,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

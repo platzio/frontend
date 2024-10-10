@@ -29,5 +29,5 @@ const props = withDefaults(
 );
 
 const store = useStore();
-const cluster = computed(() => store!.collections.k8sClusters.getOne(props.id));
+const cluster = computed(() => store?.collections.k8sClusters.getOne(props.id));
 </script>

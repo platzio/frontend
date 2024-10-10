@@ -85,7 +85,7 @@ const setIcon = ref<typeof SetHelmRegistryIcon>();
 const helmChartsCollection = createHelmChartsCollection();
 
 const registry = computed(() =>
-  store!.collections.helmRegistries.getOne(props.id)
+  store?.collections.helmRegistries.getOne(props.id)
 );
 
 const getPage = async (page: number) =>

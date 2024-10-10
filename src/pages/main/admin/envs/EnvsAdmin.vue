@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="envs">
     <PlatzCollection :items="envs">
       <template #item="{ item }">
         <PlatzLinkedItem
@@ -56,7 +56,7 @@ import CreateEnv from "./CreateEnv.vue";
 const createEnv = ref<typeof CreateEnv>();
 const store = useStore();
 
-const envs = computed(() => store!.collections.envs.all);
+const envs = computed(() => store?.collections.envs.all);
 
 useHead({
   title: "Envs - Admin - Platz",

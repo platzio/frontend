@@ -58,7 +58,10 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="env-dropdown"
           >
-            <li class="nav-heading mt-1 mb-2" v-if="otherEnvs.length > 0">
+            <li
+              class="nav-heading mt-1 mb-2"
+              v-if="otherEnvs && otherEnvs.length > 0"
+            >
               Switch Env
             </li>
             <li v-for="env in otherEnvs" :key="env.id">
@@ -71,7 +74,10 @@
                 <PlatzEnv :id="env.id" />
               </router-link>
             </li>
-            <li class="dropdown-divider" v-if="otherEnvs.length > 0" />
+            <li
+              class="dropdown-divider"
+              v-if="otherEnvs && otherEnvs.length > 0"
+            />
             <li>
               <router-link
                 :to="{ name: 'env.settings' }"
@@ -92,7 +98,7 @@
                 Chart Playground
               </router-link>
             </li>
-            <li v-if="curUser.is_admin">
+            <li v-if="curUser?.is_admin">
               <router-link
                 :to="{ name: 'admin' }"
                 class="dropdown-item"
@@ -127,16 +133,17 @@ const props = defineProps<{
 
 const store = useStore();
 
-const curUser = computed(() => store!.auth.curUser!);
+const curUser = computed(() => store?.auth.curUser);
 
 const otherEnvs = computed(() =>
-  store!.collections.envs.all.filter(
-    (env) => env.id != props.envId && isEnvUser(env.id, curUser.value)
+  store?.collections.envs.all.filter(
+    (env) =>
+      env.id != props.envId && curUser.value && isEnvUser(env.id, curUser.value)
   )
 );
 
 const resourceTypes = computed(() =>
-  store!.collections.deploymentResourceTypes.all.filter(
+  store?.collections.deploymentResourceTypes.all.filter(
     (resourceType) => resourceType.env_id === props.envId
   )
 );

@@ -112,12 +112,12 @@ const changeSecretContents = ref<typeof ChangeSecretContents>();
 const deleteSecret = ref<typeof DeleteSecret>();
 const store = useStore();
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const collections = computed(() =>
   Array.from(
     new Set(
-      store!.collections.secrets
+      store?.collections.secrets
         .allForEnv(props.envId)
         .map((secret) => secret.collection)
     )
@@ -126,9 +126,9 @@ const collections = computed(() =>
 
 const collectionSecrets = computed(
   () => (collection: string) =>
-    store!.collections.secrets
+    store?.collections.secrets
       .allForEnv(props.envId)
-      .filter((secret) => secret.collection === collection)
+      .filter((secret) => secret.collection === collection) || []
 );
 
 useHead({

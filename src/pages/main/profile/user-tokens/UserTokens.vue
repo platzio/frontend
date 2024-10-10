@@ -76,16 +76,17 @@ const props = defineProps<{
 const newUserToken = ref<typeof NewUserToken>();
 const revokeUserToken = ref<typeof RevokeUserToken>();
 const store = useStore();
-const curUser = computed(() => store!.auth.curUser!);
+const curUser = computed(() => store?.auth.curUser);
 const user = computed(() =>
-  props.userId ? store!.collections.users.getOne(props.userId) : curUser.value
+  props.userId ? store?.collections.users.getOne(props.userId) : curUser.value
 );
 
-const userTokenFilters: CollectionFilters = user.value?.id
-  ? curUser.value.id === user.value.id
-    ? {}
-    : { user_id: user.value.id }
-  : {};
+const userTokenFilters: CollectionFilters =
+  user.value?.id && curUser.value
+    ? curUser.value.id === user.value.id
+      ? {}
+      : { user_id: user.value.id }
+    : {};
 
 const reload = () => {
   userTokens.reset();

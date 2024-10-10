@@ -33,7 +33,7 @@
           :key="deployment.id"
           :value="deployment.id"
         >
-          {{ formatDeployment(deployment).text }}
+          {{ formatDeployment && formatDeployment(deployment).text }}
         </option>
       </select>
       <label class="opacity-100">
@@ -71,11 +71,11 @@ const props = defineProps<{
 const store = useStore();
 
 const resourceType = computed(() =>
-  store!.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
+  store?.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
 );
 
 const possibleDeployments = computed(() =>
-  store!.collections.deployments
+  store?.collections.deployments
     .allForEnv(props.envId)
     .filter(
       (deployment) =>
@@ -96,29 +96,32 @@ const isNew = computed(() => !props.currentData.id);
 
 async function save() {
   if (!isNew.value) {
-    const updated = await store!.collections.deploymentResources.updateItem({
-      id: props.currentData.id!,
+    if (!props.currentData.id) {
+      return;
+    }
+    const updated = await store?.collections.deploymentResources.updateItem({
+      id: props.currentData.id,
       data: {
         name: new_data.value.name,
         props: new_data.value.props,
       },
     });
-    return updated.id;
+    return updated?.id;
   }
   if (!new_data.value.name || !new_data.value.deployment_id) {
     return;
   }
-  const resource = await store!.collections.deploymentResources.createItem({
+  const resource = await store?.collections.deploymentResources.createItem({
     name: new_data.value.name,
     type_id: props.resourceTypeId,
     deployment_id: new_data.value.deployment_id,
     props: new_data.value.props,
   });
-  return resource.id;
+  return resource?.id;
 }
 
 const formatDeployment = computed(
-  () => store!.collections.deployments.formatItem
+  () => store?.collections.deployments.formatItem
 );
 
 defineExpose({ save });

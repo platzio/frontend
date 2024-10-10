@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="bots">
     <PlatzCollection :items="bots">
       <template #item="{ item }">
         <PlatzLinkedItem
@@ -55,5 +55,5 @@ const createBot = ref<typeof CreateBot>();
 
 const store = useStore();
 
-const bots = computed(() => store!.collections.bots.all);
+const bots = computed(() => store?.collections.bots.all);
 </script>

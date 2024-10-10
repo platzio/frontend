@@ -53,24 +53,24 @@ const modal = ref<typeof PlatzModal>();
 function open(env: Env) {
   Object.assign(state, initialData());
   state.auto_add_new_users = env.auto_add_new_users;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.envs.updateItem({
+    await store?.collections.envs.updateItem({
       id: props.envId,
       data: {
         auto_add_new_users: state.auto_add_new_users,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

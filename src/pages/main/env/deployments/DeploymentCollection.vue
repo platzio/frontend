@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="filteredDeployments">
     <PlatzCollection :items="filteredDeployments">
       <template #item="{ item }">
         <PlatzLinkedItem
@@ -74,30 +74,31 @@ const store = useStore();
 const editDeployment = ref<typeof EditDeployment>();
 const showAll = ref(false);
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 const kind = computed(() =>
-  store!.collections.deploymentKinds.getOne(props.kindId)
+  store?.collections.deploymentKinds.getOne(props.kindId)
 );
 
 const isOwner = computed(() => isDeploymentOwner(props.envId, props.kindId));
 
 const deployments = computed(() =>
-  store!.collections.deployments.all.filter(
+  store?.collections.deployments.all.filter(
     (deployment) =>
       deployment.kind_id === props.kindId &&
-      store!.collections.k8sClusters.getOne(deployment.cluster_id)?.env_id ===
+      store?.collections.k8sClusters.getOne(deployment.cluster_id)?.env_id ===
         props.envId
   )
 );
 
 const allDisabled = computed(
   () =>
+    deployments.value &&
     deployments.value.length > 0 &&
     deployments.value.every((deployment) => !deployment.enabled)
 );
 
 const filteredDeployments = computed(() =>
-  deployments.value.filter(
+  deployments.value?.filter(
     (deployment) => deployment.enabled || showAll.value || allDisabled.value
   )
 );

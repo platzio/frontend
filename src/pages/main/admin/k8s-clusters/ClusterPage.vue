@@ -195,7 +195,7 @@
       </div>
     </div>
 
-    <div class="my-4 card">
+    <div class="my-4 card" v-if="deployments">
       <div class="card-header">Deployments ({{ deployments.length }})</div>
       <PlatzCollection :items="deployments" :flush="true">
         <template #item="{ item }">
@@ -235,10 +235,10 @@ const changeEnv = ref<typeof ChangeEnv>();
 const editIngressSettings = ref<typeof EditIngressSettings>();
 const setIgnore = ref<typeof SetIgnore>();
 const setGrafana = ref<typeof SetGrafana>();
-const cluster = computed(() => store!.collections.k8sClusters.getOne(props.id));
+const cluster = computed(() => store?.collections.k8sClusters.getOne(props.id));
 
 const deployments = computed(() =>
-  store!.collections.deployments.all.filter(
+  store?.collections.deployments.all.filter(
     (deploy) => deploy.cluster_id == props.id
   )
 );

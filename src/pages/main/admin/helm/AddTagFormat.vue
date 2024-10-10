@@ -61,11 +61,11 @@ const modal = ref<typeof PlatzModal>();
 
 function open() {
   Object.assign(state, initialData());
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -75,10 +75,10 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.helmTagFormats.createItem({
+    await store?.collections.helmTagFormats.createItem({
       pattern: state.pattern,
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

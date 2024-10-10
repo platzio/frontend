@@ -59,7 +59,7 @@ const form = ref<typeof DeploymentForm>();
 function openForCreate(kind_id: string) {
   Object.assign(state, initialData());
   state.current = cloneDeep({ kind_id });
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function openForEdit(current: Partial<Deployment>) {
@@ -67,46 +67,49 @@ function openForEdit(current: Partial<Deployment>) {
   state.current = cloneDeep(current);
   state.title = "Edit Deployment";
   state.submitText = "Save Changes";
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function openForCloneFrom(from: Partial<Deployment>) {
   Object.assign(state, initialData());
   state.current = cloneDeep(from);
-  state.title = `Create Deployment Based On ${state.current.name!}`;
+  state.title = `Create Deployment Based On ${state.current.name}`;
   state.current.id = undefined;
   state.current.name = undefined;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 async function submitWithoutOpening(current: Partial<Deployment>) {
   Object.assign(state, initialData());
   state.current = cloneDeep(current);
   try {
+    if (!state.current.id) {
+      throw new Error("submitWithoutOpening called without id");
+    }
     state.working = true;
     state.topError = null;
     state.bottomError = null;
-    await store!.collections.deployments.updateItem({
-      id: state.current.id!,
+    await store?.collections.deployments.updateItem({
+      id: state.current.id,
       data: state.current,
     });
   } catch (error) {
     state.topError = error;
     state.bottomError = null;
     state.working = false;
-    modal.value!.open();
+    modal.value?.open();
   }
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
   try {
     state.working = true;
     state.bottomError = null;
-    await form.value!.save();
+    await form.value?.save();
     close();
   } catch (error) {
     state.bottomError = error;

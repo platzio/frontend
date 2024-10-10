@@ -15,9 +15,9 @@ const props = defineProps<{
 
 const store = useStore();
 
-const kind = computed(() => store!.collections.bots.getOne(props.id));
+const kind = computed(() => store?.collections.bots.getOne(props.id));
 
 const formatted = computed(() =>
-  kind.value ? store!.collections.bots.formatItem(kind.value) : undefined
+  kind.value ? store?.collections.bots.formatItem(kind.value) : undefined
 );
 </script>

@@ -8,6 +8,6 @@ import { useStore } from "@/store";
 
 const store = useStore();
 
-const loadingProgress = store!.loadingProgress;
-const loadingStatus = store!.loadingStatus;
+const loadingProgress = store?.loadingProgress;
+const loadingStatus = store?.loadingStatus;
 </script>

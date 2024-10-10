@@ -71,15 +71,15 @@ const props = defineProps<{
 
 const store = useStore();
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const deployment = computed(() =>
-  store!.collections.deployments.getOne(props.id)
+  store?.collections.deployments.getOne(props.id)
 );
 
 const deploymentKind = computed(() =>
   deployment.value
-    ? store!.collections.deploymentKinds.getOne(deployment.value.kind_id)
+    ? store?.collections.deploymentKinds.getOne(deployment.value.kind_id)
     : undefined
 );
 
@@ -89,7 +89,7 @@ const hasError = computed(
 
 const formatted = computed(() =>
   deployment.value
-    ? store!.collections.deployments.formatItem(deployment.value)
+    ? store?.collections.deployments.formatItem(deployment.value)
     : undefined
 );
 

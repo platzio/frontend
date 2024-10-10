@@ -48,7 +48,7 @@ const modal = ref<typeof PlatzModal>();
 const form = ref<typeof ResourceForm>();
 
 const resourceType = computed(() =>
-  store!.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
+  store?.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
 );
 
 const title = computed(
@@ -65,18 +65,18 @@ const submitText = computed(() =>
 function open(current: DeploymentResource) {
   Object.assign(state, initialData());
   state.current = Object.assign({ env_id: props.envId }, current);
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await form.value!.save();
+    await form.value?.save();
     close();
   } catch (error) {
     state.error = error;

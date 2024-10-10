@@ -133,11 +133,11 @@ function open() {
   } else {
     state.createNewCollection = true;
   }
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -147,13 +147,13 @@ async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.secrets.createItem({
+    await store?.collections.secrets.createItem({
       env_id: props.envId,
       collection: state.collection,
       name: state.name,
       contents: state.contents,
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

@@ -80,12 +80,12 @@ const formattedDeployment = computed(() => {
   if (!props.task.acting_deployment_id) {
     return undefined;
   }
-  const deployment = store!.collections.deployments.getOne(
+  const deployment = store?.collections.deployments.getOne(
     props.task.acting_deployment_id
   );
   if (!deployment) {
     return undefined;
   }
-  return store!.collections.deployments.formatItem(deployment);
+  return store?.collections.deployments.formatItem(deployment);
 });
 </script>

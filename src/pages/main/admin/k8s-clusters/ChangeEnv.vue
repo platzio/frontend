@@ -49,17 +49,17 @@ function initialData(): {
 const store = useStore();
 const state = reactive({ ...initialData() });
 const modal = ref<typeof PlatzModal>();
-const envs = computed(() => store!.collections.envs.all);
+const envs = computed(() => store?.collections.envs.all);
 
 function open(cluster: K8sCluster) {
   Object.assign(state, initialData());
   state.cluster = cluster;
   state.env_id = cluster.env_id;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -69,13 +69,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.k8sClusters.updateItem({
+    await store?.collections.k8sClusters.updateItem({
       id: state.cluster.id,
       data: {
         env_id: state.env_id,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

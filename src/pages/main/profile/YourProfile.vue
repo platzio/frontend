@@ -40,8 +40,8 @@ const props = defineProps<{
 }>();
 
 const store = useStore();
-const curUser = computed(() => store!.auth.curUser!);
+const curUser = computed(() => store?.auth.curUser);
 const user = computed(() =>
-  props.userId ? store!.collections.users.getOne(props.userId) : curUser.value
+  props.userId ? store?.collections.users.getOne(props.userId) : curUser.value
 );
 </script>

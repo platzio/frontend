@@ -89,8 +89,8 @@ const state = reactive({ ...initialData() });
 const modal = ref<typeof PlatzModal>();
 
 const possibleUsers = computed(() =>
-  store!.collections.users.all.filter((user) =>
-    store!.collections.envUserPermissions.all
+  store?.collections.users.all.filter((user) =>
+    store?.collections.envUserPermissions.all
       .filter((permission) => permission.env_id == props.envId)
       .every((permission) => permission.user_id != user.id)
   )
@@ -98,11 +98,11 @@ const possibleUsers = computed(() =>
 
 function open() {
   Object.assign(state, initialData());
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -112,12 +112,12 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.envUserPermissions.createItem({
+    await store?.collections.envUserPermissions.createItem({
       env_id: props.envId,
       user_id: state.user_id,
       role: state.role,
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

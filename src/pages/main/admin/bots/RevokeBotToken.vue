@@ -46,11 +46,11 @@ const modal = ref<typeof PlatzModal>();
 function open(token: BotToken) {
   Object.assign(state, initialData());
   state.token = token;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -61,7 +61,7 @@ async function submit() {
     state.disabled = true;
     state.error = null;
     await botTokens.deleteItem(state.token.id);
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

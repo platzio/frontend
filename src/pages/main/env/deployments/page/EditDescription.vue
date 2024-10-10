@@ -58,18 +58,18 @@ function open(deployment: Deployment) {
   Object.assign(state, initialData());
   state.id = deployment.id;
   state.markdown = deployment.description_md || "";
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.deployments.updateItem({
+    await store?.collections.deployments.updateItem({
       id: state.id,
       data: {
         description_md: state.markdown,

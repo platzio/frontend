@@ -124,11 +124,11 @@ const props = defineProps<{
 const store = useStore();
 const editNodeSelector = ref<typeof EditNodeSelector>();
 const editAutoAddNewUsers = ref<typeof EditAutoAddNewUsers>();
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const numAdmins = computed(
   () =>
-    store!.collections.envUserPermissions
+    store?.collections.envUserPermissions
       .allForEnv(props.envId)
       .filter((permission) => permission.role === EnvUserRole.Admin).length
 );

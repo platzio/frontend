@@ -1,7 +1,7 @@
 <template>
   <div v-if="visible" class="mb-3">
     <CheckboxInput
-      v-if="input.type === 'Checkbox'"
+      v-if="input && input.type === 'Checkbox'"
       :input="input"
       v-model="inner"
       :envId="envId"
@@ -10,7 +10,7 @@
       :isNew="isNew"
     />
     <CollectionInput
-      v-else-if="input.type === 'CollectionSelect'"
+      v-else-if="input && input.type === 'CollectionSelect'"
       :input="input"
       v-model="inner"
       :envId="envId"
@@ -19,7 +19,7 @@
       :isNew="isNew"
     />
     <DaysHourInput
-      v-else-if="input.type === 'DaysAndHour'"
+      v-else-if="input && input.type === 'DaysAndHour'"
       :input="input"
       v-model="inner"
       :envId="envId"
@@ -28,7 +28,7 @@
       :isNew="isNew"
     />
     <NumberInput
-      v-else-if="input.type === 'number'"
+      v-else-if="input && input.type === 'number'"
       :input="input"
       v-model="inner"
       :envId="envId"
@@ -37,7 +37,7 @@
       :isNew="isNew"
     />
     <RadioInput
-      v-else-if="input.type === 'RadioSelect'"
+      v-else-if="input && input.type === 'RadioSelect'"
       :input="input"
       v-model="inner"
       :envId="envId"
@@ -46,7 +46,7 @@
       :isNew="isNew"
     />
     <TextInput
-      v-else-if="input.type === 'text'"
+      v-else-if="input && input.type === 'text'"
       :input="input"
       v-model="inner"
       :envId="envId"
@@ -75,7 +75,7 @@ import TextInput from "./TextInput.vue";
 const props = withDefaults(
   defineProps<{
     envId: string;
-    input: UiSchemaInput;
+    input?: UiSchemaInput;
     disabled: boolean;
     modelValue?: any;
     allValues: Record<string, any>;
@@ -111,7 +111,7 @@ watch(
 );
 
 const visible = computed(() => {
-  if (props.input.showIf) {
+  if (props.input?.showIf) {
     // Keeping the behavior of the rust code in chart-ext/ui_schema.rs, in which only if the
     // json logic is valid and translates to true, the field is displayed
     try {
@@ -120,7 +120,7 @@ const visible = computed(() => {
       return false;
     }
   }
-  if (props.input.showIfAll) {
+  if (props.input?.showIfAll) {
     return props.input.showIfAll.every(
       (fv) => props.allValues[fv.field] === fv.value
     );

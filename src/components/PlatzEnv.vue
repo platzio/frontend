@@ -28,20 +28,20 @@ const props = withDefaults(
 );
 
 const store = useStore();
-const env = computed(() => store!.collections.envs.getOne(props.id));
+const env = computed(() => store?.collections.envs.getOne(props.id));
 
 const userCount = computed(
   () =>
-    store!.collections.envUserPermissions.all.filter(
+    store?.collections.envUserPermissions.all.filter(
       (permission) => permission.env_id == props.id
     ).length
 );
 
 const deploymentCount = computed(
   () =>
-    store!.collections.deployments.all.filter(
+    store?.collections.deployments.all.filter(
       (deployment) =>
-        store!.collections.k8sClusters.getOne(deployment.cluster_id)?.env_id ===
+        store?.collections.k8sClusters.getOne(deployment.cluster_id)?.env_id ===
         props.id
     ).length
 );

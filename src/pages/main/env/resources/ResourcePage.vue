@@ -126,14 +126,14 @@ const store = useStore();
 const editResource = ref<typeof EditResource>();
 const deleteResource = ref<typeof DeleteResource>();
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const resource = computed(() =>
-  store!.collections.deploymentResources.getOne(props.id)
+  store?.collections.deploymentResources.getOne(props.id)
 );
 
 const resourceType = computed(() =>
-  store!.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
+  store?.collections.deploymentResourceTypes.getOne(props.resourceTypeId)
 );
 
 const canEdit = computed(
@@ -150,19 +150,19 @@ const canDelete = computed(
 
 const formatted = computed(() =>
   resource.value
-    ? store!.collections.deploymentResources.formatItem(resource.value)
+    ? store?.collections.deploymentResources.formatItem(resource.value)
     : undefined
 );
 
 const managingDeployment = computed(
   () =>
     resource.value?.deployment_id &&
-    store!.collections.deployments.getOne(resource.value.deployment_id)
+    store?.collections.deployments.getOne(resource.value.deployment_id)
 );
 
 const deploymentKind = computed(() =>
   resourceType.value
-    ? store!.collections.deploymentKinds.getOne(
+    ? store?.collections.deploymentKinds.getOne(
         resourceType.value.deployment_kind_id
       )
     : undefined

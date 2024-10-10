@@ -49,11 +49,11 @@ const modal = ref<typeof PlatzModal>();
 function open(item: HelmTagFormat) {
   Object.assign(state, initialData());
   state.item = item;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -63,8 +63,8 @@ async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.helmTagFormats.deleteItem(state.item.id);
-    modal.value!.close();
+    await store?.collections.helmTagFormats.deleteItem(state.item.id);
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

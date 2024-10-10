@@ -51,11 +51,11 @@ const modal = ref<typeof PlatzModal>();
 function open(permission: EnvUserPermission) {
   Object.assign(state, initialData());
   state.permission = permission;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -65,8 +65,8 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.envUserPermissions.deleteItem(state.permission.id);
-    modal.value!.close();
+    await store?.collections.envUserPermissions.deleteItem(state.permission.id);
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

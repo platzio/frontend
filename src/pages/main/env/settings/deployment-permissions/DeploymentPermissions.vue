@@ -75,13 +75,13 @@ const store = useStore();
 const addUser = ref<typeof AddUserDeploymentPermission>();
 const removeUser = ref<typeof RemoveUserDeploymentPermission>();
 
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
-const deploymentKinds = computed(() => store!.collections.deploymentKinds.all);
+const deploymentKinds = computed(() => store?.collections.deploymentKinds.all);
 
 const permissionsByRole = computed(
   () => (kind_id: string, role: UserDeploymentRole) =>
-    store!.collections.deploymentPermissions.all.filter(
+    store?.collections.deploymentPermissions.all.filter(
       (perm) =>
         perm.env_id == props.envId &&
         perm.kind_id == kind_id &&
@@ -89,7 +89,9 @@ const permissionsByRole = computed(
     )
 );
 
-const canEdit = computed(() => isEnvAdmin(props.envId, store!.auth.curUser!));
+const canEdit = computed(
+  () => store?.auth.curUser && isEnvAdmin(props.envId, store?.auth.curUser)
+);
 
 useHead({
   title: computed(

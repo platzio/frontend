@@ -107,9 +107,14 @@ const removeFromArray = (idx: number) => {
   inner.value.splice(idx, 1);
 };
 
-const itemInput = computed(() => (idx: number) => ({
-  ...props.input,
-  id: `${props.input.id}-${idx}`,
-  type: props.input.itemType!,
-}));
+const itemInput = computed(() => (idx: number): UiSchemaInput | undefined => {
+  if (!props.input.itemType) {
+    return undefined;
+  }
+  return {
+    ...props.input,
+    id: `${props.input.id}-${idx}`,
+    type: props.input.itemType,
+  };
+});
 </script>

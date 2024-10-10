@@ -45,7 +45,7 @@ const store = useStore();
 
 const kind = computed(() =>
   props.kindId
-    ? store!.collections.deploymentKinds.getOne(props.kindId)
+    ? store?.collections.deploymentKinds.getOne(props.kindId)
     : undefined
 );
 

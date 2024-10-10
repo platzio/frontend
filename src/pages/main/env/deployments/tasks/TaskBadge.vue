@@ -72,10 +72,10 @@ const title = computed(() => {
         : "Upgrade";
     }
     if (operation.prev_helm_chart_id !== operation.helm_chart_id) {
-      const oldChart = helmChartsCollection!.getOne(
+      const oldChart = helmChartsCollection?.getOne(
         operation.prev_helm_chart_id
       );
-      const newChart = helmChartsCollection!.getOne(operation.helm_chart_id);
+      const newChart = helmChartsCollection?.getOne(operation.helm_chart_id);
       const isUpgrade =
         oldChart &&
         newChart &&
@@ -114,7 +114,7 @@ const title = computed(() => {
   }
   if (props.task.operation.InvokeAction) {
     const operation = props.task.operation.InvokeAction;
-    const chart = helmChartsCollection!.getOne(operation.helm_chart_id);
+    const chart = helmChartsCollection?.getOne(operation.helm_chart_id);
     if (chart) {
       const action_schema = chartActionsSchema(chart).find(
         (action) => action.id == operation.action_id

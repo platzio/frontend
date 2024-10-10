@@ -98,7 +98,7 @@ const props = defineProps<{
 }>();
 
 const store = useStore();
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 useHead({
   title: computed(() => `Playground - ${env.value?.name || "..."} - Platz`),

@@ -7,7 +7,7 @@
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      <div class="d-flex flex-row align-items-center">
+      <div class="d-flex flex-row align-items-center" v-if="curUser">
         <PlatzUser :id="curUser.id" :show-name="true" />
         <div class="ms-2">
           <FaIcon icon="angle-down" />
@@ -46,5 +46,5 @@ import { useStore } from "@/store";
 import PlatzUser from "@/components/PlatzUser.vue";
 
 const store = useStore();
-const curUser = computed(() => store!.auth.curUser!);
+const curUser = computed(() => store?.auth.curUser);
 </script>

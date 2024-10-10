@@ -52,12 +52,12 @@ function open(registry_id: string) {
   Object.assign(state, initialData());
   state.registry_id = registry_id;
   state.new_fa_icon =
-    store!.collections.helmRegistries.getOne(registry_id)?.fa_icon;
-  modal.value!.open();
+    store?.collections.helmRegistries.getOne(registry_id)?.fa_icon;
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -67,13 +67,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.helmRegistries.updateItem({
+    await store?.collections.helmRegistries.updateItem({
       id: state.registry_id,
       data: {
         fa_icon: state.new_fa_icon,
       },
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

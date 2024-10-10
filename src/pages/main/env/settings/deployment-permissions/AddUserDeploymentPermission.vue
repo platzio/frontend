@@ -16,13 +16,13 @@
       <select
         class="form-select"
         v-model="state.user_id"
-        :disabled="possibleUsers.length === 0"
+        :disabled="!possibleUsers?.length"
       >
         <option v-for="user in possibleUsers" :value="user.id" :key="user.id">
           {{ user.display_name }}
         </option>
       </select>
-      <div class="small text-body-secondary" v-if="possibleUsers.length === 0">
+      <div class="small text-body-secondary" v-if="!possibleUsers?.length">
         It looks like all possible users already have permissions for this
         deployment kind.
       </div>
@@ -62,7 +62,7 @@ const modal = ref<typeof PlatzModal>();
 
 const kind = computed(() =>
   state.kind_id
-    ? store!.collections.deploymentKinds.getOne(state.kind_id)
+    ? store?.collections.deploymentKinds.getOne(state.kind_id)
     : undefined
 );
 
@@ -71,8 +71,8 @@ const article = computed(() =>
 );
 
 const possibleUsers = computed(() =>
-  store!.collections.users.all.filter((user) =>
-    store!.collections.deploymentPermissions.all
+  store?.collections.users.all.filter((user) =>
+    store?.collections.deploymentPermissions.all
       .filter((permission) => permission.env_id == props.envId)
       .filter((permission) => permission.kind_id == state.kind_id)
       .every((permission) => permission.user_id != user.id)
@@ -83,11 +83,11 @@ function open(kind_id: string, role: UserDeploymentRole) {
   Object.assign(state, initialData());
   state.kind_id = kind_id;
   state.role = role;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -97,13 +97,13 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.deploymentPermissions.createItem({
+    await store?.collections.deploymentPermissions.createItem({
       env_id: props.envId,
       user_id: state.user_id,
       kind_id: state.kind_id,
       role: state.role,
     });
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

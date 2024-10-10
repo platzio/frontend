@@ -71,7 +71,7 @@ const props = withDefaults(
 );
 
 const store = useStore();
-const user = computed(() => store!.collections.users.getOne(props.id));
+const user = computed(() => store?.collections.users.getOne(props.id));
 const avatarUrl = computed(() =>
   user.value
     ? `https://www.gravatar.com/avatar/${md5(user.value.email)}?s=${

@@ -1,31 +1,33 @@
 <template>
-  <PlatzCollection :items="resources">
-    <template #item="{ item }">
-      <PlatzItemWithActions>
-        <template #contents>
-          <div class="my-1 fw-bold d-flex flex-row align-items-baseline">
-            <PlatzResourceStatus :id="item.id" class="me-2" />
-            <div>{{ item.name }}</div>
-          </div>
-          <div class="my-1 small text-secondary">
-            Kubernetes {{ item.kind }} ({{ item.api_version }})
-          </div>
-        </template>
-        <template #actions>
-          <li>
-            <a
-              class="dropdown-item"
-              @click="restartResource(item)"
-              :class="{ disabled: !isMaintainer }"
-            >
-              <FaIcon icon="sync" fixed-width />
-              Restart {{ item.kind }}
-            </a>
-          </li>
-        </template>
-      </PlatzItemWithActions>
-    </template>
-  </PlatzCollection>
+  <div v-if="resources">
+    <PlatzCollection :items="resources">
+      <template #item="{ item }">
+        <PlatzItemWithActions>
+          <template #contents>
+            <div class="my-1 fw-bold d-flex flex-row align-items-baseline">
+              <PlatzResourceStatus :id="item.id" class="me-2" />
+              <div>{{ item.name }}</div>
+            </div>
+            <div class="my-1 small text-secondary">
+              Kubernetes {{ item.kind }} ({{ item.api_version }})
+            </div>
+          </template>
+          <template #actions>
+            <li>
+              <a
+                class="dropdown-item"
+                @click="restartResource(item)"
+                :class="{ disabled: !isMaintainer }"
+              >
+                <FaIcon icon="sync" fixed-width />
+                Restart {{ item.kind }}
+              </a>
+            </li>
+          </template>
+        </PlatzItemWithActions>
+      </template>
+    </PlatzCollection>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -45,7 +47,7 @@ const props = defineProps<{
 
 const store = useStore();
 const deployment = computed(() =>
-  store!.collections.deployments.getOne(props.id)
+  store?.collections.deployments.getOne(props.id)
 );
 
 const isMaintainer = computed(() =>
@@ -55,13 +57,13 @@ const isMaintainer = computed(() =>
 );
 
 const resources = computed(() =>
-  store!.collections.k8sResources.all
+  store?.collections.k8sResources.all
     .filter((resource) => resource.deployment_id == props.id)
     .filter((resource) => resource.kind != "Job")
 );
 
 const restartResource = async (resource: K8sResource) => {
-  await store!.collections.deploymentTasks.createItem({
+  await store?.collections.deploymentTasks.createItem({
     deployment_id: resource.deployment_id,
     operation: {
       RestartK8sResource: {

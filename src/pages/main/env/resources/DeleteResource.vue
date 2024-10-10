@@ -45,23 +45,23 @@ const state = reactive({ ...initialData() });
 const modal = ref<typeof PlatzModal>();
 
 const resource = computed(() =>
-  state.id ? store!.collections.deploymentResources.getOne(state.id) : null
+  state.id ? store?.collections.deploymentResources.getOne(state.id) : null
 );
 
 const resourceType = computed(
   () =>
     resource.value &&
-    store!.collections.deploymentResourceTypes.getOne(resource.value.type_id)
+    store?.collections.deploymentResourceTypes.getOne(resource.value.type_id)
 );
 
 function open(id: string) {
   Object.assign(state, initialData());
   state.id = id;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -71,8 +71,8 @@ async function submit() {
   try {
     state.disabled = true;
     state.error = null;
-    await store!.collections.deploymentResources.deleteItem(state.id);
-    modal.value!.close();
+    await store?.collections.deploymentResources.deleteItem(state.id);
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.disabled = false;

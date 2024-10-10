@@ -28,7 +28,7 @@ const props = defineProps<{
 const store = useStore();
 
 const resource = computed(() =>
-  store!.collections.k8sResources.getOne(props.id)
+  store?.collections.k8sResources.getOne(props.id)
 );
 
 const status_classes = computed(() => {

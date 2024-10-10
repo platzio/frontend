@@ -85,7 +85,7 @@ const server_url = ref(`${location.protocol}//${location.host}`);
 
 async function open() {
   Object.assign(state, initialData());
-  modal.value!.open();
+  modal.value?.open();
   try {
     state.createdToken = await userTokens.createItem({ user_id: null });
   } catch (err) {
@@ -95,7 +95,7 @@ async function open() {
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 defineExpose({ open, close });

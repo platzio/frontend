@@ -43,19 +43,19 @@ const props = defineProps<{
 
 const store = useStore();
 const showAll = ref(false);
-const env = computed(() => store!.collections.envs.getOne(props.envId));
+const env = computed(() => store?.collections.envs.getOne(props.envId));
 
 const enabled_env_deployments = computed(() =>
-  store!.collections.deployments
+  store?.collections.deployments
     .allForEnv(props.envId)
     .filter((deployment) => deployment.enabled)
 );
 
 const filteredDeploymentsKinds = computed(() =>
   showAll.value
-    ? store!.collections.deploymentKinds.all
-    : store!.collections.deploymentKinds.all.filter((kind) =>
-        enabled_env_deployments.value.find(
+    ? store?.collections.deploymentKinds.all
+    : store?.collections.deploymentKinds.all.filter((kind) =>
+        enabled_env_deployments.value?.find(
           (deployment) => deployment.kind_id == kind.id
         )
       )

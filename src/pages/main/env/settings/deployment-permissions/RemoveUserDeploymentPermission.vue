@@ -51,7 +51,7 @@ const modal = ref<typeof PlatzModal>();
 
 const kind = computed(() =>
   state.kind_id
-    ? store!.collections.deploymentKinds.getOne(state.kind_id)
+    ? store?.collections.deploymentKinds.getOne(state.kind_id)
     : undefined
 );
 
@@ -64,11 +64,11 @@ function open(
   state.kind_id = kind_id;
   state.role = role;
   state.permission = permission;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -78,10 +78,10 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.deploymentPermissions.deleteItem(
+    await store?.collections.deploymentPermissions.deleteItem(
       state.permission.id
     );
-    modal.value!.close();
+    modal.value?.close();
   } catch (error) {
     state.error = error;
     state.working = false;

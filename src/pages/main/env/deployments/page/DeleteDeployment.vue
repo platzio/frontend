@@ -44,17 +44,17 @@ const emit = defineEmits(["done"]);
 
 const store = useStore();
 const deployment = computed(() =>
-  state.id ? store!.collections.deployments.getOne(state.id) : undefined
+  state.id ? store?.collections.deployments.getOne(state.id) : undefined
 );
 
 function open(id: string) {
   Object.assign(state, initialData());
   state.id = id;
-  modal.value!.open();
+  modal.value?.open();
 }
 
 function close() {
-  modal.value!.close();
+  modal.value?.close();
 }
 
 async function submit() {
@@ -64,8 +64,8 @@ async function submit() {
   try {
     state.working = true;
     state.error = null;
-    await store!.collections.deployments.deleteItem(state.id);
-    modal.value!.close();
+    await store?.collections.deployments.deleteItem(state.id);
+    modal.value?.close();
     emit("done");
   } catch (error) {
     state.error = error;
