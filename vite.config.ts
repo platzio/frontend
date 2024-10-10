@@ -20,6 +20,9 @@ export default defineConfig({
       "^/api": {
         target: PLATZ_BACKEND,
         ws: true,
+        headers: {
+          host: new URL(PLATZ_BACKEND).host,
+        },
       },
     },
   },
