@@ -42,7 +42,7 @@ const props = withDefaults(
     envId: string;
     input: UiSchemaInput;
     disabled: boolean;
-    modelValue?: {};
+    modelValue?: any;
     allValues: Record<string, any>;
     isNew?: boolean;
   }>(),
@@ -81,11 +81,7 @@ const collectionItems = computed(() => {
   if (!collection.value) {
     return [];
   }
-  if (!props.input.filters) {
-    return collection.value.allForEnv(props.envId);
-  }
-  return (collection.value.allForEnv(props.envId) as any[]).filter((item) =>
-    props.input.filters!.every((fv) => item[fv.field] == fv.value)
-  );
+
+  return collection.value.allForEnv(props.envId, props.input.filters);
 });
 </script>

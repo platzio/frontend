@@ -54,4 +54,28 @@ export const createDeploymentsCollection = (
       const cluster = k8sClustersCollection.getOne(item.cluster_id);
       return cluster?.env_id === envId;
     },
+
+    inputFilter(item, filters) {
+      if (!filters) {
+        return true;
+      }
+      for (const filter of filters) {
+        switch (filter.field) {
+          case "kind": {
+            const kind = deploymentKindsCollection.all.find(
+              (kind) => kind.name === filter.value
+            );
+            if (kind?.id !== item.kind_id) {
+              return false;
+            }
+            break;
+          }
+          default:
+            if ((item as any)[filter.field] != filter.value) {
+              return false;
+            }
+        }
+      }
+      return true;
+    },
   });

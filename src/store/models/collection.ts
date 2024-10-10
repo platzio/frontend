@@ -1,6 +1,7 @@
 import { computed, reactive, readonly, ref } from "vue";
 import axios, { type AxiosResponse } from "axios";
 import { cloneDeep } from "lodash";
+import { type UiSchemaInputFieldValue } from "@platzio/sdk";
 
 type SortFunction<Item> = (x: Item, y: Item) => number;
 
@@ -13,6 +14,11 @@ type FormatFunction<Item> = (item: Item) => {
 
 type EnvFilter<Item> = (item: Item, envId: string) => boolean;
 
+type InputFilter<Item> = (
+  item: Item,
+  filters?: UiSchemaInputFieldValue[]
+) => boolean;
+
 export type CollectionFilters = Record<string, string | number | boolean>;
 
 export interface CreateCollectionOptions<Item> {
@@ -20,6 +26,7 @@ export interface CreateCollectionOptions<Item> {
   sortFunc: SortFunction<Item>;
   formatItem: FormatFunction<Item>;
   envFilter?: EnvFilter<Item>;
+  inputFilter?: InputFilter<Item>;
   initialFilters?: CollectionFilters;
 }
 
@@ -61,11 +68,17 @@ export function createCollection<
     return result;
   });
 
+  const envFilter = opts.envFilter || (() => true);
+  const inputFilter =
+    opts.inputFilter ||
+    ((item: any, filters) =>
+      (filters || []).every((fv) => item[fv.field] == fv.value));
+
   const allForEnv = computed(
-    () => (envId: string) =>
-      opts.envFilter
-        ? all.value.filter((item) => opts.envFilter!(item, envId))
-        : all.value
+    () => (envId: string, filters?: UiSchemaInputFieldValue[]) =>
+      all.value
+        .filter((item) => envFilter(item, envId))
+        .filter((item) => inputFilter(item, filters))
   );
 
   const setOne = (item: Item) => {
