@@ -43,6 +43,8 @@ withDefaults(
   {
     progress: 0,
     animateProgress: false,
+    text: undefined,
+    error: undefined,
   }
 );
 </script>

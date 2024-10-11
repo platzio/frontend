@@ -21,6 +21,7 @@ withDefaults(
     showEmpty?: boolean;
   }>(),
   {
+    value: undefined,
     showLabel: true,
     showEmpty: false,
   }

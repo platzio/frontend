@@ -59,6 +59,8 @@ const props = withDefaults(
     allowExpand?: boolean;
   }>(),
   {
+    title: undefined,
+    text: undefined,
     isBad: false,
     allowExpand: false,
   }

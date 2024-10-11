@@ -38,7 +38,11 @@ const props = withDefaults(
     showLabel: boolean;
     showEmpty: boolean;
   }>(),
-  { showLabel: true, showEmpty: false }
+  {
+    value: undefined,
+    showLabel: true,
+    showEmpty: false,
+  }
 );
 
 const collection = computed(
@@ -52,8 +56,6 @@ const item = computed(() =>
 );
 
 const formattedItem = computed(() =>
-  item.value
-    ? collection.value?.formatItem(item.value)
-    : undefined
+  item.value ? collection.value?.formatItem(item.value) : undefined
 );
 </script>

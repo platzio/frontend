@@ -28,6 +28,7 @@ const props = withDefaults(
     isNew?: boolean;
   }>(),
   {
+    uiSchema: undefined,
     modelValue: () => ({}),
     isNew: true,
   }

@@ -65,9 +65,13 @@ const props = withDefaults(
     btnClass?: string;
   }>(),
   {
+    size: undefined,
     showSubmit: true,
+    submitText: undefined,
     showCancel: true,
     cancelText: "Cancel",
+    topError: undefined,
+    error: undefined,
     working: false,
     btnClass: "btn-primary",
   }

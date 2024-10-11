@@ -30,6 +30,7 @@ const check = async () => {
     const res = await axios.get("/");
     prev.value = current.value;
     current.value = res.data;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     /* nothing to do */
   }

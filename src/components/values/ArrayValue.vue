@@ -33,7 +33,11 @@ const props = withDefaults(
     showLabel?: boolean;
     showEmpty?: boolean;
   }>(),
-  { withLabel: true, showEmpty: false }
+  {
+    value: undefined,
+    withLabel: true,
+    showEmpty: false,
+  }
 );
 
 const innerInput = computed<UiSchemaInput | undefined>(() =>

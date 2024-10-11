@@ -20,6 +20,7 @@ const props = withDefaults(
     showEmpty?: boolean;
   }>(),
   {
+    value: undefined,
     showLabel: true,
     showEmpty: false,
   }

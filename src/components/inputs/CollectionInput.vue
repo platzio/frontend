@@ -48,6 +48,7 @@ const props = withDefaults(
   }>(),
   {
     disabled: false,
+    modelValue: undefined,
     isNew: true,
   }
 );

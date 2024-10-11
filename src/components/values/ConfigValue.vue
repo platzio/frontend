@@ -84,7 +84,11 @@ const props = withDefaults(
     showLabel?: boolean;
     showEmpty?: boolean;
   }>(),
-  { showLabel: true, showEmpty: false }
+  {
+    input: undefined,
+    showLabel: true,
+    showEmpty: false,
+  }
 );
 
 const shouldDisplay = computed(() => {

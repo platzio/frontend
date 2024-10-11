@@ -82,7 +82,9 @@ const props = withDefaults(
     isNew?: boolean;
   }>(),
   {
+    input: undefined,
     disabled: false,
+    modelValue: undefined,
     isNew: true,
   }
 );

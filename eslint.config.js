@@ -18,6 +18,7 @@ export default [
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-non-null-assertion": "error",
+      "vue/require-default-prop": "error",
     },
   },
 ];

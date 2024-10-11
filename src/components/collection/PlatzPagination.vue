@@ -63,7 +63,11 @@ const props = withDefaults(
     totalItems?: number;
     pageSize?: number;
   }>(),
-  { pageQueryParam: "page" }
+  {
+    pageQueryParam: "page",
+    totalItems: undefined,
+    pageSize: undefined,
+  }
 );
 
 const emit = defineEmits(["changed"]);
