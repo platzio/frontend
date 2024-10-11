@@ -5,25 +5,25 @@
         <div class="row">
           <div class="col-3 py-2 px-3" />
           <div
-            class="col py-2 px-3 fw-bold"
             v-for="role in UserDeploymentRole"
             :key="role"
+            class="col py-2 px-3 fw-bold"
           >
             {{ role }}s
           </div>
         </div>
       </li>
       <li
-        class="list-group-item"
         v-for="kind in deploymentKinds"
         :key="kind.id"
+        class="list-group-item"
       >
         <div class="row">
           <div class="col-3 py-2 px-3 fw-bold">{{ kind.name }}</div>
           <div
-            class="col py-2 px-3"
             v-for="role in UserDeploymentRole"
             :key="role"
+            class="col py-2 px-3"
           >
             <div
               v-for="permission in permissionsByRole(kind.id, role)"
@@ -52,7 +52,7 @@
       </li>
     </ul>
 
-    <AddUserDeploymentPermission ref="addUser" :envId="envId" />
+    <AddUserDeploymentPermission ref="addUser" :env-id="envId" />
     <RemoveUserDeploymentPermission ref="removeUser" />
   </div>
 </template>

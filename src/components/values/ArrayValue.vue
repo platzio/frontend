@@ -1,35 +1,23 @@
 <template>
   <div v-if="(value && value.length) || showEmpty">
-    <div class="text-secondary" v-if="showLabel && input.label">
+    <div v-if="showLabel && input.label" class="text-secondary">
       {{ input.label }}
     </div>
-    <ul class="array-value-list" v-if="value">
+    <ul v-if="value" class="array-value-list">
       <li v-for="(item, idx) in value" :key="idx">
         <ArraySingleValue
           v-if="innerInput"
           :input="innerInput"
-          :envId="envId"
+          :env-id="envId"
           :value="item"
-          :allValues="allValues"
+          :all-values="allValues"
         />
         <div v-else class="text-danger">Array has no item type</div>
       </li>
     </ul>
-    <span class="text-secondary fst-italic" v-else>(empty)</span>
+    <span v-else class="text-secondary fst-italic">(empty)</span>
   </div>
 </template>
-
-<style lang="scss" scoped>
-ul.array-value-list {
-  margin: 0;
-  padding-left: 1.25rem;
-
-  li {
-    margin: 0;
-    padding: 0;
-  }
-}
-</style>
 
 <script setup lang="ts">
 import { computed } from "vue";
@@ -58,3 +46,15 @@ const innerInput = computed<UiSchemaInput | undefined>(() =>
     : undefined
 );
 </script>
+
+<style lang="scss" scoped>
+ul.array-value-list {
+  margin: 0;
+  padding-left: 1.25rem;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+</style>

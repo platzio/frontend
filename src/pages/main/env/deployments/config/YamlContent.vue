@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-if="header">
+  <div v-if="header" class="card">
     <div class="small card-header">
       <div
         class="my-1 d-flex flex-row justify-content-between align-items-start"
@@ -8,7 +8,7 @@
           <div>
             {{ header }}
           </div>
-          <div class="small opacity-75" v-if="timestamp">
+          <div v-if="timestamp" class="small opacity-75">
             Updated
             <PlatzMoment :value="timestamp" />
           </div>

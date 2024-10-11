@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4 text-end" v-if="hasItems && hasGlobalActions">
+  <div v-if="hasItems && hasGlobalActions" class="mb-4 text-end">
     <slot name="globalActions" />
   </div>
 
@@ -14,7 +14,7 @@
       </slot>
     </template>
 
-    <li class="list-group-item py-5" v-if="!hasItems">
+    <li v-if="!hasItems" class="list-group-item py-5">
       <slot name="empty">
         <div class="text-center">
           <h1>😢</h1>

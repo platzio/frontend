@@ -2,59 +2,59 @@
   <div v-if="visible" class="mb-3">
     <CheckboxInput
       v-if="input && input.type === 'Checkbox'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <CollectionInput
       v-else-if="input && input.type === 'CollectionSelect'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <DaysHourInput
       v-else-if="input && input.type === 'DaysAndHour'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <NumberInput
       v-else-if="input && input.type === 'number'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <RadioInput
       v-else-if="input && input.type === 'RadioSelect'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <TextInput
       v-else-if="input && input.type === 'text'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
-    <div class="alert alert-warning mb-3" v-else>
+    <div v-else class="alert alert-warning mb-3">
       Oh no, I don't know how to render this: {{ input }}
     </div>
   </div>

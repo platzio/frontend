@@ -9,18 +9,18 @@
   >
     <div>Choose the global role for the following user:</div>
 
-    <div class="my-3 p-3 rounded border" v-if="state.user">
-      <PlatzUser :id="state.user.id" :showName="true" />
+    <div v-if="state.user" class="my-3 p-3 rounded border">
+      <PlatzUser :id="state.user.id" :show-name="true" />
     </div>
 
     <div class="my-3">
       <div class="form-check my-2">
         <input
+          id="userRoleRegular"
+          v-model="state.is_admin"
           class="form-check-input"
           type="radio"
           name="userRole"
-          id="userRoleRegular"
-          v-model="state.is_admin"
           :value="false"
         />
         <label class="form-check-label" for="userRoleRegular">
@@ -33,11 +33,11 @@
       </div>
       <div class="form-check my-3">
         <input
+          id="userRoleAdmin"
+          v-model="state.is_admin"
           class="form-check-input"
           type="radio"
           name="userRole"
-          id="userRoleAdmin"
-          v-model="state.is_admin"
           :value="true"
         />
         <label class="form-check-label" for="userRoleAdmin">

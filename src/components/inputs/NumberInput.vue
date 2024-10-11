@@ -1,11 +1,11 @@
 <template>
   <div class="form-floating">
     <input
+      :id="input.id"
+      v-model.number="inner"
       type="number"
       :step="input.step || 0.0000000000001"
       class="form-control"
-      :id="input.id"
-      v-model.number="inner"
       :disabled="disabled"
       :required="input.required"
       :min="minimum"
@@ -13,9 +13,9 @@
     />
     <label class="opacity-100">
       <span class="opacity-50">{{ input.label }}</span>
-      <span class="ms-2 text-danger" v-if="input.required">*</span>
+      <span v-if="input.required" class="ms-2 text-danger">*</span>
     </label>
-    <div class="form-text" v-if="input.helpText">
+    <div v-if="input.helpText" class="form-text">
       {{ input.helpText }}
     </div>
   </div>

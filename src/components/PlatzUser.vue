@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row align-items-center">
-    <img :src="avatarUrl" :class="imgClass" v-if="showAvatar" />
+    <img v-if="showAvatar" :src="avatarUrl" :class="imgClass" />
     <div v-if="showName">
       <span :class="nameClass">
         {{ user?.display_name }}
@@ -8,8 +8,8 @@
     </div>
   </div>
   <div
-    class="mt-1 small text-body-secondary"
     v-if="showEmail || showAdmin || showActive"
+    class="mt-1 small text-body-secondary"
   >
     <span
       v-if="showActive && user?.is_active === false"
@@ -25,23 +25,6 @@
     </span>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.avatar-lg {
-  width: 4rem;
-  height: 4rem;
-}
-
-.avatar-regular {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.avatar-sm {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-</style>
 
 <script setup lang="ts">
 import md5 from "md5";
@@ -100,3 +83,20 @@ const nameClass = computed(() => {
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.avatar-lg {
+  width: 4rem;
+  height: 4rem;
+}
+
+.avatar-regular {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.avatar-sm {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+</style>

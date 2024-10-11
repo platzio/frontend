@@ -10,9 +10,9 @@
     <div class="mb-2">Please select a name for the new env.</div>
     <div class="my-3">
       <input
+        v-model="state.name"
         type="text"
         class="form-control"
-        v-model="state.name"
         placeholder="Enter a name"
         required
       />

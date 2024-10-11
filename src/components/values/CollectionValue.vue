@@ -34,7 +34,7 @@ const props = withDefaults(
   defineProps<{
     envId: string;
     input: UiSchemaInput;
-    value?: string | Object;
+    value?: string | object;
     showLabel: boolean;
     showEmpty: boolean;
   }>(),

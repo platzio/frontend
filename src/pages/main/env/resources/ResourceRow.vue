@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-2" v-if="formatted">
+    <div v-if="formatted" class="my-2">
       <FaIcon :icon="formatted.icon" fixed-width />
       {{ formatted.text }}
     </div>

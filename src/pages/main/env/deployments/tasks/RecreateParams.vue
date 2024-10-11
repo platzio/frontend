@@ -1,8 +1,8 @@
 <template>
   <div class="small text-body-secondary">
     <div
-      class="mt-1"
       v-if="operation.old_cluster_id !== operation.new_cluster_id"
+      class="mt-1"
     >
       <span class="me-1">Move from</span>
       <span class="text-secondary">
@@ -24,16 +24,16 @@
       </span>
     </div>
     <div
-      class="mt-1"
       v-if="operation.old_namespace !== operation.new_namespace"
+      class="mt-1"
     >
       <span
-        class="me-1"
         v-if="operation.old_cluster_id !== operation.new_cluster_id"
+        class="me-1"
       >
         Then rename
       </span>
-      <span class="me-1" v-else> Rename </span>
+      <span v-else class="me-1"> Rename </span>
       <span>
         <strong>
           {{ operation.old_namespace }}

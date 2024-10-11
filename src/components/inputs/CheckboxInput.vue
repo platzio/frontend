@@ -1,11 +1,11 @@
 <template>
   <div class="form-check form-switch">
     <input
+      :id="input.id"
+      v-model.number="inner"
       class="form-check-input"
       type="checkbox"
       role="switch"
-      :id="input.id"
-      v-model.number="inner"
       :disabled="disabled"
       :required="input.required"
     />

@@ -1,10 +1,10 @@
 <template>
   <div v-if="value !== undefined || showEmpty">
-    <span class="text-secondary" v-if="showLabel"> {{ input.label }}: </span>
-    <span class="text-monospace fw-bold" v-if="value">
+    <span v-if="showLabel" class="text-secondary"> {{ input.label }}: </span>
+    <span v-if="value" class="text-monospace fw-bold">
       {{ display }}
     </span>
-    <span class="text-secondary fst-italic" v-else>(empty)</span>
+    <span v-else class="text-secondary fst-italic">(empty)</span>
   </div>
 </template>
 

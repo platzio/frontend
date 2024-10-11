@@ -2,9 +2,9 @@
   <div class="form-floating">
     <template v-if="collection">
       <select
-        class="form-select"
         :id="input.id"
         v-model="inner"
+        class="form-select"
         :disabled="disabled"
         :required="input.required"
       >
@@ -14,7 +14,7 @@
       </select>
       <label class="opacity-100">
         <span class="opacity-50">{{ input.label }}</span>
-        <span class="ms-2 text-danger" v-if="input.required">*</span>
+        <span v-if="input.required" class="ms-2 text-danger">*</span>
       </label>
     </template>
     <div v-else class="small alert alert-warning">

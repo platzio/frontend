@@ -1,5 +1,5 @@
 <template>
-  <pre class="mt-0 mb-2 small text-body-secondary" v-if="body">{{ body }}</pre>
+  <pre v-if="body" class="mt-0 mb-2 small text-body-secondary">{{ body }}</pre>
 </template>
 
 <script setup lang="ts">

@@ -17,9 +17,9 @@
         <div class="form-floating">
           <input
             id="kind"
+            v-model="kind"
             class="mb-3 form-control"
             type="text"
-            v-model="kind"
             required
           />
           <label for="kind" class="form-label"> Deployment Kind </label>
@@ -39,16 +39,16 @@
     <div class="row">
       <div class="col">
         <ConfigInputsForm
-          :envId="envId"
-          :uiSchema="ui_schema"
           v-model="rendered_inputs_new"
+          :env-id="envId"
+          :ui-schema="ui_schema"
           :disabled="false"
         />
       </div>
       <div class="col">
         <ConfigValues
-          :envId="envId"
-          :uiSchema="ui_schema"
+          :env-id="envId"
+          :ui-schema="ui_schema"
           :config="rendered_inputs_new"
         />
       </div>
@@ -62,16 +62,16 @@
     <div class="row">
       <div class="col">
         <ConfigInputsForm
-          :envId="envId"
-          :uiSchema="ui_schema"
           v-model="rendered_inputs_edit"
+          :env-id="envId"
+          :ui-schema="ui_schema"
           :disabled="true"
         />
       </div>
       <div class="col">
         <ConfigValues
-          :envId="envId"
-          :uiSchema="ui_schema"
+          :env-id="envId"
+          :ui-schema="ui_schema"
           :config="rendered_inputs_edit"
         />
       </div>

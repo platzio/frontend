@@ -2,18 +2,18 @@
   <div v-if="resourceType">
     <div class="d-flex flex-row justify-content-between align-items-start">
       <div class="d-flex flex-row align-items-center">
-        <div class="h1 me-3" v-if="formatted">
+        <div v-if="formatted" class="h1 me-3">
           <FaIcon v-if="formatted.icon" :icon="formatted.icon" fixed-width />
           {{ formatted.text }}
         </div>
       </div>
 
-      <div class="dropdown" v-if="canEdit">
+      <div v-if="canEdit" class="dropdown">
         <a
+          id="actionsDropdown"
           class="btn btn-outline-primary"
           href="#"
           role="button"
-          id="actionsDropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
@@ -43,9 +43,9 @@
       </div>
     </div>
 
-    <ResourceReason class="my-3" v-if="resource" :resource="resource" />
+    <ResourceReason v-if="resource" class="my-3" :resource="resource" />
 
-    <div class="my-3" v-if="resource">
+    <div v-if="resource" class="my-3">
       <div v-if="resourceType.spec.values_ui">
         <div
           v-for="input in resourceType.spec.values_ui.inputs"
@@ -54,9 +54,9 @@
         >
           <ConfigValue
             :input="input"
-            :envId="envId"
+            :env-id="envId"
             :value="resource.props[input.id]"
-            :allValues="resource.props"
+            :all-values="resource.props"
           />
         </div>
       </div>
@@ -65,23 +65,23 @@
     <div class="my-3 card">
       <div class="card-header">Managed By</div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item" v-if="managingDeployment">
+        <li v-if="managingDeployment" class="list-group-item">
           <PlatzDeployment :deployment="managingDeployment" />
         </li>
-        <li class="list-group-item text-body-secondary text-center" v-else>
+        <li v-else class="list-group-item text-body-secondary text-center">
           This {{ resourceType.spec.name_singular }} is not managed by any
           deployment
         </li>
       </ul>
     </div>
 
-    <div class="my-3 card" v-if="deployments">
+    <div v-if="deployments" class="my-3 card">
       <div class="card-header">Using Deployments</div>
       <div class="list-group list-group-flush">
         <div
-          class="list-group-item"
           v-for="deployment in deployments"
           :key="deployment.id"
+          class="list-group-item"
         >
           <PlatzDeployment :deployment="deployment" />
         </div>
@@ -97,8 +97,8 @@
 
     <EditResource
       ref="editResource"
-      :envId="envId"
-      :resourceTypeId="resourceTypeId"
+      :env-id="envId"
+      :resource-type-id="resourceTypeId"
     />
     <DeleteResource ref="deleteResource" />
   </div>

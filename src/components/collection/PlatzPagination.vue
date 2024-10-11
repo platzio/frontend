@@ -19,9 +19,9 @@
           </a>
         </li>
         <li
-          class="page-item"
           v-for="(link, i) in page_links"
           :key="i"
+          class="page-item"
           :class="{
             active: link.type == 'page' && cur_page == link.page,
           }"

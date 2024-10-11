@@ -13,10 +13,10 @@
 
       <div class="dropdown">
         <a
+          id="actionsDropdown"
           class="btn btn-outline-primary"
           href="#"
           role="button"
-          id="actionsDropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >

@@ -20,7 +20,7 @@
       :aria-labelledby="`header-${id}`"
     >
       <div class="offcanvas-header" :class="headerClass">
-        <div class="offcanvas-title" :id="`header-${id}`">
+        <div :id="`header-${id}`" class="offcanvas-title">
           <div class="h5">{{ title || "Details" }}</div>
           <span v-if="copied" class="small text-body-secondary">
             <FaIcon icon="copy" fixed-width />
@@ -47,41 +47,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.reason {
-  position: relative;
-  width: 100%;
-
-  .reason-preview {
-    position: absolute;
-    top: 0.1em;
-    left: 0;
-    right: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--bs-secondary);
-
-    &.expandable {
-      &:hover {
-        opacity: 0.6;
-      }
-    }
-  }
-
-  &::after {
-    content: ".";
-    visibility: hidden;
-  }
-}
-
-.reason-expanded {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-</style>
 
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from "vue";
@@ -131,3 +96,38 @@ onUnmounted(() => {
   clearTimeout(copiedTimeout);
 });
 </script>
+
+<style lang="scss" scoped>
+.reason {
+  position: relative;
+  width: 100%;
+
+  .reason-preview {
+    position: absolute;
+    top: 0.1em;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--bs-secondary);
+
+    &.expandable {
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  &::after {
+    content: ".";
+    visibility: hidden;
+  }
+}
+
+.reason-expanded {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+</style>

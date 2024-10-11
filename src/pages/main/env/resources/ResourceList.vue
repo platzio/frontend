@@ -12,7 +12,7 @@
         </PlatzLinkedItem>
       </template>
 
-      <template #globalActions v-if="canEdit">
+      <template v-if="canEdit" #globalActions>
         <button
           class="btn btn-primary"
           @click="editResource && editResource.open()"
@@ -24,7 +24,7 @@
 
       <template #emptyTitle>No {{ resourceType.spec.name_plural }}</template>
 
-      <template #emptyAction v-if="canEdit">
+      <template v-if="canEdit" #emptyAction>
         <button
           class="btn btn-lg btn-primary"
           @click="editResource && editResource.open()"
@@ -36,8 +36,8 @@
     </PlatzCollection>
     <EditResource
       ref="editResource"
-      :envId="envId"
-      :resourceTypeId="resourceTypeId"
+      :env-id="envId"
+      :resource-type-id="resourceTypeId"
     />
   </div>
 </template>

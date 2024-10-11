@@ -5,16 +5,16 @@
     btn-class="btn-primary"
     :error="state.error"
     :working="state.disabled"
+    submit-text="Save Changes"
     @submit="submit"
-    submitText="Save Changes"
   >
     <div class="form-check form-switch">
       <input
+        id="auto_add_new_users"
+        v-model="state.auto_add_new_users"
         class="form-check-input"
         type="checkbox"
         role="switch"
-        id="auto_add_new_users"
-        v-model="state.auto_add_new_users"
         :disabled="state.disabled"
       />
       <label class="form-check-label" for="auto_add_new_users">

@@ -16,7 +16,7 @@
       <div>You are about to delete this deployment</div>
     </div>
 
-    <div class="border p-2" v-if="deployment">
+    <div v-if="deployment" class="border p-2">
       <PlatzDeployment :deployment="deployment" />
     </div>
 

@@ -16,7 +16,7 @@
       <div>You are about to disable this deployment</div>
     </div>
 
-    <div class="border p-2" v-if="state.deployment">
+    <div v-if="state.deployment" class="border p-2">
       <PlatzDeployment :deployment="state.deployment" />
     </div>
 

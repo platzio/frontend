@@ -19,11 +19,11 @@
 
     <div class="mb-3 form-floating">
       <input
+        id="grafana_url"
+        v-model="state.grafana_url"
         type="text"
         class="form-control"
-        id="grafana_url"
         aria-describedby="grafana_url"
-        v-model="state.grafana_url"
         :disabled="state.working"
       />
       <label for="grafana_url" class="form-label">Grafana URL</label>
@@ -36,11 +36,11 @@
 
     <div class="mb-3 form-floating">
       <input
+        id="grafana_datasource_name"
+        v-model="state.grafana_datasource_name"
         type="text"
         class="form-control"
-        id="grafana_datasource_name"
         aria-describedby="grafana_datasource_name"
-        v-model="state.grafana_datasource_name"
         :disabled="state.working"
       />
       <label for="grafana_datasource_name" class="form-label">

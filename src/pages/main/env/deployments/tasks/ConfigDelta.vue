@@ -1,16 +1,16 @@
 <template>
   <div
-    class="my-1 small d-flex flex-row align-items-center justify-context-start"
     v-for="(changes, key) in delta"
     :key="key"
+    class="my-1 small d-flex flex-row align-items-center justify-context-start"
   >
     <ConfigValue
       :input="inputFor(key)"
       :value="changes[0]"
-      :allValues="allValues"
-      :envId="envId"
-      :showLabel="true"
-      :showEmpty="true"
+      :all-values="allValues"
+      :env-id="envId"
+      :show-label="true"
+      :show-empty="true"
     />
     <span class="mx-2 small opacity50">
       <FaIcon icon="arrow-right" />
@@ -18,10 +18,10 @@
     <ConfigValue
       :input="inputFor(key)"
       :value="changes[1]"
-      :allValues="allValues"
-      :envId="envId"
-      :showLabel="false"
-      :showEmpty="true"
+      :all-values="allValues"
+      :env-id="envId"
+      :show-label="false"
+      :show-empty="true"
     />
   </div>
 </template>

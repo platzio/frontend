@@ -1,8 +1,8 @@
 <template>
   <textarea
-    class="form-control font-monospace"
     :id="id"
-    @change="changed"
+    v-model="yaml"
+    class="form-control font-monospace"
     :style="{
       'padding-top': '2.5rem',
       'line-height': '1.5rem',
@@ -10,15 +10,15 @@
         yaml.split('\n').length + 1
       })))`,
     }"
-    v-model="yaml"
     :disabled="disabled"
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
     spellcheck="false"
+    @change="changed"
   />
   <div class="form-text opacity-75">
-    <span class="text-danger" v-if="error">
+    <span v-if="error" class="text-danger">
       <FaIcon icon="exclamation-triangle" fixed-width />
       YAML parse error: {{ error.reason }}
     </span>

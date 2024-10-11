@@ -16,7 +16,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'env.deployments' }">
@@ -24,9 +24,9 @@
           </router-link>
         </li>
         <li
-          class="nav-item"
           v-for="resourceType in resourceTypes"
           :key="resourceType.id"
+          class="nav-item"
         >
           <router-link
             class="nav-link"
@@ -43,14 +43,14 @@
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item dropdown text-secondary">
           <a
-            class="nav-link"
             id="env-dropdown"
+            class="nav-link"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <div class="d-flex flex-row align-items-center">
-              <PlatzEnv :id="envId" :showInfo="false" />
+              <PlatzEnv :id="envId" :show-info="false" />
               <FaIcon icon="angle-down" class="ms-2" />
             </div>
           </a>
@@ -59,8 +59,8 @@
             aria-labelledby="env-dropdown"
           >
             <li
-              class="nav-heading mt-1 mb-2"
               v-if="otherEnvs && otherEnvs.length > 0"
+              class="nav-heading mt-1 mb-2"
             >
               Switch Env
             </li>
@@ -75,8 +75,8 @@
               </router-link>
             </li>
             <li
-              class="dropdown-divider"
               v-if="otherEnvs && otherEnvs.length > 0"
+              class="dropdown-divider"
             />
             <li>
               <router-link
@@ -92,7 +92,7 @@
               <router-link
                 :to="{ name: 'playground' }"
                 class="dropdown-item"
-                activeClass=""
+                active-class=""
               >
                 <FaIcon icon="gamepad" fixed-width />
                 Chart Playground

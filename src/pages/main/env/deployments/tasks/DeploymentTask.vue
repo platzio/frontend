@@ -13,7 +13,7 @@
     <UpgradeParams
       v-if="'Upgrade' in task.operation"
       :operation="task.operation.Upgrade"
-      :envId="envId"
+      :env-id="envId"
     />
 
     <ReinstallParams
@@ -38,7 +38,7 @@
 
     <div class="mt-1 small d-flex flex-row align-items-center">
       <template v-if="task.acting_user_id">
-        <PlatzUser :id="task.acting_user_id" :showName="true" size="sm" />
+        <PlatzUser :id="task.acting_user_id" :show-name="true" size="sm" />
         <span>,&nbsp;</span>
       </template>
       <template v-if="task.acting_deployment_id">

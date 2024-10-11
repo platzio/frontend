@@ -1,6 +1,6 @@
 <template>
   <div v-if="value !== undefined || showEmpty">
-    <span class="text-secondary" v-if="showLabel && input.label">
+    <span v-if="showLabel && input.label" class="text-secondary">
       {{ input.label }}:
     </span>
     <template v-if="days && hour">
@@ -9,7 +9,7 @@
       <span class="fw-bold">{{ hour }}</span>
       <span class="small text-secondary"> UTC</span>
     </template>
-    <span class="text-secondary fst-italic" v-else>(empty)</span>
+    <span v-else class="text-secondary fst-italic">(empty)</span>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
     :working="state.working"
     @submit="submit"
   >
-    <div class="alert alert-danger mb-2" v-if="state.permission">
+    <div v-if="state.permission" class="alert alert-danger mb-2">
       <FaIcon icon="exclamation-triangle" fixed-width />
       You are about to remove the
       <span class="mx-1 badge bg-success">{{
@@ -16,8 +16,8 @@
       permission for the following user:
     </div>
     <div
-      class="my-3 p-3 rounded border fw-bold bg-light-subtle"
       v-if="state.permission"
+      class="my-3 p-3 rounded border fw-bold bg-light-subtle"
     >
       <PlatzUser :id="state.permission.user_id" :show-name="true" />
     </div>

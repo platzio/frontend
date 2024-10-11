@@ -1,5 +1,5 @@
 <template>
-  <div class="alert alert-danger" v-if="message">
+  <div v-if="message" class="alert alert-danger">
     <div class="my-1 fw-bold">
       <FaIcon icon="exclamation-circle" fixed-width />
       {{ message }}

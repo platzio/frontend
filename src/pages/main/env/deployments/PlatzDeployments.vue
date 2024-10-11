@@ -3,17 +3,17 @@
     <ul class="nav nav-pills flex-column">
       <div class="form-check form-switch">
         <input
-          class="form-check-input"
-          type="checkbox"
           id="showAll"
           v-model="showAll"
+          class="form-check-input"
+          type="checkbox"
         />
         <label class="form-check-label" for="showAll">Show All</label>
       </div>
       <li
-        class="nav-item"
         v-for="kind in filteredDeploymentsKinds"
         :key="kind.id"
+        class="nav-item"
       >
         <router-link
           class="nav-link"

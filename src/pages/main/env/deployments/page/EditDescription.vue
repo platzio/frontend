@@ -13,10 +13,10 @@
       value to remove the deployment description.
     </div>
     <textarea
-      class="form-control font-monospace"
       :id="`edit-description-${state.id}`"
-      style="height: 20rem"
       v-model="state.markdown"
+      class="form-control font-monospace"
+      style="height: 20rem"
       :disabled="state.working"
       autocomplete="off"
       autocorrect="off"

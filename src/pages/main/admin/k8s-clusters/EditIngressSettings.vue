@@ -28,11 +28,11 @@
 
     <div class="mb-3 form-floating">
       <input
+        id="ingress_domain"
+        v-model="state.ingress_domain"
         type="text"
         class="form-control"
-        id="ingress_domain"
         aria-describedby="domain"
-        v-model="state.ingress_domain"
         required
         :disabled="state.working"
       />
@@ -45,11 +45,11 @@
 
     <div class="mb-3 form-floating">
       <input
+        id="ingress_class"
+        v-model="state.ingress_class"
         type="text"
         class="form-control"
-        id="ingress_class"
         aria-describedby="domain"
-        v-model="state.ingress_class"
         :disabled="state.working"
       />
       <label for="ingress_class" class="form-label">Ingress Class</label>
@@ -61,11 +61,11 @@
 
     <div class="mb-3 form-floating">
       <input
+        id="ingress_tls_secret_name"
+        v-model="state.ingress_tls_secret_name"
         type="text"
         class="form-control"
-        id="ingress_tls_secret_name"
         aria-describedby="ingress_tls_secret_name"
-        v-model="state.ingress_tls_secret_name"
         required
         :disabled="state.working"
       />

@@ -7,7 +7,7 @@
     :working="state.disabled"
     @submit="submit"
   >
-    <div class="my-3 alert alert-danger" v-if="state.token">
+    <div v-if="state.token" class="my-3 alert alert-danger">
       <div class="my-2 fw-bold">
         <FaIcon icon="triangle-exclamation" fixed-width />
         Careful

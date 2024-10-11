@@ -8,13 +8,13 @@
     :working="state.working"
     @submit="submit"
   >
-    <div class="mb-2" v-if="state.ignore">
+    <div v-if="state.ignore" class="mb-2">
       You are about to <strong>IGNORE</strong> the following cluster:
     </div>
-    <div class="mb-2" v-if="!state.ignore">
+    <div v-if="!state.ignore" class="mb-2">
       You are about to <strong>UN-INGORE</strong> the following cluster:
     </div>
-    <div class="my-3 rounded border p-3" v-if="state.cluster">
+    <div v-if="state.cluster" class="my-3 rounded border p-3">
       <PlatzClusterName :id="state.cluster.id" />
     </div>
     <div class="my-3 alert alert-danger">

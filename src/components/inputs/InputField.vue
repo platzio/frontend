@@ -2,21 +2,21 @@
   <div v-if="visible" class="mb-3">
     <ArrayInput
       v-if="input.type === 'array'"
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <SingleInputField
       v-else
-      :input="input"
       v-model="inner"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
   </div>
 </template>

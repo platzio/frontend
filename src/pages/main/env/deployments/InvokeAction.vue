@@ -4,7 +4,7 @@
     :title="state.action ? state.action.title : ''"
     size="lg"
     btn-class="btn-success"
-    :topError="undefined"
+    :top-error="undefined"
     :error="state.error"
     :working="state.working"
     @submit="submit"
@@ -14,24 +14,24 @@
     </div>
 
     <ConfigInputsForm
-      :envId="envId"
-      :uiSchema="state.action?.ui_schema"
       v-model="state.body"
+      :env-id="envId"
+      :ui-schema="state.action?.ui_schema"
       :disabled="state.working"
     />
 
     <div
-      class="alert alert-warning"
       v-if="state.action && state.action.dangerous"
+      class="alert alert-warning"
     >
       <div class="form-check form-switch">
         <input
+          v-model="state.confirm_danger"
           class="form-check-input"
           type="checkbox"
           role="switch"
           :disabled="state.working"
           :required="true"
-          v-model="state.confirm_danger"
         />
         <label class="form-check-label">
           I, being of sound mind and body, herby declare that I am aware that

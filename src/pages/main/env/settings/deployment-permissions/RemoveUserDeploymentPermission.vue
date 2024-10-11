@@ -13,8 +13,8 @@
       {{ state.role?.toLowerCase() }} from {{ kind?.name.toLowerCase() }}:
     </div>
     <div
-      class="my-3 p-3 rounded border fw-bold bg-light-subtle"
       v-if="state.permission"
+      class="my-3 p-3 rounded border fw-bold bg-light-subtle"
     >
       <PlatzUser :id="state.permission.user_id" :show-name="true" />
     </div>

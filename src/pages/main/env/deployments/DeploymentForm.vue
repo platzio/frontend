@@ -1,18 +1,18 @@
 <template>
-  <div class="mb-3 form-floating" v-if="canHaveName">
+  <div v-if="canHaveName" class="mb-3 form-floating">
     <input
+      id="name"
+      v-model="new_data.name"
       type="name"
       class="form-control"
-      id="name"
       aria-describedby="nameHelp"
-      v-model="new_data.name"
       required
       pattern="^[\-a-z0-9]+$"
       :maxlength="maxNameLength"
       :disabled="working"
     />
     <label for="name" class="form-label"> Deployment Name </label>
-    <div id="nameHelp" class="form-text" v-if="new_data.name">
+    <div v-if="new_data.name" id="nameHelp" class="form-text">
       <FaIcon icon="keyboard" class="ms-1" fixed-width />
       Enter a valid DNS name,
       {{ maxNameLength - new_data.name.length }} characters left
@@ -21,10 +21,10 @@
 
   <div class="mb-3 form-floating">
     <select
+      v-model="new_data.cluster_id"
       name="clusterId"
       class="form-select"
       aria-label="Select Cluster"
-      v-model="new_data.cluster_id"
       required
       :disabled="working"
     >
@@ -41,10 +41,10 @@
 
   <div class="mb-3 form-floating">
     <select
+      v-model="new_data.helm_chart_id"
       name="helmChartId"
       class="form-select"
       aria-label="Select Version"
-      v-model="new_data.helm_chart_id"
       required
       :disabled="working"
     >
@@ -69,9 +69,9 @@
   </div>
 
   <ConfigInputsForm
-    :envId="envId"
-    :uiSchema="newUiSchema"
     v-model="new_data.config"
+    :env-id="envId"
+    :ui-schema="newUiSchema"
     :disabled="working"
   />
 
@@ -79,7 +79,7 @@
     <FaIcon icon="shield-alt" fixed-width />
     This field is only visible to deployment owners
   </div>
-  <div class="mb-3 form-floating" v-show="isOwner">
+  <div v-show="isOwner" class="mb-3 form-floating">
     <YamlInput
       id="valuesOverride"
       v-model="new_data.values_override"

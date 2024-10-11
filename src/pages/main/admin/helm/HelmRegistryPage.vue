@@ -17,10 +17,10 @@
 
       <div class="dropdown">
         <a
+          id="actionsDropdown"
           class="btn btn-outline-primary"
           href="#"
           role="button"
-          id="actionsDropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
@@ -44,10 +44,10 @@
 
   <div class="card my-3">
     <div class="pt-3 pb-0 h5 card-header border-bottom-0">Helm Charts</div>
-    <PlatzPaginatedCollection :getPage="getPage">
+    <PlatzPaginatedCollection :get-page="getPage">
       <template #item="{ item }">
         <PlatzCollectionItem>
-          <div class="my-1" v-if="item">
+          <div v-if="item" class="my-1">
             <PlatzHelmChart :chart="item" />
           </div>
         </PlatzCollectionItem>

@@ -2,9 +2,9 @@
   <div v-if="cluster">
     <div class="d-flex flex-row align-items-center">
       <div class="h1">
-        <PlatzClusterName :id="cluster.id" :showRegion="false" />
+        <PlatzClusterName :id="cluster.id" :show-region="false" />
       </div>
-      <span class="ms-3 badge bg-secondary" v-if="cluster.ignore">
+      <span v-if="cluster.ignore" class="ms-3 badge bg-secondary">
         IGNORED
       </span>
     </div>
@@ -15,8 +15,8 @@
     </div>
 
     <div
-      class="my-1 small text-danger"
       v-if="!cluster.ignore && !cluster.is_ok"
+      class="my-1 small text-danger"
     >
       <FaIcon icon="exclamation-triangle" fixed-width />
       {{ cluster.not_ok_reason }}
@@ -24,10 +24,10 @@
 
     <div class="my-4 card">
       <div class="card-header">Cluster Env</div>
-      <div class="card-body" v-if="cluster.env_id">
+      <div v-if="cluster.env_id" class="card-body">
         <div>This cluster is currently assigned to the following env:</div>
         <div class="my-3 h5">
-          <PlatzEnv :id="cluster.env_id" :showInfo="false" />
+          <PlatzEnv :id="cluster.env_id" :show-info="false" />
         </div>
         <div class="my-2">
           You can change the env, which would immediately move all of its
@@ -47,7 +47,7 @@
           </button>
         </div>
       </div>
-      <div class="card-body" v-else>
+      <div v-else class="card-body">
         <div>
           This cluster is not assigned to any env. This means that nobody can
           run deployments on it.
@@ -85,24 +85,24 @@
         </div>
         <div class="my-3">
           <span>Ingress Domain: </span>
-          <span class="fw-bold" v-if="cluster.ingress_domain">
+          <span v-if="cluster.ingress_domain" class="fw-bold">
             {{ cluster.ingress_domain }}
           </span>
-          <span class="text-body-secondary fst-italic" v-else>(not set)</span>
+          <span v-else class="text-body-secondary fst-italic">(not set)</span>
         </div>
         <div class="my-3">
           <span>Ingress Class: </span>
-          <span class="fw-bold" v-if="cluster.ingress_class">
+          <span v-if="cluster.ingress_class" class="fw-bold">
             {{ cluster.ingress_class }}
           </span>
-          <span class="text-body-secondary fst-italic" v-else>(not set)</span>
+          <span v-else class="text-body-secondary fst-italic">(not set)</span>
         </div>
         <div class="my-3">
           <span>TLS Secret Name: </span>
-          <span class="fw-bold" v-if="cluster.ingress_tls_secret_name">
+          <span v-if="cluster.ingress_tls_secret_name" class="fw-bold">
             {{ cluster.ingress_tls_secret_name }}
           </span>
-          <span class="text-body-secondary fst-italic" v-else>(not set)</span>
+          <span v-else class="text-body-secondary fst-italic">(not set)</span>
         </div>
 
         <button
@@ -116,7 +116,7 @@
 
     <div class="my-4 card">
       <div class="card-header">Ignore Cluster</div>
-      <div class="card-body" v-if="cluster.ignore">
+      <div v-if="cluster.ignore" class="card-body">
         <div class="mb-2">
           This cluster is currently
           <strong class="text-danger">ignored</strong>.
@@ -139,7 +139,7 @@
           </button>
         </div>
       </div>
-      <div class="card-body" v-else>
+      <div v-else class="card-body">
         <div class="mb-2">
           This cluster is
           <strong class="text-success">not ignored</strong>. Platz monitors this
@@ -172,17 +172,17 @@
         </div>
         <div class="my-3">
           <span>URL: </span>
-          <span class="fw-bold" v-if="cluster.grafana_url">{{
+          <span v-if="cluster.grafana_url" class="fw-bold">{{
             cluster.grafana_url
           }}</span>
-          <span class="text-body-secondary fst-italic" v-else>(not set)</span>
+          <span v-else class="text-body-secondary fst-italic">(not set)</span>
         </div>
         <div class="my-3">
           <span>Data-Source Name: </span>
-          <span class="fw-bold" v-if="cluster.grafana_datasource_name">{{
+          <span v-if="cluster.grafana_datasource_name" class="fw-bold">{{
             cluster.grafana_datasource_name
           }}</span>
-          <span class="text-body-secondary fst-italic" v-else>(not set)</span>
+          <span v-else class="text-body-secondary fst-italic">(not set)</span>
         </div>
         <div>
           <button
@@ -195,7 +195,7 @@
       </div>
     </div>
 
-    <div class="my-4 card" v-if="deployments">
+    <div v-if="deployments" class="my-4 card">
       <div class="card-header">Deployments ({{ deployments.length }})</div>
       <PlatzCollection :items="deployments" :flush="true">
         <template #item="{ item }">

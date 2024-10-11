@@ -21,8 +21,8 @@
         <PlatzClusterName :id="deployment.cluster_id" />
         <FaIcon icon="angle-right" class="ms-2 me-1 opacity-75" />
         <PlatzResourceStatus
-          :id="resource.id"
           v-for="resource in k8sResources"
+          :id="resource.id"
           :key="resource.id"
           class="ms-1"
         />
@@ -30,13 +30,13 @@
 
       <div class="my-1 small d-flex flex-row align-items-center">
         <div
+          v-if="isMaintainer && hasUpgrade"
           class="me-2 badge rounded-pill bg-primary fw-normal"
           style="font-size: 0.8rem"
-          v-if="isMaintainer && hasUpgrade"
         >
           <FaIcon icon="arrow-circle-up" fixed-width />
         </div>
-        <div class="text-secondary" v-if="chart">
+        <div v-if="chart" class="text-secondary">
           <PlatzHelmChart
             :chart="chart"
             :color="false"

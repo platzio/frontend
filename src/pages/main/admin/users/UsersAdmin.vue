@@ -7,9 +7,9 @@
             <div class="my-1">
               <PlatzUser
                 :id="item.id"
-                :showName="true"
-                :showEmail="true"
-                :showAdmin="true"
+                :show-name="true"
+                :show-email="true"
+                :show-admin="true"
               />
             </div>
           </template>
@@ -35,10 +35,10 @@
           <PlatzCollectionItem>
             <PlatzUser
               :id="item.id"
-              :showName="true"
-              :showEmail="true"
-              :showAdmin="false"
-              :showActive="true"
+              :show-name="true"
+              :show-email="true"
+              :show-admin="false"
+              :show-active="true"
             />
           </PlatzCollectionItem>
         </template>

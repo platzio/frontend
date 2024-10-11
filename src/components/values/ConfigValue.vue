@@ -4,53 +4,53 @@
       v-if="input.type === 'array'"
       :input="input"
       :value="value"
-      :allValues="allValues"
-      :envId="envId"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :all-values="allValues"
+      :env-id="envId"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <TextValue
       v-else-if="input.type === 'text'"
       :input="input"
       :value="value"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <NumberValue
       v-else-if="input.type === 'number'"
       :input="input"
       :value="value"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <CheckboxValue
       v-else-if="input.type === 'Checkbox'"
       :input="input"
       :value="value"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <CollectionValue
       v-else-if="input.type === 'CollectionSelect'"
       :input="input"
       :value="value"
-      :envId="envId"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :env-id="envId"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <RadioValue
       v-else-if="input.type === 'RadioSelect'"
       :input="input"
       :value="value"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <DaysHourValue
       v-else-if="input.type === 'DaysAndHour'"
       :input="input"
       :value="value"
-      :showLabel="showLabel"
-      :showEmpty="showEmpty"
+      :show-label="showLabel"
+      :show-empty="showEmpty"
     />
     <div v-else>
       <span class="text-secondary me-2">{{ input.label }}:</span>

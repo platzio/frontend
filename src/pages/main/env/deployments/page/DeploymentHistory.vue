@@ -1,9 +1,9 @@
 <template>
   <div class="card">
-    <PlatzPaginatedCollection :getPage="getPage">
+    <PlatzPaginatedCollection :get-page="getPage">
       <template #item="{ item }">
         <PlatzCollectionItem>
-          <DeploymentTask v-if="item" :task="item" :envId="envId" />
+          <DeploymentTask v-if="item" :task="item" :env-id="envId" />
         </PlatzCollectionItem>
       </template>
     </PlatzPaginatedCollection>

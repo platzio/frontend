@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-row" v-if="chart">
+  <div v-if="chart" class="d-flex flex-row">
     <div
       class="d-flex flex-row align-items-center"
       :class="{ 'alert alert-primary py-1 px-2 m-0': newerChart }"
@@ -15,26 +15,26 @@
       </div>
       <div v-if="newerChart" class="ms-3">
         <button
-          class="btn btn-sm btn-primary"
-          @click="showUpgradeModal"
           v-if="!altState"
+          class="btn btn-sm btn-primary"
           :disabled="disabled"
+          @click="showUpgradeModal"
         >
           <FaIcon icon="arrow-circle-up" fixed-width />
           New Version Available
         </button>
         <button
-          class="btn btn-sm btn-primary"
-          @click="upgradeImmediately"
           v-if="altState"
+          class="btn btn-sm btn-primary"
           :disabled="disabled"
+          @click="upgradeImmediately"
         >
           <FaIcon icon="fast-forward" fixed-width />
           Upgrade Immediately
         </button>
       </div>
     </div>
-    <EditDeployment ref="editDeployment" :envId="envId" />
+    <EditDeployment ref="editDeployment" :env-id="envId" />
   </div>
 </template>
 

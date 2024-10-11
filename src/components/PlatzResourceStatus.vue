@@ -2,19 +2,11 @@
   <div class="d-flex flex-row align-items-center">
     <div
       v-for="(status_class, idx) in status_classes"
-      :class="`dot ${status_class}`"
       :key="idx"
+      :class="`dot ${status_class}`"
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.dot {
-  border-radius: 50%;
-  width: 0.6rem;
-  height: 0.6rem;
-}
-</style>
 
 <script setup lang="ts">
 import { computed } from "vue";
@@ -52,3 +44,11 @@ const status_classes = computed(() => {
   });
 });
 </script>
+
+<style lang="scss" scoped>
+.dot {
+  border-radius: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+}
+</style>

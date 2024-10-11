@@ -1,7 +1,7 @@
 <template>
   <div>
-    <EnvsNavbar :envId="envId" />
-    <router-view :envId="envId" />
+    <EnvsNavbar :env-id="envId" />
+    <router-view :env-id="envId" />
   </div>
 </template>
 

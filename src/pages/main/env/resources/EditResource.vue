@@ -9,11 +9,11 @@
     @submit="submit"
   >
     <ResourceForm
+      ref="form"
       :current-data="state.current"
       :disabled="state.disabled"
-      :envId="envId"
-      :resourceTypeId="resourceTypeId"
-      ref="form"
+      :env-id="envId"
+      :resource-type-id="resourceTypeId"
     />
   </PlatzModal>
 </template>

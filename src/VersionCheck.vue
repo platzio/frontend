@@ -1,9 +1,9 @@
 <template>
-  <div class="newer-version" v-if="hasNewVersion">
+  <div v-if="hasNewVersion" class="newer-version">
     <button
       class="alert alert-success py-2"
-      @click="reload"
       :disabled="reloading"
+      @click="reload"
     >
       <div>
         <FaIcon icon="gift" fixed-width />
@@ -13,17 +13,6 @@
     </button>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.newer-version {
-  position: absolute;
-  top: 2rem;
-  margin-left: 50%;
-  transform: translate(-50%);
-  text-align: center;
-  font-size: 0.9rem;
-}
-</style>
 
 <script setup lang="ts">
 import axios from "axios";
@@ -61,3 +50,14 @@ const hasNewVersion = computed(
   () => prev.value && current.value && prev.value !== current.value
 );
 </script>
+
+<style lang="scss" scoped>
+.newer-version {
+  position: absolute;
+  top: 2rem;
+  margin-left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  font-size: 0.9rem;
+}
+</style>

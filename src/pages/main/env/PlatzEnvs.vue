@@ -11,11 +11,11 @@
         <div class="my-1">
           It looks like you have no permissions to see any env.
         </div>
-        <div class="my-1 fw-bold" v-if="!curUser?.is_admin">
+        <div v-if="!curUser?.is_admin" class="my-1 fw-bold">
           Please ask an admin to grant you permissions to one of the envs.
         </div>
       </div>
-      <div class="alert alert-primary" v-if="curUser?.is_admin">
+      <div v-if="curUser?.is_admin" class="alert alert-primary">
         <div class="mt-2 mb-3 h5 fw-bold">
           <FaIcon icon="shield-alt" fixed-width />
           But Fear Not, You're an Admin!

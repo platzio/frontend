@@ -28,9 +28,9 @@
     </div>
     <div class="my-3">
       <input
+        v-model="state.pattern"
         type="text"
         class="form-control"
-        v-model="state.pattern"
         placeholder="^(regular-expression)$"
         required
       />

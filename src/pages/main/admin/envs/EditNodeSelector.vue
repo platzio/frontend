@@ -6,8 +6,8 @@
     btn-class="btn-primary"
     :error="state.error"
     :working="state.working"
+    submit-text="Save Changes"
     @submit="submit"
-    submitText="Save Changes"
   >
     <div class="mb-3">
       Please enter updated values for node selector and tolerations:

@@ -1,8 +1,8 @@
 <template>
   <div
+    v-if="format === 'helm'"
     class="d-flex flex-row align-items-center"
     :class="classes"
-    v-if="format === 'helm'"
   >
     <FaIcon icon="map" fixed-width class="me-1" />
     <span>{{ chart.image_tag }}</span>
@@ -16,9 +16,9 @@
   </div>
 
   <div
+    v-if="format === 'git'"
     class="d-flex flex-row align-items-baseline"
     :class="classes"
-    v-if="format === 'git'"
   >
     <span
       v-if="!chart.available"

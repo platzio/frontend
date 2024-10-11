@@ -5,9 +5,9 @@
         <PlatzAntStacking size="20rem" />
       </div>
       <div
+        v-if="!error"
         class="my-3 progress"
         style="width: 17rem; height: 9px"
-        v-if="!error"
       >
         <div
           class="progress-bar bg-danger"
@@ -21,26 +21,13 @@
           :aria-valuenow="progress"
         />
       </div>
-      <div class="status" :class="{ 'show-status': !!text }" v-if="!error">
+      <div v-if="!error" class="status" :class="{ 'show-status': !!text }">
         {{ text }}
       </div>
-      <PlatzError class="my-3" :error="error" v-else />
+      <PlatzError v-else class="my-3" :error="error" />
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.status {
-  color: var(--bs-secondary);
-  transform: scaleY(0);
-  transition: transform 0.2s ease-in-out;
-  transform-origin: top center;
-}
-
-.show-status {
-  transform: scaleY(1);
-}
-</style>
 
 <script setup lang="ts">
 import PlatzAntStacking from "@platzio/design/components/PlatzAntStacking.vue";
@@ -59,3 +46,16 @@ withDefaults(
   }
 );
 </script>
+
+<style lang="scss" scoped>
+.status {
+  color: var(--bs-secondary);
+  transform: scaleY(0);
+  transition: transform 0.2s ease-in-out;
+  transform-origin: top center;
+}
+
+.show-status {
+  transform: scaleY(1);
+}
+</style>

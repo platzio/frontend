@@ -11,9 +11,9 @@
     <div class="mb-2">Enter a new name for the bot:</div>
     <div class="my-3">
       <input
+        v-model="state.display_name"
         type="text"
         class="form-control"
-        v-model="state.display_name"
         required
         placeholder="Enter a new name"
       />

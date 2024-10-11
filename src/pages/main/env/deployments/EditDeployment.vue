@@ -4,16 +4,16 @@
     size="lg"
     :title="state.title"
     :submit-text="state.submitText"
-    :topError="state.topError"
+    :top-error="state.topError"
     :error="state.bottomError"
     :working="state.working"
     @submit="submit"
   >
     <DeploymentForm
-      :envId="envId"
-      :currentData="state.current"
-      :working="state.working"
       ref="form"
+      :env-id="envId"
+      :current-data="state.current"
+      :working="state.working"
     />
   </PlatzModal>
 </template>

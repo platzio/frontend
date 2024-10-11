@@ -1,10 +1,10 @@
 <template>
-  <div class="dropdown" v-if="isOwner">
+  <div v-if="isOwner" class="dropdown">
     <a
+      id="collectionActionsDropdown"
       class="ms-4 btn btn-primary"
       href="#"
       role="button"
-      id="collectionActionsDropdown"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
@@ -24,7 +24,7 @@
       </li>
     </ul>
 
-    <EditDeployment ref="editDeployment" :envId="envId" />
+    <EditDeployment ref="editDeployment" :env-id="envId" />
   </div>
 </template>
 

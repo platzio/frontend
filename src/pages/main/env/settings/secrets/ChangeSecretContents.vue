@@ -14,10 +14,10 @@
 
     <div class="mb-3 form-floating">
       <input
-        type="text"
-        class="form-control"
         id="contents"
         v-model="state.contents"
+        type="text"
+        class="form-control"
         required
         :disabled="state.disabled"
         autocomplete="off"

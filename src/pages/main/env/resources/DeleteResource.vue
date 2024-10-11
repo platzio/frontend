@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="border p-2" v-if="resource">
+    <div v-if="resource" class="border p-2">
       <ResourceRow :resource="resource" />
     </div>
 

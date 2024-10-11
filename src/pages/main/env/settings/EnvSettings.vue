@@ -2,7 +2,7 @@
   <div class="sidenav">
     <ul class="nav nav-pills flex-column">
       <li class="h5 ms-3">
-        <PlatzEnv :id="envId" :showInfo="false" />
+        <PlatzEnv :id="envId" :show-info="false" />
       </li>
       <li class="nav-heading">Permissions</li>
       <li class="nav-item">
@@ -26,7 +26,7 @@
       </li>
     </ul>
     <div class="content">
-      <router-view :envId="envId" />
+      <router-view :env-id="envId" />
     </div>
   </div>
 </template>

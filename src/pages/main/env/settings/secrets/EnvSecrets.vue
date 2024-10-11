@@ -2,15 +2,15 @@
   <div>
     <div v-if="collections.length > 0">
       <div
-        class="mb-5"
         v-for="(collection, idx) in collections"
         :key="collection"
+        class="mb-5"
       >
         <div class="d-flex flex-row align-items-end">
           <div class="mt-0 mb-3 h4 flex-fill">
             {{ collection }}
           </div>
-          <div class="float-end mb-4" v-if="idx === 0">
+          <div v-if="idx === 0" class="float-end mb-4">
             <button
               class="btn btn-primary"
               @click="addSecret && addSecret.open()"
@@ -83,10 +83,10 @@
       </div>
     </div>
 
-    <AddSecret ref="addSecret" :envId="envId" :collections="collections" />
-    <RenameSecret ref="renameSecret" :envId="envId" />
-    <ChangeSecretContents ref="changeSecretContents" :envId="envId" />
-    <DeleteSecret ref="deleteSecret" :envId="envId" />
+    <AddSecret ref="addSecret" :env-id="envId" :collections="collections" />
+    <RenameSecret ref="renameSecret" :env-id="envId" />
+    <ChangeSecretContents ref="changeSecretContents" :env-id="envId" />
+    <DeleteSecret ref="deleteSecret" :env-id="envId" />
   </div>
 </template>
 

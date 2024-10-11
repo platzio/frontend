@@ -5,7 +5,7 @@
     </div>
     <PlatzReason
       :text="resource.sync_reason"
-      :isBad="resource.sync_status === DeploymentResourceSyncStatus.Error"
+      :is-bad="resource.sync_status === DeploymentResourceSyncStatus.Error"
     />
   </div>
 </template>

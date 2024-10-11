@@ -1,6 +1,6 @@
 <template>
   <div class="my-1" :class="klass">
-    <span class="me-1 badge bg-secondary" v-if="cluster.ignore">IGNORED</span>
+    <span v-if="cluster.ignore" class="me-1 badge bg-secondary">IGNORED</span>
     <span class="fw-bold">
       <FaIcon icon="cubes" fixed-width />
       {{ cluster.name }}

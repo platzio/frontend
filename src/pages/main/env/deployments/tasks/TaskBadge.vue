@@ -1,20 +1,20 @@
 <template>
   <div class="badge text-uppercase" :class="klass">
     <FaIcon
+      v-if="task.status == DeploymentTaskStatus.Started"
       icon="sync-alt"
       fixed-width
       spin
-      v-if="task.status == DeploymentTaskStatus.Started"
     />
     <FaIcon
+      v-else-if="task.status == DeploymentTaskStatus.Done"
       icon="check"
       class="me-1"
-      v-else-if="task.status == DeploymentTaskStatus.Done"
     />
     <FaIcon
+      v-else-if="task.status == DeploymentTaskStatus.Failed"
       icon="times"
       class="me-1"
-      v-else-if="task.status == DeploymentTaskStatus.Failed"
     />
     {{ title }}
   </div>

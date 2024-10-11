@@ -1,10 +1,10 @@
 <template>
   <div class="dropdown">
     <a
+      id="actionsDropdown"
       class="btn btn-outline-primary"
       href="#"
       role="button"
-      id="actionsDropdown"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
@@ -95,8 +95,8 @@
       </template>
     </ul>
 
-    <InvokeAction ref="invokeAction" :envId="envId" />
-    <EditDeployment ref="editDeployment" :envId="envId" />
+    <InvokeAction ref="invokeAction" :env-id="envId" />
+    <EditDeployment ref="editDeployment" :env-id="envId" />
     <EditDescription ref="editDescription" />
     <EnableDeployment ref="enableDeployment" />
     <DisableDeployment ref="disableDeployment" />

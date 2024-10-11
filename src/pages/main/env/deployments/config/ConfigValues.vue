@@ -4,9 +4,9 @@
       <div v-for="input in uiSchema.inputs" :key="input.id" class="mt-2">
         <ConfigValue
           :input="input"
-          :envId="envId"
+          :env-id="envId"
           :value="config[input.id]"
-          :allValues="config"
+          :all-values="config"
         />
       </div>
     </div>
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="my-3" v-if="valuesOverride && Object.keys(valuesOverride).length">
+  <div v-if="valuesOverride && Object.keys(valuesOverride).length" class="my-3">
     <YamlContent header="Values Override" :config="valuesOverride" />
   </div>
 </template>
@@ -30,6 +30,6 @@ defineProps<{
   envId: string;
   uiSchema?: UiSchema | null;
   config: Record<string, any>;
-  valuesOverride?: Object;
+  valuesOverride?: object;
 }>();
 </script>

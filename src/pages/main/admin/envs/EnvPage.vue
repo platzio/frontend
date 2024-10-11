@@ -49,10 +49,10 @@
         <div class="card-body">
           <div class="mb-1 d-flex flex-row align-items-start">
             <div class="flex-fill">
-              <span class="me-1 badge bg-success" v-if="env.auto_add_new_users"
+              <span v-if="env.auto_add_new_users" class="me-1 badge bg-success"
                 >ON</span
               >
-              <span class="me-1 badge bg-danger" v-else>OFF</span>
+              <span v-else class="me-1 badge bg-danger">OFF</span>
               Automatically add new users to this env
             </div>
             <button
@@ -102,8 +102,8 @@
       </div>
     </div>
 
-    <EditNodeSelector ref="editNodeSelector" :envId="envId" />
-    <EditAutoAddNewUsers ref="editAutoAddNewUsers" :envId="envId" />
+    <EditNodeSelector ref="editNodeSelector" :env-id="envId" />
+    <EditAutoAddNewUsers ref="editAutoAddNewUsers" :env-id="envId" />
   </div>
 </template>
 
@@ -130,7 +130,7 @@ const numAdmins = computed(
   () =>
     store?.collections.envUserPermissions
       .allForEnv(props.envId)
-      .filter((permission) => permission.role === EnvUserRole.Admin).length
+      .filter((permission) => permission.role === EnvUserRole.Admin).length,
 );
 
 useHead({
@@ -138,7 +138,7 @@ useHead({
 });
 
 const nodeSelector = computed(() =>
-  yaml.dump(env.value?.node_selector).trimEnd()
+  yaml.dump(env.value?.node_selector).trimEnd(),
 );
 const tolerations = computed(() => yaml.dump(env.value?.tolerations).trimEnd());
 </script>

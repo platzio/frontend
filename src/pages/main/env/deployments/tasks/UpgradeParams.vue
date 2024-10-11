@@ -23,10 +23,10 @@
     </div>
     <div v-if="configDelta && newChart.values_ui" class="mb-2">
       <ConfigDelta
-        :uiSchema="newChart.values_ui"
+        :ui-schema="newChart.values_ui"
         :delta="configDelta"
-        :envId="envId"
-        :allValues="operation.config_inputs"
+        :env-id="envId"
+        :all-values="operation.config_inputs"
       />
     </div>
   </div>

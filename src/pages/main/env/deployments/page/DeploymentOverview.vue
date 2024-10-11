@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-if="deployment">
+  <div v-if="deployment" class="card">
     <div class="card-body row">
       <!-- Overview left part -->
       <div class="col">
@@ -7,7 +7,7 @@
           <PlatzMarkdown :source="deployment.description_md" />
         </div>
         <div class="text-secondary">
-          <HelmChartWithUpgrade :envId="envId" :deployment="deployment" />
+          <HelmChartWithUpgrade :env-id="envId" :deployment="deployment" />
         </div>
 
         <div class="my-2 text-secondary">
@@ -15,20 +15,20 @@
         </div>
         <div v-if="chart">
           <ConfigValues
-            :envId="envId"
-            :uiSchema="chart.values_ui"
+            :env-id="envId"
+            :ui-schema="chart.values_ui"
             :config="deployment.config"
-            :valuesOverride="deployment.values_override"
+            :values-override="deployment.values_override"
           />
         </div>
       </div>
 
       <!-- Overview right part -->
-      <div class="col-5" v-if="notices.length > 0 || metrics.length > 0">
+      <div v-if="notices.length > 0 || metrics.length > 0" class="col-5">
         <DeploymentNotices :notices="notices" />
 
         <div class="row justify-content-end">
-          <div class="col-6 mb-3" v-for="(metric, idx) in metrics" :key="idx">
+          <div v-for="(metric, idx) in metrics" :key="idx" class="col-6 mb-3">
             <div class="card">
               <div class="card-body px-4 py-3">
                 <PlatzMetric :metric="metric" />

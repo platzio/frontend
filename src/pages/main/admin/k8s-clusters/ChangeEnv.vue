@@ -11,13 +11,13 @@
     <div class="mb-2">
       This will set or move the following cluster between envs:
     </div>
-    <div class="my-2 rounded border p-2" v-if="state.cluster">
+    <div v-if="state.cluster" class="my-2 rounded border p-2">
       <PlatzClusterName :id="state.cluster.id" />
     </div>
     <div class="my-3">
-      <select class="form-select" v-model="state.env_id">
+      <select v-model="state.env_id" class="form-select">
         <option :value="null">(No Env)</option>
-        <option v-for="env in envs" :value="env.id" :key="env.id">
+        <option v-for="env in envs" :key="env.id" :value="env.id">
           {{ env.name }}
         </option>
       </select>

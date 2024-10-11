@@ -4,7 +4,7 @@
       <FaIcon icon="city" fixed-width />
       {{ env?.name }}
     </div>
-    <div class="mt-1 small text-body-secondary" v-if="showInfo">
+    <div v-if="showInfo" class="mt-1 small text-body-secondary">
       {{ userCount === 1 ? "1 user" : `${userCount} users` }},
       {{
         deploymentCount === 1
@@ -24,7 +24,7 @@ const props = withDefaults(
     id: string;
     showInfo?: boolean;
   }>(),
-  { showInfo: true }
+  { showInfo: true },
 );
 
 const store = useStore();
@@ -33,8 +33,8 @@ const env = computed(() => store?.collections.envs.getOne(props.id));
 const userCount = computed(
   () =>
     store?.collections.envUserPermissions.all.filter(
-      (permission) => permission.env_id == props.id
-    ).length
+      (permission) => permission.env_id == props.id,
+    ).length,
 );
 
 const deploymentCount = computed(
@@ -42,7 +42,7 @@ const deploymentCount = computed(
     store?.collections.deployments.all.filter(
       (deployment) =>
         store?.collections.k8sClusters.getOne(deployment.cluster_id)?.env_id ===
-        props.id
-    ).length
+        props.id,
+    ).length,
 );
 </script>

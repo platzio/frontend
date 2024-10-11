@@ -10,9 +10,9 @@
     <div class="mb-2">Enter a FontAwesome icon name for the helm registry:</div>
     <div class="my-3">
       <input
+        v-model="state.new_fa_icon"
         type="text"
         class="form-control"
-        v-model="state.new_fa_icon"
         required
         placeholder="Enter a FontAwesome icon name"
       />

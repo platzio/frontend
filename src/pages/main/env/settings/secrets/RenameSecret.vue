@@ -13,10 +13,10 @@
 
     <div class="mb-3 form-floating">
       <input
-        type="text"
-        class="form-control"
         id="name"
         v-model="state.name"
+        type="text"
+        class="form-control"
         required
         :disabled="state.disabled"
       />

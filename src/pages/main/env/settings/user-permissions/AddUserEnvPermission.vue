@@ -10,8 +10,8 @@
     <div class="mb-2">Select a user:</div>
 
     <div class="my-2">
-      <select class="form-select" v-model="state.user_id">
-        <option v-for="user in possibleUsers" :value="user.id" :key="user.id">
+      <select v-model="state.user_id" class="form-select">
+        <option v-for="user in possibleUsers" :key="user.id" :value="user.id">
           {{ user.display_name }}
         </option>
       </select>
@@ -22,11 +22,11 @@
     <div class="my-3">
       <div class="form-check my-2">
         <input
+          id="userRoleRegular"
+          v-model="state.role"
           class="form-check-input"
           type="radio"
           name="userRole"
-          id="userRoleRegular"
-          v-model="state.role"
           :value="EnvUserRole.User"
         />
         <label class="form-check-label" for="userRoleRegular">
@@ -39,11 +39,11 @@
       </div>
       <div class="form-check my-3">
         <input
+          id="userRoleAdmin"
+          v-model="state.role"
           class="form-check-input"
           type="radio"
           name="userRole"
-          id="userRoleAdmin"
-          v-model="state.role"
           :value="EnvUserRole.Admin"
         />
         <label class="form-check-label" for="userRoleAdmin">

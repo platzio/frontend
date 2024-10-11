@@ -5,7 +5,7 @@
         <PlatzItemWithActions>
           <template #contents>
             <div class="mt-2 mb-1 d-flex flex-row align-items-center">
-              <PlatzUser :id="item.user_id" :showName="true" />
+              <PlatzUser :id="item.user_id" :show-name="true" />
               <span class="ms-2 badge bg-success">{{
                 item.role.toUpperCase()
               }}</span>
@@ -70,7 +70,7 @@
       </template>
     </PlatzCollection>
 
-    <AddUserPermission ref="addUserPermission" :envId="envId" />
+    <AddUserPermission ref="addUserPermission" :env-id="envId" />
     <RemoveUserPermission ref="removeUserPermission" />
   </div>
 </template>

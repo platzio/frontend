@@ -5,13 +5,13 @@
     class="d-flex flex-row justify-content-between align-items-center mb-n2"
   >
     <SingleInputField
+      v-model="inner[idx]"
       class="flex-fill"
       :input="itemInput(idx)"
-      v-model="inner[idx]"
-      :envId="envId"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
     <div class="ps-2 mb-3">
       <a class="text-secondary" @click="removeFromArray(idx)">

@@ -2,14 +2,14 @@
   <div v-if="deployment">
     <div class="d-flex flex-row justify-content-between align-items-start">
       <div class="d-flex flex-row align-items-center">
-        <div class="h1 me-3" v-if="formatted">
+        <div v-if="formatted" class="h1 me-3">
           <FaIcon :icon="formatted.icon" />
           {{ formatted.text }}
         </div>
         <PlatzDeploymentStatus class="me-2" :deployment="deployment" />
       </div>
 
-      <DeploymentActions :envId="envId" :deployment="deployment" />
+      <DeploymentActions :env-id="envId" :deployment="deployment" />
     </div>
 
     <PlatzReason

@@ -1,14 +1,14 @@
 <template>
   <div v-if="uiSchema">
     <InputField
-      :input="input"
       v-for="input in uiSchema.inputs"
       :key="input.id"
       v-model="allValues[input.id]"
-      :envId="envId"
+      :input="input"
+      :env-id="envId"
       :disabled="disabled"
-      :allValues="allValues"
-      :isNew="isNew"
+      :all-values="allValues"
+      :is-new="isNew"
     />
   </div>
 </template>
@@ -24,7 +24,7 @@ const props = withDefaults(
     envId: string;
     uiSchema?: UiSchema | null;
     disabled: boolean;
-    modelValue: Object;
+    modelValue: object;
     isNew?: boolean;
   }>(),
   {

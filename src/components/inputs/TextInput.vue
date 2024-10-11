@@ -1,18 +1,18 @@
 <template>
   <div class="form-floating">
     <input
-      type="text"
-      class="form-control"
       :id="input.id"
       v-model="inner"
+      type="text"
+      class="form-control"
       :disabled="disabled"
       :required="required"
     />
     <label class="opacity-100">
       <span class="opacity-50">{{ input.label }}</span>
-      <span class="ms-2 text-danger" v-if="required">*</span>
+      <span v-if="required" class="ms-2 text-danger">*</span>
     </label>
-    <div class="form-text" v-if="input.helpText">
+    <div v-if="input.helpText" class="form-text">
       {{ input.helpText }}
     </div>
   </div>

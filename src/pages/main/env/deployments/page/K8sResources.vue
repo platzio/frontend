@@ -16,8 +16,8 @@
             <li>
               <a
                 class="dropdown-item"
-                @click="restartResource(item)"
                 :class="{ disabled: !isMaintainer }"
+                @click="restartResource(item)"
               >
                 <FaIcon icon="sync" fixed-width />
                 Restart {{ item.kind }}

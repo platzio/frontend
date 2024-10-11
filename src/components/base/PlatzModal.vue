@@ -1,17 +1,17 @@
 <template>
-  <div class="modal fade" :id="id" tabindex="-1">
+  <div :id="id" class="modal fade" tabindex="-1">
     <div class="modal-dialog" :class="dialogClasses">
       <div class="modal-content text-start">
         <form @submit="submit">
           <div class="modal-header">
-            <h5 class="modal-title" :id="`${id}Label`">
+            <h5 :id="`${id}Label`" class="modal-title">
               {{ title }}
             </h5>
             <button
               type="button"
               class="btn-close"
-              @click="close"
               :disabled="working"
+              @click="close"
             />
           </div>
 
@@ -26,8 +26,8 @@
               v-if="showCancel"
               type="button"
               class="btn btn-link"
-              @click="close"
               :disabled="working"
+              @click="close"
             >
               {{ cancelText }}
             </button>

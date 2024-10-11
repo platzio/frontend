@@ -2,14 +2,14 @@
   <div v-if="resourceType">
     <div class="mb-3 form-floating">
       <input
+        id="name"
+        v-model="new_data.name"
         type="text"
         class="form-control"
-        id="name"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
         spellcheck="false"
-        v-model="new_data.name"
         required
         pattern="^[\-A-Za-z0-9_]+$"
         :disabled="disabled"
@@ -22,9 +22,9 @@
 
     <div class="mb-3 form-floating">
       <select
-        class="form-select"
         id="deployment_id"
         v-model="new_data.deployment_id"
+        class="form-select"
         :disabled="disabled || !!new_data.id"
         :required="true"
       >
@@ -39,17 +39,17 @@
       <label class="opacity-100">
         <span class="opacity-50">Managing Deployment</span>
       </label>
-      <div class="form-text" v-if="new_data.id">
+      <div v-if="new_data.id" class="form-text">
         Managing deployment can't be changed for existing resources
       </div>
     </div>
 
     <ConfigInputsForm
-      :envId="envId"
-      :uiSchema="resourceType.spec.values_ui"
-      :disabled="disabled"
-      :isNew="isNew"
       v-model="new_data.props"
+      :env-id="envId"
+      :ui-schema="resourceType.spec.values_ui"
+      :disabled="disabled"
+      :is-new="isNew"
     />
   </div>
 </template>

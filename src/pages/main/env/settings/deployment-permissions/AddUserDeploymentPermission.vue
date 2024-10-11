@@ -14,15 +14,15 @@
     </div>
     <div class="my-3">
       <select
-        class="form-select"
         v-model="state.user_id"
+        class="form-select"
         :disabled="!possibleUsers?.length"
       >
-        <option v-for="user in possibleUsers" :value="user.id" :key="user.id">
+        <option v-for="user in possibleUsers" :key="user.id" :value="user.id">
           {{ user.display_name }}
         </option>
       </select>
-      <div class="small text-body-secondary" v-if="!possibleUsers?.length">
+      <div v-if="!possibleUsers?.length" class="small text-body-secondary">
         It looks like all possible users already have permissions for this
         deployment kind.
       </div>

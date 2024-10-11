@@ -2,10 +2,10 @@
   <div>
     <div class="card-header">
       <PlatzPagination
-        @changed="loadPage"
         :page-query-param="pageQueryParam"
         :page-size="cur_page?.per_page"
         :total-items="cur_page?.num_total"
+        @changed="loadPage"
       />
     </div>
 
@@ -18,7 +18,7 @@
         :flush="true"
       >
         <template v-for="(_, name) in slots" #[name]="data">
-          <slot :name="name" v-if="data" v-bind="data" />
+          <slot v-if="data" :name="name" v-bind="data" />
         </template>
       </PlatzCollection>
     </div>

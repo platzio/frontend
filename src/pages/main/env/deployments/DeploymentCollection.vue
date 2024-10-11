@@ -9,7 +9,7 @@
           }"
           append
         >
-          <PlatzDeployment :deployment="item" :showPrimaryMetric="true" />
+          <PlatzDeployment :deployment="item" :show-primary-metric="true" />
         </PlatzLinkedItem>
       </template>
 
@@ -18,22 +18,22 @@
           <div class="form-check form-switch">
             <input
               v-if="allDisabled"
+              id="showAll"
               class="form-check-input"
               type="checkbox"
-              id="showAll"
               :checked="true"
               :disabled="true"
             />
             <input
               v-else
-              class="form-check-input"
-              type="checkbox"
               id="showAll"
               v-model="showAll"
+              class="form-check-input"
+              type="checkbox"
             />
             <label class="form-check-label" for="showAll">Show All</label>
           </div>
-          <DeploymentCollectionActions :envId="envId" :kindId="kindId" />
+          <DeploymentCollectionActions :env-id="envId" :kind-id="kindId" />
         </div>
       </template>
 
@@ -50,7 +50,7 @@
         </button>
       </template>
     </PlatzCollection>
-    <EditDeployment ref="editDeployment" :envId="envId" />
+    <EditDeployment ref="editDeployment" :env-id="envId" />
   </div>
 </template>
 

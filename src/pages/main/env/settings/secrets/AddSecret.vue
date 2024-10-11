@@ -11,11 +11,11 @@
     <div class="mb-3">
       <div class="my-2 form-check">
         <input
+          id="useExistingCollection"
+          v-model="state.createNewCollection"
           class="form-check-input"
           type="radio"
           name="whichCollection"
-          id="useExistingCollection"
-          v-model="state.createNewCollection"
           :value="false"
           :disabled="collections.length === 0"
         />
@@ -25,11 +25,11 @@
       </div>
       <div class="my-2 form-check">
         <input
+          id="createNewCollection"
+          v-model="state.createNewCollection"
           class="form-check-input"
           type="radio"
           name="whichCollection"
-          id="createNewCollection"
-          v-model="state.createNewCollection"
           :value="true"
         />
         <label class="form-check-label" for="createNewCollection">
@@ -38,11 +38,11 @@
       </div>
     </div>
 
-    <div class="mb-3 form-floating" v-if="!state.createNewCollection">
+    <div v-if="!state.createNewCollection" class="mb-3 form-floating">
       <select
-        class="form-select"
         id="collection"
         v-model="state.collection"
+        class="form-select"
         :disabled="state.disabled"
         required
       >
@@ -53,12 +53,12 @@
       <label>Collection</label>
     </div>
 
-    <div class="mb-3 form-floating" v-if="state.createNewCollection">
+    <div v-if="state.createNewCollection" class="mb-3 form-floating">
       <input
-        type="text"
-        class="form-control"
         id="collection"
         v-model="state.collection"
+        type="text"
+        class="form-control"
         required
         :disabled="state.disabled"
       />
@@ -67,10 +67,10 @@
 
     <div class="mb-3 form-floating">
       <input
-        type="text"
-        class="form-control"
         id="name"
         v-model="state.name"
+        type="text"
+        class="form-control"
         required
         :disabled="state.disabled"
       />
@@ -79,10 +79,10 @@
 
     <div class="mb-3 form-floating">
       <input
-        type="contents"
-        class="form-control"
         id="contents"
         v-model="state.contents"
+        type="contents"
+        class="form-control"
         required
         :disabled="state.disabled"
         autocomplete="off"

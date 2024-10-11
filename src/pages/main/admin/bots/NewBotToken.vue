@@ -6,8 +6,8 @@
     :error="state.error"
     :working="state.working"
     btn-class="btn-success"
-    :showSubmit="false"
-    cancelText="Close"
+    :show-submit="false"
+    cancel-text="Close"
   >
     <div v-if="state.working" class="my-3 h2 text-center text-body-secondary">
       <FaIcon icon="circle-notch" spin fixed-width />
@@ -46,20 +46,6 @@ default_profile = true</code></pre>
     </div>
   </PlatzModal>
 </template>
-
-<style lang="scss" scoped>
-.api-token {
-  font-size: 1.35rem;
-  border: 2px dashed var(--bs-success);
-  color: var(--bs-success);
-  background-color: var(--bs-light);
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  text-align: center;
-  word-wrap: break-word;
-  word-break: break-all;
-}
-</style>
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
@@ -100,3 +86,17 @@ function close() {
 
 defineExpose({ open, close });
 </script>
+
+<style lang="scss" scoped>
+.api-token {
+  font-size: 1.35rem;
+  border: 2px dashed var(--bs-success);
+  color: var(--bs-success);
+  background-color: var(--bs-light);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  text-align: center;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+</style>
