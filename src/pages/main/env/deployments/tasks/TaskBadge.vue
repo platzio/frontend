@@ -85,8 +85,8 @@ const title = computed(() => {
           ? "Upgrading"
           : "Downgrading"
         : isUpgrade
-        ? "Upgrade"
-        : "Downgrade";
+          ? "Upgrade"
+          : "Downgrade";
     }
     return props.task.status == DeploymentTaskStatus.Started
       ? "Reconfiguring"

@@ -29,6 +29,7 @@ const props = defineProps<{
 
 const deploymentTasksCollection = createDeploymentTasksCollection();
 const helmChartsCollection = createHelmChartsCollection();
+helmChartsCollection.init();
 
 provide(InjectedHelmChartsCollection, helmChartsCollection);
 
