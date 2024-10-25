@@ -29,7 +29,7 @@
           :disabled="disabled"
           @click="upgradeImmediately"
         >
-          <FaIcon icon="fast-forward" fixed-width />
+          <FaIcon icon="forward-fast" fixed-width />
           Upgrade Immediately
         </button>
       </div>
