@@ -135,11 +135,15 @@ const store = useStore();
 
 const curUser = computed(() => store?.auth.curUser);
 
-const otherEnvs = computed(() =>
-  store?.collections.envs.all.filter(
-    (env) =>
-      env.id != props.envId && curUser.value && isEnvUser(env.id, curUser.value)
-  )
+const otherEnvs = computed(
+  () =>
+    store &&
+    store.collections.envs.all.filter(
+      (env) =>
+        env.id != props.envId &&
+        curUser.value &&
+        isEnvUser(store, env.id, curUser.value)
+    )
 );
 
 const resourceTypes = computed(() =>

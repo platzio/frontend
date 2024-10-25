@@ -1,22 +1,20 @@
 import { EnvUserRole, type User, UserDeploymentRole } from "@platzio/sdk";
-import { useStore } from ".";
+import type { Store } from ".";
 
-export function isEnvUser(envId: string, user: User) {
-  const store = useStore();
+export function isEnvUser(store: Store, envId: string, user: User) {
   return (
     user.is_admin ||
-    store?.collections.envUserPermissions.all.some(
+    store.collections.envUserPermissions.all.some(
       (permission) =>
         permission.env_id == envId && permission.user_id == user.id
     )
   );
 }
 
-export function isEnvAdmin(envId: string, user: User) {
-  const store = useStore();
+export function isEnvAdmin(store: Store, envId: string, user: User) {
   return (
     user.is_admin ||
-    store?.collections.envUserPermissions.all.some(
+    store.collections.envUserPermissions.all.some(
       (permission) =>
         permission.env_id == envId &&
         permission.user_id == user.id &&
@@ -25,13 +23,16 @@ export function isEnvAdmin(envId: string, user: User) {
   );
 }
 
-export function isDeploymentOwner(envId: string, kind_id: string) {
-  const store = useStore();
-  const curUser = store?.auth.curUser;
+export function isDeploymentOwner(
+  store: Store,
+  envId: string,
+  kind_id: string
+) {
+  const curUser = store.auth.curUser;
   return (
     curUser &&
-    (isEnvAdmin(envId, curUser) ||
-      store?.collections.deploymentPermissions.all.some(
+    (isEnvAdmin(store, envId, curUser) ||
+      store.collections.deploymentPermissions.all.some(
         (permission) =>
           permission.env_id == envId &&
           permission.kind_id == kind_id &&
@@ -41,13 +42,16 @@ export function isDeploymentOwner(envId: string, kind_id: string) {
   );
 }
 
-export function isDeploymentMaintainer(envId: string, kind_id: string) {
-  const store = useStore();
-  const curUser = store?.auth.curUser;
+export function isDeploymentMaintainer(
+  store: Store,
+  envId: string,
+  kind_id: string
+) {
+  const curUser = store.auth.curUser;
   return (
     curUser &&
-    (isEnvAdmin(envId, curUser) ||
-      store?.collections.deploymentPermissions.all.some(
+    (isEnvAdmin(store, envId, curUser) ||
+      store.collections.deploymentPermissions.all.some(
         (permission) =>
           permission.env_id == envId &&
           permission.kind_id == kind_id &&

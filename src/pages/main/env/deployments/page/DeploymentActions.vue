@@ -131,12 +131,14 @@ const enableDeployment = ref<typeof EnableDeployment>();
 const disableDeployment = ref<typeof DisableDeployment>();
 const deleteDeployment = ref<typeof DeleteDeployment>();
 
-const isOwner = computed(() =>
-  isDeploymentOwner(props.envId, props.deployment.kind_id)
+const isOwner = computed(
+  () => store && isDeploymentOwner(store, props.envId, props.deployment.kind_id)
 );
 
-const isMaintainer = computed(() =>
-  isDeploymentMaintainer(props.envId, props.deployment.kind_id)
+const isMaintainer = computed(
+  () =>
+    store &&
+    isDeploymentMaintainer(store, props.envId, props.deployment.kind_id)
 );
 
 const chart = computed(() =>

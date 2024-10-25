@@ -35,6 +35,7 @@
 import { isEqual } from "lodash";
 import { computed, ref, watch, watchEffect } from "vue";
 import { type UiSchemaInput } from "@platzio/sdk";
+import { useStore } from "@/store";
 import { getInputCollection } from "@/store/deployment-resources";
 
 const props = withDefaults(
@@ -55,6 +56,8 @@ const props = withDefaults(
 
 const emit = defineEmits(["update:modelValue"]);
 
+const store = useStore();
+
 const inner = ref();
 
 watch(
@@ -74,8 +77,9 @@ watchEffect(() => {
 
 const collection = computed(
   () =>
+    store &&
     props.input.collection &&
-    getInputCollection(props.envId, props.input.collection)
+    getInputCollection(store, props.envId, props.input.collection)
 );
 
 const collectionItems = computed(() => {

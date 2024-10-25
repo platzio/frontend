@@ -1,22 +1,20 @@
 import { computed, reactive } from "vue";
-import { useStore } from ".";
+import { type Store } from ".";
 import { DbTable, type DbTableOrDeploymentResource } from "@platzio/sdk";
 
-function toDeploymentResourceCollection(resourceTypeId: string) {
-  const store = useStore();
-
+function toDeploymentResourceCollection(store: Store, resourceTypeId: string) {
   const resourceType = computed(() =>
-    store?.collections.deploymentResourceTypes.getOne(resourceTypeId)
+    store.collections.deploymentResourceTypes.getOne(resourceTypeId)
   );
 
   const all = computed(() =>
-    store?.collections.deploymentResources.all.filter(
+    store.collections.deploymentResources.all.filter(
       (resource) => resource.type_id === resourceTypeId
     )
   );
   const allForEnv = computed(() => () => all.value);
   const getOne = computed(
-    () => (id: string) => store?.collections.deploymentResources.getOne(id)
+    () => (id: string) => store.collections.deploymentResources.getOne(id)
   );
   const formatItem = computed(() => (item: any) => ({
     text: item.name,
@@ -34,14 +32,10 @@ function toDeploymentResourceCollection(resourceTypeId: string) {
 }
 
 export function getInputCollection(
+  store: Store,
   envId: string,
   collection: DbTableOrDeploymentResource
 ) {
-  const store = useStore();
-  if (!store) {
-    return undefined;
-  }
-
   // If the collection is an explicit type, find it
   if (typeof collection !== "string" && "deployment" in collection) {
     for (const resourceType of store.collections.deploymentResourceTypes.all.filter(
@@ -55,7 +49,7 @@ export function getInputCollection(
         (resourceType.env_id && resourceType.env_id === envId) ||
         !resourceType.env_id
       ) {
-        return toDeploymentResourceCollection(resourceType.id);
+        return toDeploymentResourceCollection(store, resourceType.id);
       }
     }
   }
@@ -74,7 +68,7 @@ export function getInputCollection(
       (resourceType.env_id && resourceType.env_id === envId) ||
       !resourceType.env_id
     ) {
-      return toDeploymentResourceCollection(resourceType.id);
+      return toDeploymentResourceCollection(store, resourceType.id);
     }
   }
 

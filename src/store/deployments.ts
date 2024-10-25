@@ -2,23 +2,17 @@ import {
   type DbTableOrDeploymentResource,
   type Deployment,
 } from "@platzio/sdk";
-import { useStore } from "./";
+import { type Store } from "./";
 
 export function findCollectionDependencies(
+  store: Store,
   collection: DbTableOrDeploymentResource,
   id: string
 ): Deployment[] {
-  const store = useStore();
-  if (!store) {
-    return [];
-  }
-
   const result = [];
 
   for (const deployment of store.collections.deployments.all) {
-    const chart = store?.collections.helmCharts.getOne(
-      deployment.helm_chart_id
-    );
+    const chart = store.collections.helmCharts.getOne(deployment.helm_chart_id);
 
     if (!chart) {
       continue;

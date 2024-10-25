@@ -113,8 +113,9 @@ const new_data = ref<Partial<Deployment>>({});
 
 const isOwner = computed(
   () =>
+    store &&
     new_data.value.kind_id &&
-    isDeploymentOwner(props.envId, new_data.value.kind_id)
+    isDeploymentOwner(store, props.envId, new_data.value.kind_id)
 );
 
 const new_kind = computed(() =>

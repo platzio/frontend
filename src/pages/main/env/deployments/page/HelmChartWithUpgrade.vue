@@ -76,18 +76,23 @@ onBeforeUnmount(() => {
   keyDownController.abort();
 });
 
-const isMaintainer = computed(() =>
-  isDeploymentMaintainer(props.envId, props.deployment.kind_id)
+const isMaintainer = computed(
+  () =>
+    store &&
+    isDeploymentMaintainer(store, props.envId, props.deployment.kind_id)
 );
 
 const chart = computed(() =>
   store?.collections.helmCharts.getOne(props.deployment.helm_chart_id)
 );
 
-const newerChart = computed(() =>
-  isMaintainer.value && props.deployment.enabled && chart.value
-    ? chartForUpgrade(chart.value)
-    : null
+const newerChart = computed(
+  () =>
+    isMaintainer.value &&
+    props.deployment.enabled &&
+    chart.value &&
+    store &&
+    chartForUpgrade(store.collections.helmCharts, chart.value)
 );
 
 const deploymentForUpgrade = computed(() =>

@@ -1,7 +1,6 @@
 import { type HelmChart } from "@platzio/sdk";
 import { createCollection } from "./collection";
 import { chartFeatures } from "../chart-ext";
-import { useStore } from "..";
 
 export const InjectedHelmChartsCollection = Symbol(
   "InjectedHelmChartsCollection"
@@ -38,9 +37,11 @@ export function chartIcon(chart?: HelmChart): string | undefined {
   }
 }
 
-export function chartForUpgrade(current: HelmChart): HelmChart | undefined {
-  const store = useStore();
-  const newer = store?.collections.helmCharts.all
+export function chartForUpgrade(
+  helmChartsCollection: HelmChartsCollection,
+  current: HelmChart
+): HelmChart | undefined {
+  const newer = helmChartsCollection.all
     .filter((chart) => current.helm_registry_id == chart.helm_registry_id)
     .filter((chart) => chart.created_at.localeCompare(current.created_at) == 1)
     .filter((chart) => current.parsed_branch === chart.parsed_branch)

@@ -50,10 +50,11 @@ const deployment = computed(() =>
   store?.collections.deployments.getOne(props.id)
 );
 
-const isMaintainer = computed(() =>
-  deployment.value
-    ? isDeploymentMaintainer(props.envId, deployment.value.kind_id)
-    : undefined
+const isMaintainer = computed(
+  () =>
+    store &&
+    deployment.value &&
+    isDeploymentMaintainer(store, props.envId, deployment.value.kind_id)
 );
 
 const resources = computed(() =>

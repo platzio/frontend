@@ -49,5 +49,7 @@ const kind = computed(() =>
     : undefined
 );
 
-const isOwner = computed(() => isDeploymentOwner(props.envId, props.kindId));
+const isOwner = computed(
+  () => store && isDeploymentOwner(store, props.envId, props.kindId)
+);
 </script>

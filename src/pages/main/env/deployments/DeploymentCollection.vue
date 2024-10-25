@@ -79,7 +79,9 @@ const kind = computed(() =>
   store?.collections.deploymentKinds.getOne(props.kindId)
 );
 
-const isOwner = computed(() => isDeploymentOwner(props.envId, props.kindId));
+const isOwner = computed(
+  () => store && isDeploymentOwner(store, props.envId, props.kindId)
+);
 
 const deployments = computed(() =>
   store?.collections.deployments.all.filter(

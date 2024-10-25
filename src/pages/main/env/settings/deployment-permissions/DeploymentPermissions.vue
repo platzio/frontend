@@ -90,7 +90,10 @@ const permissionsByRole = computed(
 );
 
 const canEdit = computed(
-  () => store?.auth.curUser && isEnvAdmin(props.envId, store?.auth.curUser)
+  () =>
+    store &&
+    store.auth.curUser &&
+    isEnvAdmin(store, props.envId, store?.auth.curUser)
 );
 
 useHead({

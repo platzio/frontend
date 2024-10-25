@@ -49,7 +49,7 @@ const curUser = computed(() => store?.auth.curUser);
 const check = () => {
   if (route.name == "envs" && store?.collections.envs.ready) {
     const possibleEnvs = store?.collections.envs.all.filter(
-      (env) => curUser.value && isEnvUser(env.id, curUser.value)
+      (env) => curUser.value && isEnvUser(store, env.id, curUser.value)
     );
     if (possibleEnvs.length > 0) {
       ok.value = true;

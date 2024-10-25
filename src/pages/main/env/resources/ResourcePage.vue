@@ -168,18 +168,21 @@ const deploymentKind = computed(() =>
     : undefined
 );
 
-const deployments = computed(() =>
-  resourceType.value && deploymentKind.value
-    ? findCollectionDependencies(resourceType.value.key, props.id).concat(
-        findCollectionDependencies(
-          {
-            deployment: deploymentKind.value.name,
-            type: resourceType.value.key,
-          },
-          props.id
-        )
+const deployments = computed(
+  () =>
+    store &&
+    resourceType.value &&
+    deploymentKind.value &&
+    findCollectionDependencies(store, resourceType.value.key, props.id).concat(
+      findCollectionDependencies(
+        store,
+        {
+          deployment: deploymentKind.value.name,
+          type: resourceType.value.key,
+        },
+        props.id
       )
-    : undefined
+    )
 );
 
 onBeforeRouteUpdate((to) => {

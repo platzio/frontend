@@ -54,5 +54,5 @@ export function createStore() {
 }
 
 export const storeSymbol = Symbol("store");
-export const useStore = () =>
-  inject<ReturnType<typeof createStore>>(storeSymbol);
+export type Store = ReturnType<typeof createStore>;
+export const useStore = () => inject<Store>(storeSymbol);

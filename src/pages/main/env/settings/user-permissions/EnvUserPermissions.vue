@@ -107,8 +107,9 @@ const curUser = computed(() => store?.auth.curUser);
 
 const canEdit = computed(
   () =>
+    store &&
     curUser.value &&
-    (curUser.value.is_admin || isEnvAdmin(props.envId, curUser.value))
+    (curUser.value.is_admin || isEnvAdmin(store, props.envId, curUser.value))
 );
 
 useHead({

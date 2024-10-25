@@ -87,14 +87,21 @@ const chart = computed(() =>
 const hasUpgrade = computed(
   () =>
     props.deployment.enabled &&
-    (chart.value ? chartForUpgrade(chart.value) : null)
+    store &&
+    chart.value &&
+    chartForUpgrade(store.collections.helmCharts, chart.value)
 );
 
 const isMaintainer = computed(() => {
-  const envId = store?.collections.k8sClusters.getOne(
+  if (!store) {
+    return undefined;
+  }
+  const envId = store.collections.k8sClusters.getOne(
     props.deployment.cluster_id
   )?.env_id;
-  return envId && isDeploymentMaintainer(envId, props.deployment.kind_id);
+  return (
+    envId && isDeploymentMaintainer(store, envId, props.deployment.kind_id)
+  );
 });
 
 const primaryMetric = computed(
