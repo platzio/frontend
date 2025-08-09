@@ -24,7 +24,7 @@ const props = withDefaults(
     envId: string;
     uiSchema?: UiSchema | null;
     disabled: boolean;
-    modelValue: object;
+    modelValue?: object;
     isNew?: boolean;
   }>(),
   {

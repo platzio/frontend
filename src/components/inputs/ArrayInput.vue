@@ -37,7 +37,7 @@ const props = withDefaults(
   defineProps<{
     envId: string;
     input: UiSchemaInput;
-    disabled: boolean;
+    disabled?: boolean;
     modelValue?: Array<any>;
     allValues: Record<string, any>;
     isNew?: boolean;

@@ -61,7 +61,7 @@ const props = withDefaults(
     cancelText?: string;
     topError?: Error;
     error?: Error;
-    working: boolean;
+    working?: boolean;
     btnClass?: string;
   }>(),
   {

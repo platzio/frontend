@@ -18,7 +18,7 @@ withDefaults(
     input: UiSchemaInput;
     value?: boolean;
     showLabel: boolean;
-    showEmpty: boolean;
+    showEmpty?: boolean;
   }>(),
   { withLabel: true, showEmpty: false }
 );

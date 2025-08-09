@@ -36,8 +36,8 @@ const props = withDefaults(
     envId: string;
     input: UiSchemaInput;
     value?: string | object;
-    showLabel: boolean;
-    showEmpty: boolean;
+    showLabel?: boolean;
+    showEmpty?: boolean;
   }>(),
   {
     value: undefined,

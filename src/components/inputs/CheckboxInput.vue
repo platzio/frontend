@@ -24,7 +24,7 @@ const props = withDefaults(
   defineProps<{
     envId: string;
     input: UiSchemaInput;
-    disabled: boolean;
+    disabled?: boolean;
     modelValue?: boolean;
     allValues: Record<string, any>;
     isNew?: boolean;
