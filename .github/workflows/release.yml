@@ -19,10 +19,11 @@ jobs:
       - name: 🛠️ Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version-file: .nvmrc
+          cache: npm
 
-      - name: 📦 npm install
-        run: npm install
+      - name: 📦 npm ci
+        run: npm ci
 
       - name: 📦 npm run lint
         run: npm run lint
