@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "^24"
+  },
   "scripts": {
     "dev": "vite",
     "build": "npm run type-check && vite build",
@@ -28,7 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@tsconfig/node20": "^20.1.9",
+    "@tsconfig/node24": "^24.0.4",
     "@types/bootstrap": "^5.2.10",
     "@types/js-yaml": "^4.0.9",
     "@types/json-logic-js": "^2.0.8",
