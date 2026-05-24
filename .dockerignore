@@ -1,2 +1,7 @@
-src
+.git
+.github
+.vscode
 node_modules
+dist
+LICENSE
+README.md
