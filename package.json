@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@platzio/design": "github:platzio/design",
-    "@platzio/sdk": "^0.6.0-beta.3",
+    "@platzio/sdk": "^0.7.0-beta.4",
     "@vueuse/head": "^2.0.0",
     "axios": "^1.16.1",
     "bootstrap": "^5.3.8",
