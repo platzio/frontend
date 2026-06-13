@@ -71,7 +71,7 @@
                   params: { envId: env.id },
                 }"
               >
-                <PlatzEnv :id="env.id" />
+                <PlatzEnv :id="env.id" :show-info="false" />
               </router-link>
             </li>
             <li

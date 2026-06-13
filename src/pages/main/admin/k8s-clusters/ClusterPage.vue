@@ -214,7 +214,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store";
+import { useStore, useEnvScope } from "@/store";
 import { computed, ref } from "vue";
 import PlatzCollection from "@/components/collection/PlatzCollection.vue";
 import PlatzCollectionItem from "@/components/collection/PlatzCollectionItem.vue";
@@ -236,6 +236,10 @@ const editIngressSettings = ref<typeof EditIngressSettings>();
 const setIgnore = ref<typeof SetIgnore>();
 const setGrafana = ref<typeof SetGrafana>();
 const cluster = computed(() => store?.collections.k8sClusters.getOne(props.id));
+
+// This admin view lists the cluster's deployments, which live in the cluster's
+// environment, so load that environment's data while the page is shown.
+useEnvScope(() => cluster.value?.env_id ?? undefined);
 
 const deployments = computed(() =>
   store?.collections.deployments.all.filter(

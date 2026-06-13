@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useStore } from "@/store";
+import { useStore, useEnvScope } from "@/store";
 
 const props = withDefaults(
   defineProps<{
@@ -29,6 +29,11 @@ const props = withDefaults(
 
 const store = useStore();
 const env = computed(() => store?.collections.envs.getOne(props.id));
+
+// When this label shows per-environment counts, load that environment's data so
+// the counts are accurate. Pure name labels (showInfo=false, e.g. the always
+// present env switcher) load nothing, keeping navigation lightweight.
+useEnvScope(() => (props.showInfo ? props.id : undefined));
 
 const userCount = computed(
   () =>

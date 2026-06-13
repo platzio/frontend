@@ -181,6 +181,16 @@ export function createCollection<
     setFilters(opts.initialFilters || {});
   };
 
+  // Lazily load a scope (a filtered subset) on demand, without resetting what is
+  // already loaded. Repeated calls for the same scope are de-duplicated by
+  // setFilters via appliedFilters, so views can call this freely on mount.
+  const ensureScope = async (filters: CollectionFilters = {}) => {
+    if (!items.value) {
+      items.value = new Map();
+    }
+    await setFilters(filters);
+  };
+
   return reactive({
     ready: readonly(ready),
     loading: readonly(loading),
@@ -195,6 +205,7 @@ export function createCollection<
     all,
     allForEnv,
     init,
+    ensureScope,
     setOne,
     discardOne,
     readItem,

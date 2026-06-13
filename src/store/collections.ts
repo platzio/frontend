@@ -97,8 +97,43 @@ export function createCollections() {
     }
   }
 
+  // Global (non-environment-scoped) collections. Loaded once and kept live for
+  // the whole session; their subscription carries no env_id.
+  const catalog = [
+    { table: DbTable.Envs, collection: envs },
+    { table: DbTable.Users, collection: users },
+    { table: DbTable.Bots, collection: bots },
+    { table: DbTable.K8sClusters, collection: k8sClusters },
+    { table: DbTable.K8sResources, collection: k8sResources },
+    { table: DbTable.DeploymentKinds, collection: deploymentKinds },
+    {
+      table: DbTable.DeploymentResourceTypes,
+      collection: deploymentResourceTypes,
+    },
+    { table: DbTable.HelmRegistries, collection: helmRegistries },
+    { table: DbTable.HelmCharts, collection: helmCharts },
+    { table: DbTable.HelmTagFormats, collection: helmTagFormats },
+    // The user's environment memberships are needed across all environments
+    // (e.g. the env switcher lists every env the user belongs to), and are
+    // already bounded to the user's environments by the API's permission
+    // scope, so they are loaded globally rather than per environment.
+    { table: DbTable.EnvUserPermissions, collection: envUserPermissions },
+  ];
+
+  // Environment-scoped collections. Loaded and subscribed per environment, on
+  // demand, by the views that show that environment.
+  const envScoped = [
+    { table: DbTable.Deployments, collection: deployments },
+    { table: DbTable.DeploymentTasks, collection: deploymentTasks },
+    { table: DbTable.DeploymentResources, collection: deploymentResources },
+    { table: DbTable.Secrets, collection: secrets },
+    { table: DbTable.DeploymentPermissions, collection: deploymentPermissions },
+  ];
+
   return {
     collections,
     dbTableToCollection,
+    catalog,
+    envScoped,
   };
 }
